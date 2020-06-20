@@ -19,9 +19,11 @@ class DefaultController extends AbstractController
     public function index(SiteSettings $siteSettings)
     {
         $banner = $siteSettings->getBanner();
+        $user = $this->getUser();
 
         return $this->render('Web/Default/index.html.php', [
-            'banner' => $banner
+            'banner' => $banner,
+            'user' => $user
         ]);
     }
 
@@ -30,16 +32,30 @@ class DefaultController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        // if ($this->getUser()) {
-        //     return $this->redirectToRoute('target_path');
-        // }
+        if ($this->getUser()) {
+            return $this->redirectToRoute('index');
+        }
 
+        $tokenProvider = $this->container->get('security.csrf.token_manager');
+        $token = $tokenProvider->getToken('authenticate')->getValue();
         // get the login error if there is one
+
         $error = $authenticationUtils->getLastAuthenticationError();
+
+        if ($error) {
+            $this->addFlash('error', $error->getMessageKey());
+        }
+
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        return $this->render('Web/Default/login.html.php', 
+            [
+                'last_username' => $lastUsername, 
+                'error' => $error,
+                'token' => $token,
+            ]
+        );
     }
 
     /**

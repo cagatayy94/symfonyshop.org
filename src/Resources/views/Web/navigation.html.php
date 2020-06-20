@@ -5,14 +5,25 @@
                 <div class="header-row">
                     <div class="header-column justify-content-end">
                         <ul class="nav">
+                            <?php if ($user): ?>
+                            <li class="nav-item">
+                                <a href="siparislerim" class="nav-link">SİPARİŞLERİM</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="favorilerim" class="nav-link">FAVORİLERİM</a>
+                            </li>
                             <li class="nav-item">
                                 <a href="#" class="nav-link">HESABIM</a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">GİRİŞ YAP / KAYIT OL</a>
+                                <a href="<?php echo $this->get('router')->path('logout'); ?>" class="nav-link">ÇIKIŞ YAP</a>
                             </li>
+                            <?php else: ?>
+                            <li class="nav-item">
+                                <a href="<?php echo $this->get('router')->path('login'); ?>" class="nav-link">GİRİŞ YAP / KAYIT OL</a>
+                            </li>
+                            <?php endif; ?>
                         </ul>
-
                     </div>
                 </div>
             </div>
@@ -77,7 +88,7 @@
                                 </ul>
                             </nav>
                         </div>
-                        <a href="shop-login.html" class="btn btn-link text-color-default font-weight-bold order-3 d-none d-sm-block ml-auto mr-2 pt-1 text-1">Giriş Hesap</a>
+                        <a href="shop-login.html" class="btn btn-link text-color-default font-weight-bold order-3 d-none d-sm-block ml-auto mr-2 pt-1 text-1"></a>
                         <div class="mini-cart order-4">
                             <span class="font-weight-bold font-primary">Sepet / <span class="cart-total">0.00₺</span></span>
                             <div class="mini-cart-icon">

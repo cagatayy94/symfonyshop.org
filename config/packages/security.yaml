@@ -44,16 +44,17 @@ security:
             guard:
                 authenticators:
                     - App\Security\Web\UserAuthenticator
+            form_login:
+                login_path: login
+                check_path: login
+                default_target_path: index
+                use_referer: true
+
             logout:
                 path: logout
                 # where to redirect after logout
                 target: login
                 invalidate_session: false
-
-
-
-
-
 
                 # where to redirect after logout
                 # target: app_any_route
@@ -68,6 +69,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/profile, roles: ROLE_USER }
         # - { path: ^/profile, roles: ROLE_USER }

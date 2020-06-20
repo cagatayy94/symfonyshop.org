@@ -36,7 +36,12 @@
 </head>
 <body>
 <div class="body">
-    <?php echo $this->render('Web/navigation.html.php'); ?>
+    <?php echo $this->render('Web/navigation.html.php',
+            [
+                'user' => isset($user) ? $user : null
+            ]
+        ); 
+    ?>
     <?php $view['slots']->output('body'); ?>
     <?php echo $view['actions']->render('Web:DefaultController:/footer/data'); ?>
 </div>
