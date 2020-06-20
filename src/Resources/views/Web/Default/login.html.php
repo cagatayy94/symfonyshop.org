@@ -47,21 +47,21 @@
                     <span class="top-sub-title">YENİ KULLANICI</span>
                     <h2 class="font-weight-bold text-4 mb-1">Hesabınız yok mu? Şimdi Kaydolun.</h2>
                     <p class="lead mb-4">Kayıt yaptığınızda size özel fırsatlarımızdan yararlanabilirsiniz.</p>
-                    <form id="register" method="post" action="<?php echo $this->get('router')->path('register') ?>">
+                    <form id="register_form" method="post" action="<?php echo $this->get('router')->path('register') ?>">
                         <div class="form-row">
                             <div class="form-group col-lg-6">
                                 <label class="text-color-dark" for="register-name">*ADINIZ SOYADINIZ:</label>
-                                <input type="text" class="form-control bg-light-5 border-0 rounded" name="username" id="register-name" required>
+                                <input type="text" class="form-control bg-light-5 border-0 rounded required" name="username" id="register-name" required>
                             </div>
                             <div class="form-group col-lg-6">
                                 <label class="text-color-dark" for="register-email">*EMAIL ADRESİNİZ:</label>
-                                <input type="email" title="Geçerli bir mail adresi yazınız" class="form-control bg-light-5 border-0 rounded" name="email" id="register-email" required="">
+                                <input type="email" title="Geçerli bir mail adresi yazınız" class="form-control bg-light-5 border-0 rounded required" name="email" id="register-email" required="">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-lg-6">
                                 <label class="text-color-dark" for="register-password">*PAROLA:</label>
-                                <input type="password" pattern=".{7,}" title="Lütfen en az 7 karakter yazınız" class="form-control bg-light-5 border-0 rounded" name="password" id="register-password" required>
+                                <input type="password" pattern=".{7,}" title="Lütfen en az 7 karakter yazınız" class="form-control bg-light-5 border-0 rounded required" name="password" id="register-password" required>
                             </div>
                             <div class="form-group col-lg-6">
                                 <label class="text-color-dark" for="register-phone">TELEFON:</label>
@@ -71,7 +71,7 @@
                         <div class="form-row">
                             <div class="form-group col-lg-6">
                                 <div class="form-check checkbox-custom">
-                                    <input class="form-check-input" name="agreement" value="1" type="checkbox" required id="agreement">
+                                    <input class="form-check-input required" name="agreement" value="1" type="checkbox" required id="agreement">
                                     <label class="form-check-label" for="register-agreement">
                                         <a href="<?php echo $this->get('router')->path('uyelik-sozlesmesi'); ?>" target="_blank">Kullanıcı Sözleşmesini</a> Okudum ve Onaylıyorum.
                                     </label>
