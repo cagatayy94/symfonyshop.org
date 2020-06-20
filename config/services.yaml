@@ -36,6 +36,13 @@ services:
             - [setLogger, ["@logger"]]
             - [setEncoderFactory, ["@security.user_password_encoder.generic"]]
 
+    App\Service\Web\User:
+        calls:
+            - [setContainer, ['@service_container']]
+            - [setConnection, ["@database_connection"]]
+            - [setLogger, ["@logger"]]
+            - [setEncoderFactory, ["@security.user_password_encoder.generic"]]
+
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
