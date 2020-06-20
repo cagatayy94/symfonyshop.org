@@ -110,4 +110,16 @@ trait ServiceTrait
     {
         return substr(preg_replace("/[^0-9]/", "", $mobileNumber), -10);
     }
+
+    public function uId()
+    {
+        $first5     = substr(md5(microtime()),rand(0,26),5);
+        $secondt5   = substr(md5(microtime()),rand(0,26),5);
+        $third5     = substr(md5(microtime()),rand(0,26),5);
+        $fourth5    = substr(md5(microtime()),rand(0,26),5);
+
+        $result = $first5."-".$secondt5."-".$third5."-".$fourth5;
+
+        return $result;
+    }
 }
