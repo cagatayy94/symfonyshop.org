@@ -53,7 +53,7 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
             $account->setIsDeleted($record['is_deleted']);
             $account->setMobile($record['mobile']);
             $account->setIsMobileApproved($record['is_mobile_approved']);
-            $account->setIsEmailApproved($record['is_mobile_approved']);
+            $account->setIsEmailApproved($record['is_email_approved']);
             $account->setActivationCode($record['activation_code']);
             $account->setIsUnsubscribe($record['is_unsubscribe']);
             $account->setCreatedAt(new \DateTime($record['created_at']));
