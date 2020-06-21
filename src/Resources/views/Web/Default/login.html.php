@@ -89,13 +89,16 @@
         </div>
     </section>
 </div>
-<?php
-$flashbag = $this->get('session')->getFlashes();
-if (isset($flashbag['error'])):?>
+<?php $flashbag = $this->get('session')->getFlashes();?>
+<input type="hidden" name="error" id="error" value="<?php echo isset($flashbag['error'][0]) ? $flashbag['error'][0] : 0 ?>">
 <?php $view['slots']->start('js'); ?>
     <script type="text/javascript">
-        toastr.error('Kullanıcı adı veya parola yanlış.');
+        var errorType = $('#error').val();
+        if (errorType != "0" && errorType == 'email_is_not_approved') {
+            toastr.info('Email adresi onaylanmamış lütfen email gelen kutunuzu kontrol ediniz.');
+        }else if (errorType != "0"){
+            toastr.error('Kullanıcı adı veya parola yanlış.');
+        }
     </script>
 <?php $view['slots']->stop(); ?>
-<?php endif; ?>
 <?php $view['slots']->stop(); ?>
