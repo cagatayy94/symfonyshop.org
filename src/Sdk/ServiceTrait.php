@@ -4,10 +4,12 @@ namespace App\Sdk;
 use Psr\Log\LoggerInterface;
 use Doctrine\DBAL\Driver\Connection;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 trait ServiceTrait
 {
     use ContainerAwareTrait;
+
     /**
      * @var Connection
      */
@@ -17,6 +19,11 @@ trait ServiceTrait
      * @var Logger Logger
      */
     protected $logger;
+
+    /**
+     * @var Mailer 
+     */
+    protected $mailer;
 
     /**
      * Sets the database connection driver instance
@@ -36,6 +43,16 @@ trait ServiceTrait
     public function setLogger(LoggerInterface $logger)
     {
         $this->logger = $logger;
+    }
+
+    /**
+     * Sets the request mailer instance
+     *
+     * @param Mailer $mailer Instance
+     */
+    public function setMailer(Mailer $mailer)
+    {
+        $this->mailer = $mailer;
     }
 
     /**
