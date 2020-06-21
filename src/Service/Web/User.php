@@ -40,7 +40,7 @@ class User
         $logDetails['password'] = null;
 
         $logFullDetails = [
-            'entity' => 'Admin',
+            'entity' => 'User',
             'activity' => 'create',
             'activityId' => 0,
             'details' => $logDetails
@@ -138,6 +138,182 @@ class User
             $logFullDetails['details']['exception'] = $exception->getMessage();
             $this->logger->error('Could not create admin account', $logFullDetails);
             throw new \Exception("Kayıt başarısız bir sorun oluştu lütfen daha sonra tekrar deneyiniz");            
+        }
+    }
+
+    /**
+     * Approve user email
+     *
+     * @param string $email
+     * @param string $code
+     * @throws \Exception
+     */
+    public function approveEmail($email, $code)
+    {
+        $logDetails = $this->getArguments(__FUNCTION__, func_get_args());
+
+        $logFullDetails = [
+            'entity' => 'User',
+            'activity' => 'approveEmail',
+            'activityId' => 0,
+            'details' => $logDetails
+        ];
+
+        $connection = $this->connection;
+
+        try {
+            if (empty($email)) {
+                throw new \InvalidArgumentException('invalid_crediantials');
+            }
+
+            if (empty($code)) {
+                throw new \InvalidArgumentException('invalid_crediantials');
+            }
+            
+            $user = $connection->executeQuery('
+                    SELECT
+                        ua.id,
+                        ua.activation_code,
+                        ua.is_email_approved
+                    FROM
+                        user_account ua
+                    WHERE
+                        ua.email = :email
+                    AND
+                        ua.is_deleted = FALSE
+                ', [
+                    'email' => $email,
+                ]
+            )->fetch();
+
+            if (!$user) {
+                throw new \InvalidArgumentException('invalid_crediantials');
+            }
+
+            if ($user['is_email_approved']) {
+                throw new \InvalidArgumentException('approved_allready');
+            }
+
+            if ($user['activation_code'] != $code) {
+                throw new \InvalidArgumentException('invalid_crediantials');
+            }
+
+            $statement = $connection->prepare('
+                UPDATE user_account 
+                SET
+                    is_email_approved = true
+                WHERE
+                    id = :id
+            ');
+
+            $statement->bindValue(':id', $user['id']);
+            $statement->execute();
+
+            $logFullDetails['activityId'] = $user['id'];
+            $this->logger->info('Email approved the user account', $logFullDetails);
+        } catch (\InvalidArgumentException $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+            $this->logger->error('Could not email approved the user account', $logFullDetails);
+            throw $exception;
+        } catch (\Exception $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+            $this->logger->error('Could not Email approved the user account', $logFullDetails);
+            throw new \Exception("Bir sorun oluştu.");            
+        }
+    }
+
+    /**
+     * Send new email approve code
+     *
+     * @param string $email
+     * @throws \Exception
+     */
+    public function sendNewCode($email)
+    {
+        $logDetails = $this->getArguments(__FUNCTION__, func_get_args());
+
+        $logFullDetails = [
+            'entity' => 'User',
+            'activity' => 'sendNewCode',
+            'activityId' => 0,
+            'details' => $logDetails
+        ];
+
+        $connection = $this->connection;
+
+        try {
+            if (empty($email)) {
+                return;
+            }
+            
+            $user = $connection->executeQuery('
+                    SELECT
+                        ua.id,
+                        ua.name,
+                        ua.activation_code_created_at
+                    FROM
+                        user_account ua
+                    WHERE
+                        ua.email = :email
+                    AND
+                        ua.is_deleted = FALSE
+                ', [
+                    'email' => $email,
+                ]
+            )->fetch();
+
+            if (!$user) {
+                return;
+            }
+
+            if ($user['activation_code_created_at']) {
+                $dateDiff = date_diff(new \DateTime(), new \DateTime($user['activation_code_created_at']));
+                $minutes = $dateDiff->days * 24 * 60;
+                $minutes += $dateDiff->h * 60;
+                $minutes += $dateDiff->i;
+
+                if ($minutes < 15) {
+                    return;
+                }
+            }
+
+            $activationCode = $this->uId();
+
+            $statement = $connection->prepare('
+                UPDATE user_account 
+                SET
+                    activation_code_created_at = NOW(),
+                    activation_code = :activation_code
+                WHERE
+                    id = :id
+            ');
+
+            $statement->bindValue(':id', $user['id']);
+            $statement->bindValue(':activation_code', $activationCode);
+            $statement->execute();
+
+            //send activation email
+            $this->mailer->send(
+                $email, 
+                'Hesap Aktivasyon', 
+                'Web/Mail/registration.html.php', 
+                [
+                    'name'=> $user['name'],
+                    'email'=> $email,
+                    'activationCode'=> $activationCode,
+                ]);
+
+            $logFullDetails['activityId'] = $user['id'];
+            $this->logger->info('Resend email approved code', $logFullDetails);
+        } catch (\InvalidArgumentException $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+            $this->logger->error('Could not resend email approved code', $logFullDetails);
+            throw $exception;
+        } catch (\Exception $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+            $this->logger->error('Could not resend email approved code', $logFullDetails);
+            throw new \Exception($exception->getMessage());            
+            throw new \Exception("Bir sorun oluştu.");            
         }
     }
 }
