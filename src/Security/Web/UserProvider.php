@@ -30,11 +30,14 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
         $connection = $this->connection;
 
         $statement = $connection->prepare('
-            SELECT a.*
-            FROM user_account a
+            SELECT
+                a.*
+            FROM
+                user_account a
             WHERE
-                    a.email = :email
-                AND a.is_deleted = FALSE
+                a.email = :email
+            AND 
+                a.is_deleted = FALSE
         ');
 
         $statement->bindValue(':email', $username);
@@ -46,6 +49,14 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
             $account = new UserAccount($record['id']);
             $account->setEmail($record['email']);
             $account->setPassword($record['password']);
+            $account->setName($record['name']);
+            $account->setIsDeleted($record['is_deleted']);
+            $account->setMobile($record['mobile']);
+            $account->setIsMobileApproved($record['is_mobile_approved']);
+            $account->setIsEmailApproved($record['is_mobile_approved']);
+            $account->setActivationCode($record['activation_code']);
+            $account->setIsUnsubscribe($record['is_unsubscribe']);
+            $account->setCreatedAt(new \DateTime($record['created_at']));
 
             $roles = ['ROLE_ADMIN'];
 
