@@ -110,12 +110,23 @@ class User
             $statement->bindValue(':name', $name);
             $statement->bindValue(':email', $email);
             $statement->bindValue(':mobile', $mobile ? $mobile : null);
-            $statement->bindValue(':password', $password);
+            $statement->bindValue(':password', $encodedPassword);
             $statement->bindValue(':activation_code', $activationCode);
             $statement->bindValue(':ip_address', $ipAddress);
             $statement->execute();
 
             $userId = $connection->lastInsertId();
+
+            //send activation email
+            $this->mailer->send(
+                $email, 
+                'Hesap Aktivasyon', 
+                'Web/Mail/registration.html.php', 
+                [
+                    'name'=> $name,
+                    'email'=> $email,
+                    'activationCode'=> $activationCode,
+                ]);
 
             $logFullDetails['activityId'] = $userId;
             $this->logger->info('Created the user account', $logFullDetails);
@@ -126,7 +137,7 @@ class User
         } catch (\Exception $exception) {
             $logFullDetails['details']['exception'] = $exception->getMessage();
             $this->logger->error('Could not create admin account', $logFullDetails);
-            throw new \Exception("Kayıt başarısız bir sorun oluştu");            
+            throw new \Exception("Kayıt başarısız bir sorun oluştu lütfen daha sonra tekrar deneyiniz");            
         }
     }
 }
