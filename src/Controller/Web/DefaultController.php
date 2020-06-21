@@ -185,4 +185,16 @@ class DefaultController extends AbstractController
             'sss' => $sss
         ]);
     }
+
+    /**
+     * @Route("/iletisim", name="iletisim")
+     */
+    public function contactAction(SiteSettings $siteSettings)
+    {
+        $sss = $siteSettings->getfaq();
+        
+        return $this->render('Web/Strings/faq.html.php', [
+            'sss' => $sss
+        ]);
+    }
 }
