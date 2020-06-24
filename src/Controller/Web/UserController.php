@@ -92,6 +92,72 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Route("/parolami-sifirla", name="reset_password")
+     */
+    public function forgotPasswordAction(Request $request, UserService $userService)
+    {
+        $email = $request->request->get('email');
+
+        if ($request->isMethod('post')) {
+            $result = true;
+        }else{
+            $result = null;
+        }
+
+        $userService->sendForgotPassword($email);
+
+        return $this->render('Web/Default/reset-password.html.php', [
+            'result' => $result
+        ]);
+    }
+
+    /**
+     * @Route("/new-password", name="new_password")
+     */
+    public function newPasswordAction(Request $request, UserService $userService)
+    {
+        $email = $request->query->get('email');
+        $code = $request->query->get('activationCode');
+
+        $isMatching = $userService->isEmailAndCodeIsMatching($email, $code);
+
+        if (!$isMatching) {
+            return $this->redirectToRoute('index');
+        }
+
+        return $this->render('Web/Default/new-password.html.php', [
+            'email' => $email,
+            'code' => $code
+        ]);
+    }
+
+    /**
+     * @Route("/new-password-create", name="new_password_create")
+     */
+    public function newPasswordCreateAction(Request $request, UserService $userService)
+    {
+        $password = $request->request->get('password');
+        $passwordRepeat = $request->request->get('passwordRepeat');
+        $code = $request->request->get('code');
+        $email = $request->request->get('email');
+
+        try {
+            $userService->resetForgotPassword($email, $code, $password, $passwordRepeat);
+
+            return new JsonResponse([
+                'success' => true,
+            ]);
+        } catch (\Exception $exception) {
+            return new JsonResponse([
+                'success' => false,
+                'error' => [
+                    'message' => $exception->getMessage()
+                ]
+            ]);
+        }
+    }
+
+    /**
      * @Route("/email-unsubscribe", name="email_unsubscribe")
      */
     public function unsubscribeAction(Request $request, UserService $userService)
