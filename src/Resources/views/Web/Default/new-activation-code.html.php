@@ -34,7 +34,7 @@
         var result = $('#result').val();
 
         if (result == "1") {
-            $('#alert-success-div').show();
+            $('.alert-success-div').show();
         }
     </script>
 <?php $view['slots']->stop(); ?>
