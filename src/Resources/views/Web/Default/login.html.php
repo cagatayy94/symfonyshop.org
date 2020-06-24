@@ -32,7 +32,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group col text-right">
-                                    <a href="parola-sifirla" class="forgot-pw text-color-light-2 d-block">Şifremi Unuttum</a>
+                                    <a href="<?php echo $this->get('router')->path('reset_password') ?>" class="forgot-pw text-color-light-2 d-block">Parolamı Unuttum</a>
                                 </div>
                             </div>
                             <div class="row align-items-center">
