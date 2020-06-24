@@ -250,7 +250,8 @@ class User
                     SELECT
                         ua.id,
                         ua.name,
-                        ua.activation_code_created_at
+                        ua.activation_code_created_at,
+                        ua.is_email_approved
                     FROM
                         user_account ua
                     WHERE
@@ -263,6 +264,10 @@ class User
             )->fetch();
 
             if (!$user) {
+                return;
+            }
+
+            if ($user['is_email_approved']) {
                 return;
             }
 
