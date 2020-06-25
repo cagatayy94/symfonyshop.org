@@ -163,26 +163,14 @@ class UserController extends AbstractController
     public function unsubscribeAction(Request $request, UserService $userService)
     {
         $email = $request->query->get('email');
-        $activationCode = $request->query->get('activationCode');
-
-        print_r($email);echo "<pre>";
-
-        die();
-
 
         try {
-            $userService->create($name, $email, $password, $agreement, $ipAddress, $mobile);
-
-            return new JsonResponse([
-                'success' => true,
-            ]);
+            $userService->unsubscribe($email);
+            echo "Tüm mail listelerinden çıkarıldınız";
+            die();
         } catch (\Exception $exception) {
-            return new JsonResponse([
-                'success' => false,
-                'error' => [
-                    'message' => $exception->getMessage()
-                ]
-            ]);
+            echo $exception->getMessage();
+            die();
         }
     }
 }

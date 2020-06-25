@@ -531,4 +531,53 @@ class User
             throw new \Exception("Bir sorun oluştu.");            
         }
     }
+
+    /**
+     * Unsubscribe the user email
+     *
+     * @param string $email
+     * @throws \Exception
+     */
+    public function unsubscribe($email)
+    {
+        $logDetails = $this->getArguments(__FUNCTION__, func_get_args());
+
+        $logFullDetails = [
+            'entity' => 'User',
+            'activity' => 'unsubscribe',
+            'activityId' => 0,
+            'details' => $logDetails
+        ];
+
+        $connection = $this->connection;
+
+        try {
+            if (empty($email)) {
+                throw new \InvalidArgumentException('invalid_crediantials');
+            }
+
+            $statement = $connection->prepare('
+                UPDATE
+                    user_account 
+                SET
+                    is_unsubscribe = true
+                WHERE
+                    email = :email
+            ');
+
+            $statement->bindValue(':email', $email);
+            $statement->execute();
+
+            $logFullDetails['activityId'] = $email;
+            $this->logger->info('Email unsubscribed the user account', $logFullDetails);
+        } catch (\InvalidArgumentException $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+            $this->logger->error('Could not email unsubscribed the user account', $logFullDetails);
+            throw $exception;
+        } catch (\Exception $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+            $this->logger->error('Could not Email unsubscribed the user account', $logFullDetails);
+            throw new \Exception("Bir sorun oluştu.");            
+        }
+    }
 }
