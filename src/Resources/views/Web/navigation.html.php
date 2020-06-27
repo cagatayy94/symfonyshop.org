@@ -32,7 +32,7 @@
             <div class="header-row">
                 <div class="header-column justify-content-start">
                     <div class="header-logo">
-                        <a href="index.html">
+                        <a href="/">
                             <img alt="EZ" width="128" height="32" src="web/img/logo-shop.png">
                         </a>
                     </div>
