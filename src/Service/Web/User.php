@@ -552,8 +552,8 @@ class User
         $connection = $this->connection;
 
         try {
-            if (empty($email)) {
-                throw new \InvalidArgumentException('invalid_crediantials');
+            if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                throw new \InvalidArgumentException("Email hatalı");
             }
 
             $statement = $connection->prepare('
@@ -562,7 +562,14 @@ class User
                 SET
                     is_unsubscribe = true
                 WHERE
-                    email = :email
+                    email = :email;
+                UPDATE
+                    email_marketing_leads 
+                SET
+                    is_unsubscribe = true
+                WHERE
+                    email = :email;
+
             ');
 
             $statement->bindValue(':email', $email);
@@ -577,6 +584,53 @@ class User
         } catch (\Exception $exception) {
             $logFullDetails['details']['exception'] = $exception->getMessage();
             $this->logger->error('Could not Email unsubscribed the user account', $logFullDetails);
+            throw new \Exception("Bir sorun oluştu.");            
+        }
+    }
+
+    /**
+     * Subscribe the email
+     *
+     * @param string $email
+     * @throws \Exception
+     */
+    public function subscribe($email)
+    {
+        $logDetails = $this->getArguments(__FUNCTION__, func_get_args());
+
+        $logFullDetails = [
+            'entity' => 'User',
+            'activity' => 'subscribe',
+            'activityId' => 0,
+            'details' => $logDetails
+        ];
+
+        $connection = $this->connection;
+
+        try {
+            if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                throw new \InvalidArgumentException("Email hatalı");
+            }
+
+            $statement = $connection->prepare('
+                INSERT INTO email_marketing_leads
+                    (email)
+                VALUES
+                    (:email)
+            ');
+
+            $statement->bindValue(':email', $email);
+            $statement->execute();
+
+            $logFullDetails['activityId'] = $email;
+            $this->logger->info('Email subscribed', $logFullDetails);
+        } catch (\InvalidArgumentException $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+            $this->logger->error('Could not email subscribed', $logFullDetails);
+            throw $exception;
+        } catch (\Exception $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+            $this->logger->error('Could not email subscribed', $logFullDetails);
             throw new \Exception("Bir sorun oluştu.");            
         }
     }

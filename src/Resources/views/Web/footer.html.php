@@ -9,17 +9,9 @@
                     <p>Haftalık indirimleri ve haberleri kaçırmak istemiyorsanız bültenimize abone olabilirsiniz. <br><small>İstediğiniz zaman ayrılabilirsiniz</small></p>
                 </div>
                 <div class="col-md-6">
-
-                    <form class="newsletter-form" action="php/newsletter-subscribe.php" method="POST">
-                        <div class="newsletter-form-success alert alert-success d-none">
-                            <strong>Success!</strong> You've been added to our email list.
-                        </div>
-                        <div class="newsletter-form-error alert alert-danger d-none">
-                            <strong>Error!</strong> There was an error to add your email.
-                        </div>
-
+                    <form id="newsletter_form" class="newsletter-form" action="<?php echo $this->get('router')->path('email_subscribe') ?>" method="POST">
                         <div class="input-group bg-light rounded">
-                            <input type="email" class="newsletter-email form-control border-0 rounded" placeholder="Email yazınız" aria-label="Email yazınız" required>
+                            <input name="email" required="required" type="email" class="newsletter-email form-control border-0 rounded required" placeholder="Email yazınız" aria-label="Email yazınız">
                             <span class="input-group-btn p-1">
                                 <button class="btn btn-primary font-weight-semibold btn-h-2 rounded h-100" type="submit">ABONE OL</button>
                             </span>

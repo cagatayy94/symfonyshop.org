@@ -173,4 +173,27 @@ class UserController extends AbstractController
             die();
         }
     }
+
+    /**
+     * @Route("/email-subscribe", name="email_subscribe")
+     */
+    public function subscribeAction(Request $request, UserService $userService)
+    {
+        $email = $request->request->get('email');
+
+        try {
+            $userService->subscribe($email);
+
+            return new JsonResponse([
+                'success' => true,
+            ]);
+        } catch (\Exception $exception) {
+            return new JsonResponse([
+                'success' => false,
+                'error' => [
+                    'message' => $exception->getMessage()
+                ]
+            ]);
+        }
+    }
 }
