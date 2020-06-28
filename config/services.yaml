@@ -48,6 +48,14 @@ services:
             - [setEncoderFactory, ["@security.user_password_encoder.generic"]]
             - [setMailer, ["@app.sdk-mailer"]]
 
+    App\Service\Web\SiteSettings:
+        calls:
+            - [setContainer, ['@service_container']]
+            - [setConnection, ["@database_connection"]]
+            - [setLogger, ["@logger"]]
+            - [setMailer, ["@app.sdk-mailer"]]
+
+
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
