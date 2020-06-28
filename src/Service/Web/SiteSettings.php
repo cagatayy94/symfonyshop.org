@@ -130,4 +130,83 @@ class SiteSettings
             return [];
         }
     }
+
+    /**
+     * Contact form submit
+     *
+     * @param string $name
+     * @param string $email
+     * @param string $subject
+     * @param string $mobile
+     * @param string $message
+     * @throws \Exception
+     */
+    public function contactFormSubmit($name, $email, $subject, $mobile, $message)
+    {
+        $logDetails = $this->getArguments(__FUNCTION__, func_get_args());
+
+        $logFullDetails = [
+            'entity' => 'SiteSettings',
+            'activity' => 'contactFormSubmit',
+            'activityId' => 0,
+            'details' => $logDetails
+        ];
+
+        $connection = $this->connection;
+
+        $name = trim($name);
+        $email = trim($email);
+        $subject = trim($subject);
+        $mobile = $this->formatMobileNumber(trim($mobile));
+        $message = trim($message);
+
+        try {
+            if (empty($name)) {
+                throw new \InvalidArgumentException('Ad belirtilmemiş');
+            }
+
+            if (empty($email)) {
+                throw new \InvalidArgumentException('E-posta adresi belirtilmemiş');
+            }
+
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                throw new \InvalidArgumentException('E-posta adresini hatalı girdiniz');
+            }
+
+            if (empty($subject)) {
+                throw new \InvalidArgumentException('Konu belirtilmemiş');
+            }
+
+            if (empty($mobile)) {
+                throw new \InvalidArgumentException("Lütfen telefon numaranızı giriniz");
+            }
+
+            if (empty($message)) {
+                throw new \InvalidArgumentException("Lütfen mesaj yazınız");
+            }
+
+            //send notification email
+            $this->mailer->send(
+                $_ENV['MAIN_MAIL_ADDRESS'], //to address 
+                'Yeni iletişim talebi', 
+                'Web/Mail/contact.html.php', 
+                [
+                    'name'=> $name,
+                    'email'=> $email,
+                    'subject'=> $subject,
+                    'mobile'=> $mobile,
+                    'message'=> $message,
+                ]);
+
+            $this->logger->info('Sent new contact form submit', $logFullDetails);
+        } catch (\InvalidArgumentException $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+            $this->logger->error('Could not sent new contact form submit', $logFullDetails);
+            throw $exception;
+        } catch (\Exception $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+            $this->logger->error('Could not sent new contact form submit', $logFullDetails);
+            throw new \Exception("Şu an bu talebinizi gerçekleştiremiyoruz lütfen daha sonra tekrar deneyiniz.");            
+        }
+    }
 }
