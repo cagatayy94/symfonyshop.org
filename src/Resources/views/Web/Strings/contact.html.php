@@ -78,7 +78,9 @@
                         </div>
                         <div class="form-row mt-2">
                             <div class="col">
-                                <input type="submit" value="Mesajı Gönder" class="btn btn-primary btn-rounded btn-4 font-weight-semibold text-0">
+                                <button type="submit" class="btn btn-primary btn-rounded btn-4 font-weight-semibold text-0">
+                                    Mesajı Gönder
+                                </button> 
                             </div>
                         </div>
                     </form>
