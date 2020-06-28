@@ -4,7 +4,9 @@ namespace App\Controller\Web;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use App\Service\Web\SiteSettings as SiteSettings;
 
@@ -191,10 +193,37 @@ class DefaultController extends AbstractController
      */
     public function contactAction(SiteSettings $siteSettings)
     {
-        $sss = $siteSettings->getfaq();
+        $siteSettings = $siteSettings->getFooterData();
         
-        return $this->render('Web/Strings/faq.html.php', [
-            'sss' => $sss
+        return $this->render('Web/Strings/contact.html.php', [
+            'siteSettings' => $siteSettings
         ]);
+    }
+
+    /**
+     * @Route("/contact-submit", name="contact_submit")
+     */
+    public function contactResultAction(SiteSettings $siteSettings, Request $request)
+    {
+        $name = $request->request->get('name');
+        $email = $request->request->get('email');
+        $subject = $request->request->get('subject');
+        $mobile = $request->request->get('mobile');
+        $message = $request->request->get('message');
+
+        try {
+            $siteSettings->contactFormSubmit($name, $email, $subject, $mobile, $message);
+
+            return new JsonResponse([
+                'success' => true,
+            ]);
+        } catch (\Exception $exception) {
+            return new JsonResponse([
+                'success' => false,
+                'error' => [
+                    'message' => $exception->getMessage()
+                ]
+            ]);
+        }
     }
 }
