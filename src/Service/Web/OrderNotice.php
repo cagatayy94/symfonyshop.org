@@ -70,16 +70,12 @@ class OrderNotice
             $this->logger->info('Created the order notice', $logFullDetails);
         } catch (\InvalidArgumentException $exception) {
             $logFullDetails['details']['exception'] = $exception->getMessage();
-
-            $this->logger->error('Created the order notice', $logFullDetails);
-
+            $this->logger->error('Could not create the order notice', $logFullDetails);
             throw $exception;
         } catch (\Exception $exception) {
             $logFullDetails['details']['exception'] = $exception->getMessage();
-
             $this->logger->error('Could not create the order notice', $logFullDetails);
-
-            throw $exception;
+            throw new \Exception("Şu an bu talebinizi gerçekleştiremiyoruz lütfen daha sonra tekrar deneyiniz.");            
         }
     }
 }
