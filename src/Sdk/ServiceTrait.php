@@ -139,4 +139,17 @@ trait ServiceTrait
 
         return $result;
     }
+
+    public function createSlugFromString($string)
+    {
+        $turkish = array("ı", "ğ", "ü", "ş", "ö", "ç");//turkish letters
+        $english   = array("i", "g", "u", "s", "o", "c");//english
+
+        $lower              = mb_strtolower($string);
+        $removeTrChar       = str_replace($turkish, $english, $lower);
+        $removeSpecialChars = preg_replace('/[^A-Za-z0-9\-]/', ' ', $removeTrChar);
+        $transform          = str_replace(' ', '_', $removeSpecialChars);
+
+        return $transform;
+    }
 }
