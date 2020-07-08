@@ -1102,7 +1102,7 @@ class SiteSettings
      */
     public function newBannerAdd($name, $img)
     {
-        $this->authorize('add_banner');
+        $this->authorize('create_banner');
 
         $logDetails = $this->getArguments(__FUNCTION__, func_get_args());
 
@@ -1367,7 +1367,7 @@ class SiteSettings
      */
     public function newCargoCompanyAdd($name)
     {
-        $this->authorize('cargo_add');
+        $this->authorize('cargo_create');
 
         $logDetails = $this->getArguments(__FUNCTION__, func_get_args());
 
