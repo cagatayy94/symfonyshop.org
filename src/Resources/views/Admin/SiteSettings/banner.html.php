@@ -22,7 +22,7 @@
               <div class="box-tools">
                 <div class="input-group input-group-sm hidden-xs" style="width: 150px;">
                   <div class="input-group-btn">
-                    <?php if($admin->hasRole('add_banner')): ?>
+                    <?php if($admin->hasRole('create_banner')): ?>
                       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-new-banner-modal"><i class="fa fa-plus"></i> Yeni Ekle</button>
                     <?php endif; ?>
                   </div>
@@ -74,7 +74,7 @@
     </section>
     <!-- /.content -->
   </div>
-<?php if ($admin->hasRole('add_banner')):?>
+<?php if ($admin->hasRole('create_banner')):?>
 <div class="modal fade" id="add-new-banner-modal" style="display: none;">
   <div class="modal-dialog">
     <div class="modal-content">

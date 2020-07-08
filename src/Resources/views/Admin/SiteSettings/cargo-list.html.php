@@ -21,7 +21,7 @@
               <div class="box-tools">
                 <div class="input-group input-group-sm hidden-xs" style="width: 150px;">
                   <div class="input-group-btn">
-                    <?php if($admin->hasRole('cargo_add')): ?>
+                    <?php if($admin->hasRole('cargo_create')): ?>
                       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-new-cargo-modal"><i class="fa fa-plus"></i> Yeni Ekle</button>
                     <?php endif; ?>
                   </div>
@@ -58,7 +58,7 @@
     </section>
     <!-- /.content -->
   </div>
-<?php if ($admin->hasRole('cargo_add')):?>
+<?php if ($admin->hasRole('cargo_create')):?>
 <div class="modal fade" id="add-new-cargo-modal" style="display: none;">
   <div class="modal-dialog">
     <div class="modal-content">
