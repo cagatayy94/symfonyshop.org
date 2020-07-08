@@ -81,6 +81,19 @@
                 </ul>
             </li>
         <?php endif; ?>
+
+        <?php if($admin->hasRole('product_create')): ?>
+            <li class="treeview">
+                <a href=""><i class="fa fa-user-circle-o" aria-hidden="true"></i><span>Ürünler</span>
+                    <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span>
+                </a>
+                <ul class="treeview-menu">
+                    <?php if ($admin->hasRole('product_create')):?>
+                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_product_create_view'); ?>">Yeni Ürün Ekle</a></li>
+                    <?php endif; ?>
+                </ul>
+            </li>
+        <?php endif; ?>
         </ul>
         <!-- /.sidebar-menu -->
     </section>
