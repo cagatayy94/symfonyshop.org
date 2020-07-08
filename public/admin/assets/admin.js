@@ -958,3 +958,147 @@ $('.approve').on('click', function (e) {
         return false;
     }
 });
+
+$('.clone-element').on('click', function (e) {
+
+    var self = $(this);
+
+    var elementsHolder = self.parent().siblings('.elements-holder');
+
+    var newElementIndex = elementsHolder.children().length+1;
+
+    var originalElement = elementsHolder.children(':first');
+
+    var cloneElement = originalElement.clone();
+
+    cloneElement.find('span.element-index').html(newElementIndex+'. ');
+    cloneElement.find('input').val('');
+    cloneElement.find('img').removeAttr('src');
+    cloneElement.find('img').hide();
+
+    elementsHolder.append(cloneElement);
+});
+
+$('.delete-clone').on('click', function (e) {
+    var self = $(this);
+
+    var elementsHolder = self.parent().siblings('.elements-holder');
+
+    var elementCount = elementsHolder.children().length;
+
+    if (elementCount>1) {
+        elementsHolder.children(':last-child').remove();
+    }
+});
+
+function readURL(input) {
+
+    var imgViewer = $(input).parent().siblings().find('.img-viewer');
+
+    if (input.files && input.files[0]) {
+
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            imgViewer.attr('src', e.target.result);
+            imgViewer.show();
+        }
+
+        reader.readAsDataURL(input.files[0]); // convert to base64 string
+    }
+}
+
+$(document).on('change', ".img-with-viewer", function() {
+    readURL(this);
+});
+
+$('#add_product').on('submit', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var self = $(this);
+    var url = self.attr('action');
+    var method = self.attr('method');
+    var button = self.find(':submit');
+    var isValid = true;
+
+    button.attr('disabled', 'disabled');
+
+    //isValid = controlRequiredInputsAreFilled(self.find('.required'));
+
+    if(isValid){
+        $.ajax({
+            url: url,
+            type: method,
+            data: new FormData(this),
+            contentType: false,
+            processData: false,
+            success: function(result) {
+                if (result.success) {
+                    toastr.success('Başarılı');
+                    setTimeout(function() { window.location.href = location.pathname; }, 750);
+                }else{
+                    toastr.error(result.error.message);
+                    button.removeAttr('disabled');
+                }
+            }
+        });
+    }else{
+        button.removeAttr('disabled');
+    }
+});
+
+function loadCategories(){
+    $.ajax({
+        url: '/admin/category/get/all',
+        type: 'GET',
+        success: function(result) {
+            if (result.success) {
+                var checkboxHolder = $('.category-checkbox-holder');
+                checkboxHolder.html('');
+                $.each(result.data, function(index, value) {
+                    checkboxHolder.append('<label class="col-md-3"><input type="checkbox" name="category[]" value="'+ value.id +'"> '+ value.name +'</label>')
+                });
+            }else{
+                toastr.error('Kategoriler yüklenirken bir sorun oluştu');
+            }
+        }
+    });
+}
+
+$('#add_category_form').on('submit', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var self = $(this);
+    var url = self.attr('action');
+    var method = self.attr('method');
+    var data = self.serialize();
+
+    self.find('[type="submit"]').attr('disabled', 'disabled');
+
+    var isValid = true;
+
+    isValid = controlRequiredInputsAreFilled(self.find('.required'));
+
+    if (isValid) {
+        $.ajax({
+            type: method,
+            url: url,
+            data: data,
+            success: function (result) {
+                if (result.success) {
+                    toastr.success('Başarılı');
+                    loadCategories();
+                    self.find(':input').val('');
+                    $("#add_category_modal").modal('hide');
+                    self.find('[type="submit"]').removeAttr('disabled');
+                } else {
+                    toastr.error(result.error.message);
+                    self.find('[type="submit"]').removeAttr('disabled');
+                }
+            }
+        });
+    } else {
+        self.find('[type="submit"]').removeAttr('disabled');
+    }
+}); 
