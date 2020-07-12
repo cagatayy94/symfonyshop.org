@@ -59,10 +59,6 @@ class Product
                 throw new \InvalidArgumentException('Ürün fiyatı belirtilmemiş');
             }
 
-            if (!$cargoPrice) {
-                throw new \InvalidArgumentException('Kargo fiyatı belirtilmemiş');
-            }
-
             if (!$categoryId) {
                 throw new \InvalidArgumentException('En az bir kategori seçiniz');
             }
