@@ -1,21 +1,21 @@
 //form control is everything filled up?
 function controlRequiredInputsAreFilled(array){
-    var isValid = true;
+var isValid = true;
 
-    array.each(function() {
-       if (!$(this).val().length > 0 || $(this).val() == '' || $(this).val() == 0) {
-           isValid = false;
-           $(this).closest('.form-group').addClass('has-error');
-       } else {
-           $(this).closest('.form-group').removeClass('has-error');
-       }
-    });
-
-    if (!isValid) {
-        toastr.warning('Tüm alanları doldurunuz.');
+array.each(function() {
+    if (!$(this).val().length > 0 || $(this).val() == '' || $(this).val() == 0) {
+        isValid = false;
+        $(this).closest('.form-group').addClass('has-error');
+    } else {
+        $(this).closest('.form-group').removeClass('has-error');
     }
+});
 
-    return isValid;
+if (!isValid) {
+    toastr.warning('Gerekli alanları doldurunuz.');
+}
+
+return isValid;
 }
 //for dynamic routes active class in admin
 $(function(){
@@ -1011,42 +1011,6 @@ $(document).on('change', ".img-with-viewer", function() {
     readURL(this);
 });
 
-$('#add_product').on('submit', function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    var self = $(this);
-    var url = self.attr('action');
-    var method = self.attr('method');
-    var button = self.find(':submit');
-    var isValid = true;
-
-    button.attr('disabled', 'disabled');
-
-    //isValid = controlRequiredInputsAreFilled(self.find('.required'));
-
-    if(isValid){
-        $.ajax({
-            url: url,
-            type: method,
-            data: new FormData(this),
-            contentType: false,
-            processData: false,
-            success: function(result) {
-                if (result.success) {
-                    toastr.success('Başarılı');
-                    setTimeout(function() { window.location.href = location.pathname; }, 750);
-                }else{
-                    toastr.error(result.error.message);
-                    button.removeAttr('disabled');
-                }
-            }
-        });
-    }else{
-        button.removeAttr('disabled');
-    }
-});
-
 function loadCategories(){
     $.ajax({
         url: '/admin/category/get/all',
@@ -1056,7 +1020,7 @@ function loadCategories(){
                 var checkboxHolder = $('.category-checkbox-holder');
                 checkboxHolder.html('');
                 $.each(result.data, function(index, value) {
-                    checkboxHolder.append('<label class="col-md-3"><input type="checkbox" name="category[]" value="'+ value.id +'"> '+ value.name +'</label>')
+                    checkboxHolder.append('<label class="col-md-3"><input type="checkbox" name="categoryId[]" value="'+ value.id +'"> '+ value.name +'</label>')
                 });
             }else{
                 toastr.error('Kategoriler yüklenirken bir sorun oluştu');
@@ -1101,4 +1065,64 @@ $('#add_category_form').on('submit', function (e) {
     } else {
         self.find('[type="submit"]').removeAttr('disabled');
     }
-}); 
+});
+
+$('#add_product').on('submit', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var self = $(this);
+    var url = self.attr('action');
+    var method = self.attr('method');
+    var button = self.find(':submit');
+    var isValid = true;
+
+    button.attr('disabled', 'disabled');
+
+    isValid = controlRequiredInputsAreFilled(self.find('.required'));
+
+    if(isValid){
+        $.ajax({
+            url: url,
+            type: method,
+            data: new FormData(this),
+            contentType: false,
+            processData: false,
+            success: function(result) {
+                if (result.success) {
+                    toastr.success('Başarılı');
+                    button.removeAttr('disabled');
+
+                    //setTimeout(function() { window.location.href = location.pathname; }, 750);
+                }else{
+                    toastr.error(result.error.message);
+                    button.removeAttr('disabled');
+                }
+            }
+        });
+    }else{
+        button.removeAttr('disabled');
+    }
+});
+
+$(document).ready(function(){
+    $(':input.float').focusout(function(){
+
+        var value  = this.value
+
+        console.log(value);
+
+        var float= /^\s*(\+|-)?((\d+(\.\d+)?)|(\.\d+))\s*$/;
+        var a = $(".check_int_float").val();
+        
+        if (float.test(value)) {
+            $(this).closest('.form-group').removeClass('has-error');
+            return;
+        }else {
+            $(this).val("");
+            $(this).closest('.form-group').addClass('has-error');
+            toastr.error('Lütfen değeri tam sayı veya ondalık sayı olacak şekilde yazın ( <b>24 - 32.12</b> <s> - 12,32</s> )');
+        }
+    });
+});
+
