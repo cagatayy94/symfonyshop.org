@@ -27,26 +27,26 @@
                             <div class="box-body ">
                                 <div class="form-group col-md-6">
                                     <label for="productName">Ürün İsmi</label>
-                                    <input type="text" class="form-control" id="productName" placeholder="Ürün İsmi Yazınız" name="productName">
+                                    <input type="text" class="form-control required" id="productName" placeholder="Ürün İsmi Yazınız" name="productName">
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label for="productPrice">Ürün Fiyatı</label>
                                     <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="135.42" name="productPrice">
+                                            <input type="text" class="form-control required float" placeholder="135.42" name="productPrice">
                                         <span class="input-group-addon">₺</span>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label for="cargoPrice">Kargo Ücreti</label>
                                     <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="12.34" name="cargoPrice">
+                                            <input type="text" class="form-control required float" placeholder="12.34" name="cargoPrice">
                                         <span class="input-group-addon">₺</span>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label for="tax">Vergi Oranı</label>
                                     <div class="input-group">
-                                        <select class="form-control">
+                                        <select name="tax" class="form-control required">
                                             <option value="">Seçiniz</option>
                                             <option value="18">%18</option>
                                             <option value="8">%8</option>
@@ -56,7 +56,7 @@
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label for="productDescription">Ürün Açıklaması</label>
-                                    <textarea style="resize: none;" class="form-control" rows="5" placeholder="Detaylı Ürün Açıklaması"></textarea>
+                                    <textarea style="resize: none;" name="description" class="form-control required" rows="5" placeholder="Detaylı Ürün Açıklaması"></textarea>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="box box-info">
@@ -82,17 +82,17 @@
                                         <div class="box-body">
                                             <div class="form-group">
                                                 <label for="tax">Varyant Başlığı</label>
-                                                <input type="text" class="form-control" id="variantTitle" placeholder="Beden, Ayakkabı Numarası, Uzunluk, Renk vb." name="variantTitle">
+                                                <input type="text" class="form-control required" id="variantTitle" placeholder="Beden, Ayakkabı Numarası, Uzunluk, Renk vb." name="variantTitle">
                                             </div>
                                             <div class="elements-holder">
                                                 <div class="variant-element">
                                                     <div class="form-group col-md-6">
                                                         <label for="tax"><span class="element-index">1. </span>Varyant İsmi</label>
-                                                        <input type="text" class="form-control" placeholder="41-42 ve L-XL gibi" name="variantTitle[]">
+                                                        <input type="text" class="form-control required" placeholder="41-42 ve L-XL gibi" name="variantName[]">
                                                     </div>
                                                     <div class="form-group col-md-6">
                                                         <label for="tax"><span class="element-index">1. </span>Varyant Stok Adedi</label>
-                                                        <input type="text" class="form-control" placeholder="Stokta kaç adet varsa sayı ile yazınız" name="variantStock[]">
+                                                        <input type="text" class="form-control required" placeholder="Stokta kaç adet varsa sayı ile yazınız" name="variantStock[]">
                                                     </div>
                                                 </div>
                                             </div>
