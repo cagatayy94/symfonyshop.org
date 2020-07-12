@@ -39,7 +39,7 @@
                                 <div class="form-group col-md-2">
                                     <label for="cargoPrice">Kargo Ücreti</label>
                                     <div class="input-group">
-                                            <input type="text" class="form-control required float" placeholder="12.34" name="cargoPrice">
+                                            <input type="text" class="form-control float" placeholder="12.34" name="cargoPrice">
                                         <span class="input-group-addon">₺</span>
                                     </div>
                                 </div>
