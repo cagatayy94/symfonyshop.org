@@ -20,9 +20,12 @@ class Product
      * @param string $productName
      * @param float $productPrice
      * @param float $cargoPrice
-     * @param int[] $category
-     * @param string[] $variantTitle
+     * @param string $description
+     * @param int[] $categoryId
+     * @param string $variantTitle
+     * @param string[] $variantName
      * @param string[] $variantStock
+     * @param int $tax
      * @param file $files
      *
      * @throws \Exception
@@ -94,7 +97,6 @@ class Product
             $connection->beginTransaction();
 
             try {
-
                 //add product
                 $statement = $connection->prepare('
                     INSERT INTO product
@@ -119,16 +121,13 @@ class Product
                     INSERT INTO
                         product_category
                             (product_id, category_id) 
-                    VALUES
-                        (:product_id, ". intval($categoryId[0]) .")";
+                    VALUES ";
 
                 foreach ($categoryId as $key => $value) {
 
-                    if ($key == 0) {
-                        continue;
-                    }
+                    $comma = $key != 0 ? ',' : '';
 
-                    $sql.=", (". intval($productId) .", ". intval($value) .")";
+                    $sql .= $comma."(:product_id, ". intval($value) .")";
                 }
 
                 $statement = $connection->prepare($sql);
@@ -137,20 +136,17 @@ class Product
                 $statement->execute();
 
                 //add variant
+                $sql = "
+                    INSERT INTO
+                        product_variant
+                            (product_id, name, stock) 
+                    VALUES";
+
                 foreach ($variantStock as $key => $value) {
 
-                    $sql = "
-                        INSERT INTO
-                            product_variant
-                                (product_id, name, stock) 
-                        VALUES
-                            (:product_id, '". $variantName[0] ."', ". intval($variantStock[0]) .")";
+                    $comma = $key != 0 ? ',' : '';
 
-                        if ($key == 0) {
-                            continue;
-                        }
-
-                    $sql.=", (:product_id, '". $variantName[$key] ."', ". $value .")";
+                    $sql .= $comma."(:product_id, '". $variantName[$key] ."', ". $variantStock[$key] .")";
                 }
 
                 $statement = $connection->prepare($sql);
@@ -177,8 +173,8 @@ class Product
                         $foo->allowed               = array("image/*");
                         $foo->image_convert         ='png' ;
                         $foo->image_resize          = true;
-                        $foo->image_ratio_fill      = true;
-                        $foo->image_y               = 30;
+                        $foo->image_x               = 1170;
+                        $foo->image_y               = 1170;
                         $foo->process($_SERVER["DOCUMENT_ROOT"].'/web/img/product');
                         if ($foo->processed) {
                             $foo->clean();
@@ -204,20 +200,18 @@ class Product
                 throw $exception;
             }
 
-            $adminId = $connection->lastInsertId();
-
-            $logFullDetails['activityId'] = $adminId;
-            $this->logger->info('Created the admin account', $logFullDetails);
+            $logFullDetails['productId'] = $productId;
+            $this->logger->info('Created the new product', $logFullDetails);
         } catch (\InvalidArgumentException $exception) {
             $logFullDetails['details']['exception'] = $exception->getMessage();
 
-            $this->logger->error('Could not create admin account', $logFullDetails);
+            $this->logger->error('Could not create the new product', $logFullDetails);
 
             throw $exception;
         } catch (\Exception $exception) {
             $logFullDetails['details']['exception'] = $exception->getMessage();
 
-            $this->logger->error('Could not create admin account', $logFullDetails);
+            $this->logger->error('Could not create the new product', $logFullDetails);
 
             throw $exception;
         }
