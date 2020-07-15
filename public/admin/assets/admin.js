@@ -857,6 +857,18 @@ $('.submit-filter').on('click', function (e) {
     self.attr('disabled', 'disabled');
     var form = self.closest('form');
     var currentPage = form.find('input[name="currentPage"]').val("1");
+    var currentPage = form.find('input[name="excelExport"]').val("0");
+    form.submit();
+});
+
+$('.submit-filter-excel').on('click', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var self = $(this);
+    var form = self.closest('form');
+    var currentPage = form.find('input[name="currentPage"]').val("1");
+    var currentPage = form.find('input[name="excelExport"]').val("1");
     form.submit();
 });
 
