@@ -67,7 +67,7 @@
                         </td>
                         <td></td>
                         <td class="text-center">
-                          <button type="submit" class="btn btn-success submit-filter"><i class="fa fa-fw fa-filter"></i> Filtrele</button>
+                          <button type="submit" class="btn btn-sm btn-success submit-filter"><i class="fa fa-fw fa-filter"></i> Filtrele</button>
                         </td>
                     </tr>
                     <?php foreach ($bankTrasferList['records'] as $value): ?>
@@ -90,7 +90,7 @@
                         <td class="text-center"><?php echo $value['message'] ?></td>
                         <td class="text-center">
                           <?php if ($admin->hasRole('bank_transfer_delete')): ?>
-                            <button data-delete-url="<?php echo $this->get('router')->path('admin_money_order_delete', ['moneyOrderId' => $value['id']]) ?>" class="btn btn-danger delete-bank-transfer"><i class="fa fa-fw fa-eraser"></i> Sil</button>
+                            <button data-delete-url="<?php echo $this->get('router')->path('admin_money_order_delete', ['moneyOrderId' => $value['id']]) ?>" class="btn btn-sm btn-danger delete-bank-transfer"><i class="fa fa-fw fa-eraser"></i> Sil</button>
                           <?php endif ?>
                         </td>
                       </tr>
