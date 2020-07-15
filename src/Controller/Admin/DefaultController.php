@@ -15,7 +15,7 @@ class DefaultController extends AbstractController
     /**
      * @Route("/login", name="login")
      */
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function loginAction(AuthenticationUtils $authenticationUtils): Response
     {
         // if ($this->getUser()) {
         //     return $this->redirectToRoute('target_path');
@@ -35,7 +35,7 @@ class DefaultController extends AbstractController
     /**
      * @Route("/logout", name="logout")
      */
-    public function logout()
+    public function logoutAction()
     {
         throw new \Exception('This method can be blank - it will be intercepted by the logout key on your firewall');
     }
@@ -44,7 +44,7 @@ class DefaultController extends AbstractController
     /**
      * @Route("/", name="dashboard")
      */
-    public function dashboard()
+    public function dashboardAction()
     {
         $admin = $this->getUser();
         

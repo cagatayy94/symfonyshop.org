@@ -19,7 +19,7 @@ class AccountController extends AbstractController
     /**
      * @Route("/account/list", name="account_list")
      */
-    public function adminList(AccountService $accountService)
+    public function adminListAction(AccountService $accountService)
     {
         $admin = $this->getUser();
 
@@ -37,7 +37,7 @@ class AccountController extends AbstractController
     /**
      * @Route("/account/create", name="account_create")
      */
-    public function adminCreate(Request $request, AccountService $accountService)
+    public function adminCreateAction(Request $request, AccountService $accountService)
     {
         $admin = $this->getUser();
 
@@ -68,7 +68,7 @@ class AccountController extends AbstractController
     /**
      * @Route("/account/detail/{adminId}", name="account_detail")
      */
-    public function adminAccountDetail(AccountService $accountService, $adminId)
+    public function adminAccountDetailAction(AccountService $accountService, $adminId)
     {
         $admin = $this->getUser();
 
@@ -85,7 +85,7 @@ class AccountController extends AbstractController
     /**
      * @Route("/account/update", name="account_update")
      */
-    public function adminUpdate(Request $request, AccountService $accountService)
+    public function adminUpdateAction(Request $request, AccountService $accountService)
     {
         $admin = $this->getUser();
 
@@ -125,7 +125,7 @@ class AccountController extends AbstractController
     /**
      * @Route("/account/delete/{adminId}", name="account_delete")
      */
-    public function adminDelete($adminId, AccountService $accountService)
+    public function adminDeleteAction($adminId, AccountService $accountService)
     {
         try {
             $accountService->delete($adminId);
@@ -146,7 +146,7 @@ class AccountController extends AbstractController
     /**
      * @Route("/profile/list", name="profile_list")
      */
-    public function adminProfileList(AccountService $accountService)
+    public function adminProfileListAction(AccountService $accountService)
     {
         $admin = $this->getUser();
 
@@ -161,7 +161,7 @@ class AccountController extends AbstractController
     /**
      * @Route("/profile/create", name="profile_create")
      */
-    public function adminProfile(Request $request, AccountService $accountService)
+    public function adminProfileAction(Request $request, AccountService $accountService)
     {
         $admin = $this->getUser();
 
@@ -186,7 +186,7 @@ class AccountController extends AbstractController
     /**
      * @Route("/profile/detail/{profileId}", name="profile_detail")
      */
-    public function adminProfileDetail(AccountService $accountService, $profileId)
+    public function adminProfileDetailAction(AccountService $accountService, $profileId)
     {
         $admin = $this->getUser();
 
@@ -204,7 +204,7 @@ class AccountController extends AbstractController
     /**
      * @Route("/profile/update", name="profile_update")
      */
-    public function adminProfileUpdate(Request $request, AccountService $accountService)
+    public function adminProfileUpdateAction(Request $request, AccountService $accountService)
     {
         $admin = $this->getUser();
 
