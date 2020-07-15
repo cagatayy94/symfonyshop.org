@@ -1138,3 +1138,59 @@ $(document).ready(function(){
     });
 });
 
+$('.delete-product').on('click', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    var self = $(this);
+    var url = self.attr('data-delete-url');
+    self.attr('disabled', 'disabled');
+
+    if (confirm('Silmek istediğinize emin misiniz?')) {
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function(result) {
+                if (result.success) {
+                    toastr.success('Başarılı');
+                    setTimeout(function() { window.location.href = location.pathname; }, 750);
+                }else{
+                    toastr.error(result.error.message);
+                    self.removeAttr('disabled');
+                }
+            }
+        });
+    }else{
+        self.removeAttr('disabled');
+        return false;
+    }
+});
+
+$('.undelete-product').on('click', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var self = $(this);
+    var url = self.attr('data-delete-url');
+    self.attr('disabled', 'disabled');
+
+    if (confirm('Silmeyi geri almak istediğinize emin misiniz?')) {
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function(result) {
+                if (result.success) {
+                    toastr.success('Başarılı');
+                    setTimeout(function() { window.location.href = location.pathname; }, 750);
+                }else{
+                    self.removeAttr('disabled');
+                    toastr.error(result.error.message);
+                }
+            }
+        });
+    }else{
+        self.removeAttr('disabled');
+        return false;
+    }
+});
+

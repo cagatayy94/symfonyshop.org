@@ -8,9 +8,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use App\Service\Admin\Account as AccountService;
 use App\Service\Admin\Product as ProductService;
 use App\Service\Admin\Category as CategoryService;
+use App\Sdk\Excel as ExcelService;
 
 
 /**
@@ -21,7 +21,7 @@ class ProductController extends AbstractController
     /**
      * @Route("/product-create/view", name="product_create_view")
      */
-    public function productAddPage(CategoryService $categoryService)
+    public function productAddPageAction(CategoryService $categoryService)
     {
         $admin = $this->getUser();
 
@@ -36,7 +36,7 @@ class ProductController extends AbstractController
     /**
      * @Route("/product-create", name="product_create")
      */
-    public function productCreate(Request $request, ProductService $productService)
+    public function productCreateAction(Request $request, ProductService $productService)
     {
         $productName = $request->request->get('productName');
         $productPrice = $request->request->get('productPrice');
@@ -51,6 +51,100 @@ class ProductController extends AbstractController
 
         try {
             $productService->create($productName, $productPrice, $cargoPrice, $description, $categoryId, $variantTitle, $variantName, $variantStock, $tax, $files);
+
+            return new JsonResponse([
+                'success' => true,
+            ]);
+        } catch (\Exception $exception) {
+            return new JsonResponse([
+                'success' => false,
+                'error' => [
+                    'message' => $exception->getMessage()
+                ]
+            ]);
+        }
+    }
+
+    /**
+     * @Route("/product-list", name="product_list")
+     */
+    public function productListAction(Request $request, ProductService $productService, ExcelService $excelService)
+    {
+        $admin = $this->getUser();
+
+        $perPage = 50;
+        $pageCount = 0;
+        $currentPage = (int) $request->query->get('currentPage', 1);
+
+        $productName = $request->query->get('productName');
+        $productId = $request->query->get('productId');
+        $createdAtStart = $request->query->get('createdAtStart');
+        $createdAtEnd = $request->query->get('createdAtEnd');
+        $excelExport = $request->query->get('excelExport');
+
+        if ($currentPage == "") {
+            $currentPage = 1;
+        }
+
+        if ($excelExport) {
+            $perPage = PHP_INT_MAX;
+        }
+
+        $products = $productService->getAll($currentPage, $pageCount, $perPage, false, $productName, $productId, $createdAtStart, $createdAtEnd);
+
+        if (!empty($products['total']) && $products['total'] > $perPage) {
+            $pageCount = ceil($products['total'] / $perPage);
+        }
+
+        $data = [
+            'admin' => $admin,
+            'products' => $products,
+            'productName' => $productName,
+            'productId' => $productId,
+            'createdAtStart' => $createdAtStart,
+            'createdAtEnd' => $createdAtEnd,
+            'pageCount' => $pageCount,
+            'currentPage' => $currentPage,
+            'excelExport' => $excelExport,
+        ];
+
+        $view = 'Admin/Product/list.html.php';
+
+        if ($excelExport) {
+            return $excelService->renderExcel($view, $data, 'urun-listesi');
+        }
+
+        return $this->render($view, $data);
+    }
+
+    /**
+     * @Route("/product/delete/{productId}", name="product_delete")
+     */
+    public function deleteProductAction($productId, ProductService $productService)
+    {
+        try {
+            $productService->deleteProduct($productId);
+
+            return new JsonResponse([
+                'success' => true,
+            ]);
+        } catch (\Exception $exception) {
+            return new JsonResponse([
+                'success' => false,
+                'error' => [
+                    'message' => $exception->getMessage()
+                ]
+            ]);
+        }
+    }
+
+    /**
+     * @Route("/product/undelete/{productId}", name="product_undelete")
+     */
+    public function undeleteProductAction($productId, ProductService $productService)
+    {
+        try {
+            $productService->undeleteProduct($productId);
 
             return new JsonResponse([
                 'success' => true,

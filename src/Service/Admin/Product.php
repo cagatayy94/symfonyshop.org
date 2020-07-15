@@ -373,4 +373,124 @@ class Product
             'records' => $records,
         ];
     }
+
+    /**
+     * Delete product
+     *
+     * @param int $id
+     *
+     * @throws \Exception
+     */
+    public function deleteProduct($id)
+    {
+        $this->authorize('product_delete');
+
+        $logDetails = $this->getArguments(__FUNCTION__, func_get_args());
+
+        $logFullDetails = [
+            'entity' => 'Product',
+            'activity' => 'deleteProduct',
+            'activityId' => 0,
+            'details' => $logDetails
+        ];
+
+        $connection = $this->connection;
+
+        $id = intval($id);
+
+        try {
+            if (!$id) {
+                throw new \InvalidArgumentException('Id belirtilmemiş');
+            }
+
+            $sql = '
+                UPDATE 
+                    product
+                SET
+                    is_deleted = TRUE
+                WHERE
+                    id = :id';
+
+            $statement = $connection->prepare($sql);
+
+            $statement->bindValue(':id', $id);
+
+            $statement->execute();
+
+            $logFullDetails['activityId'] = $id;
+            $this->logger->info('Deleted the product', $logFullDetails);
+        } catch (\InvalidArgumentException $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+
+            $this->logger->error('Could not delete the product', $logFullDetails);
+
+            throw $exception;
+        } catch (\Exception $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+
+            $this->logger->error('Could not delete the product', $logFullDetails);
+
+            throw $exception;
+        }
+    }
+
+    /**
+     * Undelete product
+     *
+     * @param int $id
+     *
+     * @throws \Exception
+     */
+    public function undeleteProduct($id)
+    {
+        $this->authorize('product_undelete');
+
+        $logDetails = $this->getArguments(__FUNCTION__, func_get_args());
+
+        $logFullDetails = [
+            'entity' => 'Product',
+            'activity' => 'undeleteProduct',
+            'activityId' => 0,
+            'details' => $logDetails
+        ];
+
+        $connection = $this->connection;
+
+        $id = intval($id);
+
+        try {
+            if (!$id) {
+                throw new \InvalidArgumentException('Id belirtilmemiş');
+            }
+
+            $sql = '
+                UPDATE 
+                    order_notice
+                SET
+                    is_deleted = FALSE
+                WHERE
+                    id = :id';
+
+            $statement = $connection->prepare($sql);
+
+            $statement->bindValue(':id', $id);
+
+            $statement->execute();
+
+            $logFullDetails['activityId'] = $id;
+            $this->logger->info('Undeleted the product', $logFullDetails);
+        } catch (\InvalidArgumentException $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+
+            $this->logger->error('Could not undelete the product', $logFullDetails);
+
+            throw $exception;
+        } catch (\Exception $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+
+            $this->logger->error('Could not undelete the product', $logFullDetails);
+
+            throw $exception;
+        }
+    }
 }
