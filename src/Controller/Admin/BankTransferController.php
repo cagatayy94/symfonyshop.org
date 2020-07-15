@@ -35,11 +35,6 @@ class BankTransferController extends AbstractController
         $isApproved = $request->query->get('isApproved');
         $startDate = $request->query->get('startDate');
         $endDate = $request->query->get('endDate');
-       
-        if (!$startDate) {
-            $firstDayOfCurrentMonth = new \DateTime('first day of this month');
-            $startDate = $firstDayOfCurrentMonth->format("d.m.Y");
-        }
 
         if (!$endDate) {
             $lastDayOfCurrentMonth = new \DateTime('last day of this month');
