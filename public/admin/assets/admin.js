@@ -1031,7 +1031,7 @@ function loadCategories(){
             if (result.success) {
                 var checkboxHolder = $('.category-checkbox-holder');
                 var selected = "";
-                var productCategories = JSON.parse(localStorage.getItem('category'));
+                var productCategories = JSON.parse($('.category-checkbox-holder').siblings('.exist-categories').attr('data-value'));
 
                 checkboxHolder.html('');
                 $.each(result.data, function(index, value) {
@@ -1044,7 +1044,6 @@ function loadCategories(){
 
                     checkboxHolder.append('<label class="col-md-3"><input type="checkbox" '+ isChecked +' name="categoryId[]" value="'+ value.id +'"> '+ value.name +'</label>')
                 });
-                localStorage.setItem('category', '{}');
             }else{
                 toastr.error('Kategoriler yüklenirken bir sorun oluştu');
             }
