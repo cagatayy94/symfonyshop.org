@@ -465,7 +465,7 @@ class Product
 
             $sql = '
                 UPDATE 
-                    order_notice
+                    product
                 SET
                     is_deleted = FALSE
                 WHERE
