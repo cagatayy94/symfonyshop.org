@@ -62,10 +62,13 @@
                                     <div class="box box-info">
                                         <div class="box-header with-border">
                                             <h3 class="box-title pull-left">Kategori Seçiniz</h3>
-                                            <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#add_category_modal"><i class="fa fa-plus" aria-hidden="true"></i> Ekle</button>
+                                            <?php if ($admin->hasRole('category_create')): ?>
+                                                <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#add_category_modal"><i class="fa fa-plus" aria-hidden="true"></i> Ekle</button>
+                                            <?php endif ?>
                                         </div>
                                         <div class="box-body">
                                             <div class="form-group col-md-12">
+                                                <span class="exist-categories" data-value='{}'></span>
                                                 <div class="category-checkbox-holder row">
                                                     <label>Yükleniyor..</label>
                                                 </div>
@@ -133,7 +136,9 @@
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
-                                <button type="submit" class="btn btn-primary">Kaydet</button>
+                                <?php if ($admin->hasRole('product_create')): ?>
+                                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                                <?php endif; ?>
                             </div>
                         </form>
                     </div>
@@ -145,6 +150,7 @@
     </section>
     <!-- /.content -->
 </div>
+<?php if ($admin->hasRole('category_create')): ?>
 <div class="modal fade" id="add_category_modal" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -168,6 +174,7 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
+<?php endif; ?>
 <script type="text/javascript">
     $( document ).ready(function() {
         loadCategories();
