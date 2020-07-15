@@ -212,4 +212,165 @@ class Product
             throw $exception;
         }
     }
+
+    /**
+     * Get All Products
+     *
+     * @param int $currentPage
+     * @param int $pageCount
+     * @param int $perPage
+     * @param bool $isDeleted
+     * @param string $name
+     * @param int $productId
+     * @param date $createdAtStart
+     * @param date $createdAtEnd
+     *
+     * @throws \Exception
+     */
+    public function getAll($currentPage, $pageCount, $perPage, $isDeleted = false, $productName = null, $productId = null, $createdAtStart = null, $createdAtEnd = null)
+    {
+        $this->authorize('product_list');
+
+        $isDeleted      = $this->formatBoolParameter($isDeleted);
+        $productName    = $this->formatStringParameter($productName);
+        $productId      = $this->formatIntParameter($productId);
+        $createdAtStart = $this->formatDateParameter($createdAtStart, true);
+        $createdAtEnd   = $this->formatDateParameter($createdAtEnd, false);
+
+        $connection = $this->connection;
+
+        //values sql
+        $recordsSql = "
+            SELECT
+                id,
+                name,
+                price,
+                tax,
+                description,
+                variant_title,
+                cargo_price,
+                view,
+                created_at
+            FROM
+                product p
+            WHERE
+                1 = 1";
+
+        if (!is_null($isDeleted)) {
+            if($isDeleted){
+                $recordsSql .= " AND p.is_deleted = TRUE ";
+            }else{
+                $recordsSql .= " AND p.is_deleted = FALSE ";
+            }
+        }
+
+        if ($productName) {
+            $recordsSql .= " AND LOWER(p.name) LIKE LOWER(:name) ";
+        }
+
+        if ($productId) {
+            $recordsSql .= " AND p.id = :id ";
+        }
+
+        if ($createdAtStart) {
+            $recordsSql .= " AND p.created_at > :createdAtStart";
+        }
+
+        if ($createdAtEnd) {
+            $recordsSql .= " AND p.created_at < :createdAtEnd";
+        }
+
+        // limit sql
+        $recordsSql .= '
+            ORDER BY
+                p.created_at
+            LIMIT
+                '. $perPage . '
+            OFFSET
+                ' . $perPage * ($currentPage - 1) . '
+        ';
+
+        $statement = $connection->prepare($recordsSql);
+
+        if ($productName) {
+            $statement->bindValue(':name', '%'.$productName.'%');
+        }           
+
+        if ($productId) {
+            $statement->bindValue(':id', $productId);
+        }
+
+        if ($createdAtStart) {
+            $statement->bindValue(':createdAtStart', $createdAtStart->format("Y-m-d H:i:s"));
+        }
+
+        if ($createdAtEnd) {
+            $statement->bindValue(':createdAtEnd', $createdAtEnd->format("Y-m-d H:i:s"));
+        }
+        
+        $statement->execute();
+
+        $records = $statement->fetchAll();
+
+        //total sql
+        $totalSql = "
+            SELECT
+                COUNT(p.id)
+            FROM
+                product p
+            WHERE
+                1 = 1";
+
+        if (!is_null($isDeleted)) {
+            if($isDeleted){
+                $totalSql .= " AND p.is_deleted = TRUE ";
+            }else{
+                $totalSql .= " AND p.is_deleted = FALSE ";
+            }
+        }
+
+        if ($productName) {
+            $totalSql .= " AND LOWER(p.name) LIKE LOWER(:name) ";
+        }
+
+        if ($productId) {
+            $totalSql .= " AND p.id = :id ";
+        }
+
+        if ($createdAtStart) {
+            $totalSql .= " AND p.created_at > :createdAtStart";
+        }
+
+        if ($createdAtEnd) {
+            $totalSql .= " AND p.created_at < :createdAtEnd";
+        }
+
+        $statement = $connection->prepare($totalSql);
+
+
+        if ($productName) {
+            $statement->bindValue(':name', '%'.$productName.'%');
+        }           
+
+        if ($productId) {
+            $statement->bindValue(':id', $productId);
+        }
+
+        if ($createdAtStart) {
+            $statement->bindValue(':createdAtStart', $createdAtStart->format("Y-m-d H:i:s"));
+        }
+
+        if ($createdAtEnd) {
+            $statement->bindValue(':createdAtEnd', $createdAtEnd->format("Y-m-d H:i:s"));
+        }
+
+        $statement->execute();
+
+        $total = $statement->fetchColumn();
+
+        return [
+            'total' => $total,
+            'records' => $records,
+        ];
+    }
 }
