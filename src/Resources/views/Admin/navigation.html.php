@@ -82,7 +82,7 @@
             </li>
         <?php endif; ?>
 
-        <?php if($admin->hasRole('product_create')): ?>
+        <?php if($admin->hasRole('product_create') || $admin->hasRole('product_list')): ?>
             <li class="treeview">
                 <a href=""><i class="fa fa-shopping-basket" aria-hidden="true"></i><span>Ürünler</span>
                     <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span>
@@ -90,6 +90,9 @@
                 <ul class="treeview-menu">
                     <?php if ($admin->hasRole('product_create')):?>
                     <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_product_create_view'); ?>">Yeni Ürün Ekle</a></li>
+                    <?php endif; ?>
+                    <?php if ($admin->hasRole('product_list')):?>
+                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_product_list'); ?>">Ürün Listesi</a></li>
                     <?php endif; ?>
                 </ul>
             </li>
