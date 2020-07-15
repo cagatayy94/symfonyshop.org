@@ -158,4 +158,56 @@ class ProductController extends AbstractController
             ]);
         }
     }
+
+    /**
+     * @Route("/product-list-deleted", name="product_list_deleted")
+     */
+    public function productListDeletedAction(Request $request, ProductService $productService, ExcelService $excelService)
+    {
+        $admin = $this->getUser();
+
+        $perPage = 50;
+        $pageCount = 0;
+        $currentPage = (int) $request->query->get('currentPage', 1);
+
+        $productName = $request->query->get('productName');
+        $productId = $request->query->get('productId');
+        $createdAtStart = $request->query->get('createdAtStart');
+        $createdAtEnd = $request->query->get('createdAtEnd');
+        $excelExport = $request->query->get('excelExport');
+
+        if ($currentPage == "") {
+            $currentPage = 1;
+        }
+
+        if ($excelExport) {
+            $perPage = PHP_INT_MAX;
+        }
+
+        $products = $productService->getAll($currentPage, $pageCount, $perPage, true, $productName, $productId, $createdAtStart, $createdAtEnd);
+
+        if (!empty($products['total']) && $products['total'] > $perPage) {
+            $pageCount = ceil($products['total'] / $perPage);
+        }
+
+        $data = [
+            'admin' => $admin,
+            'products' => $products,
+            'productName' => $productName,
+            'productId' => $productId,
+            'createdAtStart' => $createdAtStart,
+            'createdAtEnd' => $createdAtEnd,
+            'pageCount' => $pageCount,
+            'currentPage' => $currentPage,
+            'excelExport' => $excelExport,
+        ];
+
+        $view = 'Admin/Product/list-deleted.html.php';
+
+        if ($excelExport) {
+            return $excelService->renderExcel($view, $data, 'silinmis-urun-listesi');
+        }
+
+        return $this->render($view, $data);
+    }
 }
