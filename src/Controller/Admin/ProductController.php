@@ -19,7 +19,7 @@ use App\Service\Admin\Category as CategoryService;
 class ProductController extends AbstractController
 {
     /**
-     * @Route("/product/create/view", name="product_create_view")
+     * @Route("/product-create/view", name="product_create_view")
      */
     public function productAddPage(CategoryService $categoryService)
     {
@@ -34,7 +34,7 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/product/create", name="product_create")
+     * @Route("/product-create", name="product_create")
      */
     public function productCreate(Request $request, ProductService $productService)
     {
