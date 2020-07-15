@@ -41,6 +41,7 @@ class Category
      * Create category
      *
      * @param string $name
+     *
      * @throws \Exception
      */
     public function create($name)

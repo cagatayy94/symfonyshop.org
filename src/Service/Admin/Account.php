@@ -272,6 +272,12 @@ class Account
         return $finalResult;
     }
 
+    /**
+     * Get Account Detail
+     *
+     * @param int $id identifier of admin
+     * @throws \Exception
+     */
     public function getAccountDetail($id)
     {
         $this->authorize('account_detail_show');
@@ -583,6 +589,12 @@ class Account
         }
     }
 
+    /**
+     * Get Profile Detail
+     *
+     * @param int $id
+     * @throws \Exception
+     */
     public function getProfileDetail($id)
     {
         $this->authorize('profile_detail_show');
@@ -748,7 +760,7 @@ class Account
     }
 
     /**
-     * Update admin account
+     * Delete admin account
      *
      * @param int $id
      * @throws \Exception
@@ -807,7 +819,7 @@ class Account
     }
 
     /**
-     * Update admin account
+     * Delete the admin profile
      *
      * @param int $profileId
      * @throws \Exception

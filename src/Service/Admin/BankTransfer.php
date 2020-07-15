@@ -13,6 +13,23 @@ class BankTransfer
     use ServiceTrait;
     use AdminServiceTrait;
 
+    /**
+     * Get All Bank Transfers
+     *
+     * @param int $currentPage
+     * @param int $pageCount
+     * @param int $perPage
+     * @param string $name
+     * @param string $email
+     * @param string $mobile
+     * @param int $bankId
+     * @param bool $isDeleted
+     * @param bool $isApproved
+     * @param date $startDate
+     * @param date $endDate
+     *
+     * @throws \Exception
+     */
     public function getAll($currentPage, $pageCount, $perPage, $name = null, $email = null, $mobile = null, $bankId = null, $isDeleted = false, $isApproved = false, $startDate = null, $endDate = null)
     {
         $this->authorize('bank_transfer_list');
@@ -218,6 +235,7 @@ class BankTransfer
      * Delete money order
      *
      * @param int $id
+     *
      * @throws \Exception
      */
     public function deleteMoneyOrder($id)
@@ -277,6 +295,7 @@ class BankTransfer
      * Undelete money order
      *
      * @param int $id
+     *
      * @throws \Exception
      */
     public function undeleteMoneyOrder($id)
@@ -336,6 +355,8 @@ class BankTransfer
      * Update money order
      *
      * @param int $id
+     * @param string $type
+     *
      * @throws \Exception
      */
     public function updateMoneyOrder($id, $type)
@@ -346,7 +367,7 @@ class BankTransfer
 
         $logFullDetails = [
             'entity' => 'BankTransfer',
-            'activity' => 'approveMoneyOrder',
+            'activity' => 'updateMoneyOrder',
             'activityId' => 0,
             'details' => $logDetails
         ];

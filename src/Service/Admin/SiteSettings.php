@@ -54,6 +54,7 @@ class SiteSettings
      * @param string $twitter
      * @param string $youtube
      * @param string $pinterest
+     *
      * @throws \Exception
      */
     public function siteSettingsGeneralUpdate($name, $title, $description, $keywords, $copyright, $mail, $link, $address, $phone, $footerText, $facebook, $instagram, $linkedin, $twitter, $youtube, $pinterest)
@@ -235,6 +236,7 @@ class SiteSettings
      * @param text $distantSalesAgreement
      * @param text $deliverables
      * @param text $cancelRefundChange
+     *
      * @throws \Exception
      */
     public function agreementsAndStringsUpdate($aboutUs, $signUpAgreement, $termsofUse, $confidentialityAgreement, $distantSalesAgreement, $deliverables, $cancelRefundChange)
@@ -356,6 +358,7 @@ class SiteSettings
      * Delete bank
      *
      * @param int $id
+     *
      * @throws \Exception
      */
     public function deleteBank($id)
@@ -422,6 +425,7 @@ class SiteSettings
      * @param string $accountNumber
      * @param string $iban
      * @param string $logo
+     *
      * @throws \Exception
      */
     public function newBankAdd($name, $city, $country, $branchName, $branchCode, $currency, $accountOwner, $accountNumber, $iban, $logo)
@@ -543,6 +547,7 @@ class SiteSettings
      * @param string $accountNumber
      * @param string $iban
      * @param string $logo
+     *
      * @throws \Exception
      */
     public function updateBank($id, $name, $city, $country, $branchName, $branchCode, $currency, $accountOwner, $accountNumber, $iban, $logo = null)
@@ -709,6 +714,7 @@ class SiteSettings
      *
      * @param string $question
      * @param string $answer
+     *
      * @throws \Exception
      */
     public function faqCreate($question, $answer)
@@ -767,6 +773,7 @@ class SiteSettings
      * Delete faq
      *
      * @param int $id
+     *
      * @throws \Exception
      */
     public function deleteFaq($id)
@@ -826,6 +833,7 @@ class SiteSettings
      * @param string $id
      * @param string $question
      * @param string $answer
+     *
      * @throws \Exception
      */
     public function updateFaq($id, $question, $answer)
@@ -891,9 +899,10 @@ class SiteSettings
     /**
      * Update the favicon and logos
      *
-     * @param obj $lightLogo
-     * @param obj $darkLogo
-     * @param obj $favicon
+     * @param image $lightLogo
+     * @param image $darkLogo
+     * @param image $favicon
+     *
      * @throws \Exception
      */
     public function updateLogo($darkLogo = null, $lightLogo = null, $favicon = null)
@@ -1040,6 +1049,7 @@ class SiteSettings
      * Delete banner
      *
      * @param int $id
+     *
      * @throws \Exception
      */
     public function deleteBanner($id)
@@ -1097,7 +1107,8 @@ class SiteSettings
      * Add new banner
      *
      * @param string $name
-     * @param obj $img
+     * @param image $img
+     *
      * @throws \Exception
      */
     public function newBannerAdd($name, $img)
@@ -1179,7 +1190,8 @@ class SiteSettings
      *
      * @param string $id
      * @param string $name
-     * @param obj $img
+     * @param image $img
+     *
      * @throws \Exception
      */
     public function updateBanner($id, $name, $img = null)
@@ -1306,6 +1318,7 @@ class SiteSettings
      * Delete cargo company
      *
      * @param int $id
+     *
      * @throws \Exception
      */
     public function deleteCargoCompany($id)
@@ -1363,6 +1376,7 @@ class SiteSettings
      * Add new cargo company
      *
      * @param string $name
+     *
      * @throws \Exception
      */
     public function newCargoCompanyAdd($name)
@@ -1418,6 +1432,7 @@ class SiteSettings
      *
      * @param string $id
      * @param string $name
+     *
      * @throws \Exception
      */
     public function updateCargoCompany($id, $name)
