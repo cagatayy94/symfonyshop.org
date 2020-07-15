@@ -493,4 +493,137 @@ class Product
             throw $exception;
         }
     }
+
+    /**
+     * Get Product By Id
+     *
+     * @param int $id identifier of product
+     *
+     * @throws \Exception
+     */
+    public function getProduct($id)
+    {
+        $this->authorize('product_detail');
+
+        $id  = $this->formatIntParameter($id);
+
+        $connection = $this->connection;
+
+        if (!$id) {
+            throw new \Exception("Ürün kodu belirtilmemiş");
+            
+        }
+
+        //values sql
+        $sql = "
+            SELECT
+                p.name AS name,
+                p.price price,
+                p.cargo_price cargo_price,
+                p.tax tax,
+                p.description description,
+                p.variant_title variant_title,
+                p.view AS view,
+                p.created_at created_at
+            FROM
+                product p
+            WHERE
+                p.is_deleted = false
+            AND
+                p.id = :id
+        ";
+
+        $statement = $connection->prepare($sql);        
+
+        if ($id) {
+            $statement->bindValue(':id', $id);
+        }
+        
+        $statement->execute();
+
+        $product = $statement->fetch();
+
+        //fetch variants
+        $sql = "
+            SELECT
+                pv.id variant_id,
+                pv.name variant_name,
+                pv.stock variant_stock
+            FROM
+                product_variant pv
+            WHERE
+                product_id = :product_id
+        ";
+
+        $statement = $connection->prepare($sql);        
+
+        if ($id) {
+            $statement->bindValue(':product_id', $id);
+        }
+        
+        $statement->execute();
+
+        $product['variant'] = $statement->fetchAll();
+
+        //fetch category
+        $sql = "
+            SELECT
+                c.id category_id,
+                c.slug category_slug,
+                c.name category_name
+            FROM
+                category c
+            LEFT JOIN
+                product_category pc on c.id = pc.category_id
+            WHERE
+                c.is_deleted = false
+            AND
+                product_id = :product_id
+        ";
+
+        $statement = $connection->prepare($sql);        
+
+        if ($id) {
+            $statement->bindValue(':product_id', $id);
+        }
+        
+        $statement->execute();
+
+        $productCategory = $statement->fetchAll();
+
+        $categories = [];
+        foreach ($productCategory as $key => $value) {
+            $categories[$value['category_id']] = [
+                'category_slug' => $value['category_slug'],
+                'category_name' => $value['category_name'],
+            ];
+        }
+
+        $product['category'] = $categories;
+
+        //fetch photo
+        $sql = "
+            SELECT
+                ph.path
+            FROM
+                product_photo ph
+            WHERE
+                ph.is_deleted = false
+            AND
+                ph.product_id = :product_id
+
+        ";
+
+        $statement = $connection->prepare($sql);        
+
+        if ($id) {
+            $statement->bindValue(':product_id', $id);
+        }
+        
+        $statement->execute();
+
+        $product['photo'] = $statement->fetchAll();
+
+        return $product;
+    }
 }
