@@ -67,7 +67,7 @@
 					<?php endif ?>
 					<?php foreach ($products['records'] as $value): ?>
 					  <tr data-product-id="<?php echo $value['id']; ?>">
-						<td class="text-center"><?php echo $value['id'] ?></td>
+						<td class="text-center"><a href="<?php echo $this->get('router')->path('admin_product_detail', ['id' => $value['id']]) ?>"><?php echo $value['id'] ?></a></td>
 						<td class="text-center"><?php echo $value['name'] ?></td>
 						<td class="text-center"><?php echo $value['price'] ?></td>
 						<td class="text-center"><?php echo $value['cargo_price'] ?></td>
