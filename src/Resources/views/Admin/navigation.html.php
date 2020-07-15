@@ -93,6 +93,7 @@
                     <?php endif; ?>
                     <?php if ($admin->hasRole('product_list')):?>
                     <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_product_list'); ?>">Ürün Listesi</a></li>
+                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_product_list_deleted'); ?>">Silinmiş Ürün Listesi</a></li>
                     <?php endif; ?>
                 </ul>
             </li>
