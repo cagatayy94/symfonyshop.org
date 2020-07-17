@@ -609,6 +609,7 @@ class Product
         //fetch photo
         $sql = "
             SELECT
+                ph.id,
                 ph.path
             FROM
                 product_photo ph
@@ -649,7 +650,7 @@ class Product
      *
      * @throws \Exception
      */
-    public function update($id, $productName, $productPrice, $cargoPrice, $description, $categoryId, $variantTitle, $variantName, $variantStock, $variantId, $tax, $files, $imgPlaceHolder)
+    public function update($id, $productName, $productPrice, $cargoPrice, $description, $categoryId, $variantTitle, $variantName, $variantStock, $tax, $files)
     {
         $this->authorize('product_update');
 
@@ -669,7 +670,6 @@ class Product
         $cargoPrice     = $this->formatFloatParameter($cargoPrice);
         $tax            = $this->formatIntParameter($tax);
         $id             = $this->formatIntParameter($id);
-
 
         try {
 
@@ -712,10 +712,6 @@ class Product
                 throw new \InvalidArgumentException('Açıklama belirtiniz');
             }
 
-            // if (!$files) {
-            //     throw new \InvalidArgumentException('En az 1 fotoğraf yüklemelisiniz');
-            // }
-
             $connection->beginTransaction();
 
             try {
@@ -743,8 +739,7 @@ class Product
                 $statement->bindValue(':cargo_price', $cargoPrice);
                 $statement->execute();
 
-                //add product category
-                //delete old ones
+                //update product category
                 $connection->executeQuery('
                     DELETE
                     FROM
@@ -775,85 +770,95 @@ class Product
                 $statement->bindValue(':product_id', $id);
                 $statement->execute();
 
-                //update or add
-                foreach ($variantId as $key => $value) {
-                    if ($value) {
+                //update variant
+                $connection->executeQuery('
+                    DELETE
+                    FROM
+                        product_variant
+                    WHERE
+                        product_id = :product_id
+                        ', [
+                            'product_id' => $id,
+                        ]
+                );
 
-                        $connection->executeQuery('
-                           UPDATE
-                                product_variant
-                            SET
-                                name = :name,
-                                stock = :stock
-                            WHERE
-                                id = :id', 
-                            [
-                                'id' => $value,
-                                'name' => $variantName[$key],
-                                'stock' => $variantStock[$key],
-                            ]
-                        );
-
-                    }else{
-                        $connection->executeQuery('
-                            INSERT INTO
-                                product_variant
-                                (product_id, name, stock) 
-                            VALUES
-                                (:product_id, :name, :stock)
-                                ', 
-                            [
-                                'product_id' => $id,
-                                'name' => $variantName[$key],
-                                'stock' => $variantStock[$key],
-                            ]
-                        );
-                    }
-                }
-
-                echo "<pre>";
-                print_r($files);
-                print_r($imgPlaceHolder);
-
-die();
-                //add photo
                 $sql = "
                     INSERT INTO
-                        product_photo
-                            (product_id, path) 
-                    VALUES ";
+                        product_variant
+                            (product_id, name, stock) 
+                    VALUES";
 
-                foreach ($files as $key => $value) {
-                    $filename = md5(time()).rand(1, 10000);
-                    //Save Bank Logo
-                    $foo = new upload($value,"tr-TR");
-                    if ($foo->uploaded) {
-                        // save uploaded image with a new name,
-                        $foo->file_new_name_body    = $filename;
-                        $foo->file_overwrite        = true;
-                        $foo->image_resize          = true;
-                        $foo->allowed               = array("image/*");
-                        $foo->image_convert         ='png' ;
-                        $foo->image_resize          = true;
-                        $foo->image_x               = 1170;
-                        $foo->image_y               = 1170;
-                        $foo->process($_SERVER["DOCUMENT_ROOT"].'/web/img/product');
-                        if ($foo->processed) {
-                            $foo->clean();
-                        } else {
-                            throw new \InvalidArgumentException($foo->error);
-                        }
-                    }
+                foreach ($variantStock as $key => $value) {
 
                     $comma = $key != 0 ? ',' : '';
 
-                    $sql .=  $comma."(:product_id, '/web/img/product/". $filename . ".png')";
+                    $sql .= $comma."(:product_id, '". $variantName[$key] ."', ". $variantStock[$key] .")";
                 }
 
                 $statement = $connection->prepare($sql);
 
-                $statement->bindValue(':product_id', $productId);
+                $statement->bindValue(':product_id', $id);
                 $statement->execute();
+
+                //add photo
+                $isProductHasAnyPhoto = $connection->executeQuery('
+                    SELECT
+                        count(id)
+                    FROM
+                        product_photo
+                    WHERE
+                        product_id = :product_id
+                    AND
+                        is_deleted = FALSE
+                    ', 
+                    [
+                        'product_id' => $id
+                    ]
+                )->fetchColumn();
+
+                if (!$isProductHasAnyPhoto && !$files) {
+                    throw new \InvalidArgumentException('En az 1 fotoğraf yüklemelisiniz');
+                }
+
+                if ($files) {
+                    $sql = "
+                        INSERT INTO
+                            product_photo
+                                (product_id, path) 
+                        VALUES ";
+
+                    foreach ($files as $key => $value) {
+                        $filename = md5(time()).rand(1, 10000);
+                        //Save Bank Logo
+                        $foo = new upload($value,"tr-TR");
+                        if ($foo->uploaded) {
+                            // save uploaded image with a new name,
+                            $foo->file_new_name_body    = $filename;
+                            $foo->file_overwrite        = true;
+                            $foo->image_resize          = true;
+                            $foo->allowed               = array("image/*");
+                            $foo->image_convert         ='png' ;
+                            $foo->image_resize          = true;
+                            $foo->image_x               = 1170;
+                            $foo->image_y               = 1170;
+                            $foo->process($_SERVER["DOCUMENT_ROOT"].'/web/img/product');
+                            if ($foo->processed) {
+                                $foo->clean();
+                            } else {
+                                throw new \InvalidArgumentException($foo->error);
+                            }
+                        }
+
+                        $comma = $key != 0 ? ',' : '';
+
+                        $sql .=  $comma."(:product_id, '/web/img/product/". $filename . ".png')";
+                    }
+
+                    $statement = $connection->prepare($sql);
+
+                    $statement->bindValue(':product_id', $id);
+                    $statement->execute();
+                }
 
                 $connection->commit();
                 
@@ -862,18 +867,78 @@ die();
                 throw $exception;
             }
 
-            $logFullDetails['productId'] = $productId;
-            $this->logger->info('Created the new product', $logFullDetails);
+            $logFullDetails['productId'] = $id;
+            $this->logger->info('Updated the product', $logFullDetails);
         } catch (\InvalidArgumentException $exception) {
             $logFullDetails['details']['exception'] = $exception->getMessage();
 
-            $this->logger->error('Could not create the new product', $logFullDetails);
+            $this->logger->error('Could not updated the product', $logFullDetails);
 
             throw $exception;
         } catch (\Exception $exception) {
             $logFullDetails['details']['exception'] = $exception->getMessage();
 
-            $this->logger->error('Could not create the new product', $logFullDetails);
+            $this->logger->error('Could not update the product', $logFullDetails);
+
+            throw $exception;
+        }
+    }
+
+    /**
+     * Delete product image
+     *
+     * @param int $id
+     *
+     * @throws \Exception
+     */
+    public function deleteProductImage($id)
+    {
+        $this->authorize('product_img_delete');
+
+        $logDetails = $this->getArguments(__FUNCTION__, func_get_args());
+
+        $logFullDetails = [
+            'entity' => 'Product',
+            'activity' => 'deleteProductImage',
+            'activityId' => 0,
+            'details' => $logDetails
+        ];
+
+        $connection = $this->connection;
+
+        $id = intval($id);
+
+        try {
+            if (!$id) {
+                throw new \InvalidArgumentException('Id belirtilmemiş');
+            }
+
+            $sql = '
+                UPDATE 
+                    product_photo
+                SET
+                    is_deleted = TRUE
+                WHERE
+                    id = :id';
+
+            $statement = $connection->prepare($sql);
+
+            $statement->bindValue(':id', $id);
+
+            $statement->execute();
+
+            $logFullDetails['activityId'] = $id;
+            $this->logger->info('Deleted the product image', $logFullDetails);
+        } catch (\InvalidArgumentException $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+
+            $this->logger->error('Could not delete the product image', $logFullDetails);
+
+            throw $exception;
+        } catch (\Exception $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+
+            $this->logger->error('Could not delete the product image', $logFullDetails);
 
             throw $exception;
         }
