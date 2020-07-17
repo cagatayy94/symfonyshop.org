@@ -1241,3 +1241,99 @@ $('#update_product').on('submit', function (e) {
         button.removeAttr('disabled');
     }
 });
+
+$('#create_menu_form').on('submit', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var self = $(this);
+    var url = self.attr('action');
+    var method = self.attr('method');
+    var data = self.serialize();
+
+    self.find('[type="submit"]').attr('disabled', 'disabled');
+
+    var isValid = true;
+
+    isValid = controlRequiredInputsAreFilled(self.find('.required'));
+
+    if (isValid) {
+        $.ajax({
+            type: method,
+            url: url,
+            data: data,
+            success: function (result) {
+                if (result.success) {
+                    toastr.success('Başarılı');
+                    setTimeout(function() { location.reload(); }, 750);
+                } else {
+                    toastr.error(result.error.message);
+                    self.find('[type="submit"]').removeAttr('disabled');
+                }
+            }
+        });
+    } else {
+        self.find('[type="submit"]').removeAttr('disabled');
+    }
+});
+
+$('#menu_delete').on('click', function (e) {
+
+    var self = $(this);
+    var url = self.attr('data-href');
+
+    self.attr('disabled', 'disabled');
+
+    if (confirm('Silmek istediğinize emin misiniz?')) {
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function(result) {
+                if (result.success) {
+                    toastr.success('Başarılı');
+                    setTimeout(function() { window.location.href = '/admin/menu-list'; }, 750);
+                }else{
+                    toastr.error(result.error.message);
+                    self.removeAttr('disabled');
+                }
+            }
+        });
+    }else{
+        self.removeAttr('disabled');
+    }
+});
+
+$('#menu_update_form').on('submit', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var self = $(this);
+    var url = self.attr('action');
+    var method = self.attr('method');
+    var data = self.serialize();
+
+    self.find('[type="submit"]').attr('disabled', 'disabled');
+
+    var isValid = true;
+
+    isValid = controlRequiredInputsAreFilled(self.find('.required'));
+
+    if (isValid) {
+        $.ajax({
+            type: method,
+            url: url,
+            data: data,
+            success: function (result) {
+                if (result.success) {
+                    toastr.success('Başarılı');
+                    self.find('[type="submit"]').removeAttr('disabled');
+                } else {
+                    toastr.error(result.error.message);
+                    self.find('[type="submit"]').removeAttr('disabled');
+                }
+            }
+        });
+    } else {
+        self.find('[type="submit"]').removeAttr('disabled');
+    }
+});
