@@ -210,4 +210,55 @@ class ProductController extends AbstractController
 
         return $this->render($view, $data);
     }
+
+    /**
+     * @Route("/product/detail/{id}", name="product_detail")
+     */
+    public function productDetailAction($id, ProductService $productService)
+    {
+        $admin = $this->getUser();
+
+        $product = $productService->getProduct($id);
+
+        return $this->render('Admin/Product/detail.html.php', [
+            'admin' => $admin,
+            'product' => $product,
+            'id' => $id,
+        ]);
+    }
+
+    /**
+     * @Route("/product-update", name="product_update")
+     */
+    public function productUpdateAction(Request $request, ProductService $productService)
+    {
+        $id             = $request->request->get('id');
+        $productName    = $request->request->get('productName');
+        $productPrice   = $request->request->get('productPrice');
+        $cargoPrice     = $request->request->get('cargoPrice');
+        $categoryId     = $request->request->get('categoryId');
+        $variantName    = $request->request->get('variantName');
+        $variantTitle   = $request->request->get('variantTitle');
+        $variantStock   = $request->request->get('variantStock');
+        $variantId      = $request->request->get('variantId');
+        $description    = $request->request->get('description');
+        $tax            = $request->request->get('tax');
+        $imgPlaceHolder = $request->request->get('imgPlaceHolder');
+        $files          = $request->files->get('img');
+
+        try {
+            $productService->update($id, $productName, $productPrice, $cargoPrice, $description, $categoryId, $variantTitle, $variantName, $variantStock, $variantId, $tax, $imgPlaceHolder, $files);
+
+            return new JsonResponse([
+                'success' => true,
+            ]);
+        } catch (\Exception $exception) {
+            return new JsonResponse([
+                'success' => false,
+                'error' => [
+                    'message' => $exception->getMessage()
+                ]
+            ]);
+        }
+    }
 }

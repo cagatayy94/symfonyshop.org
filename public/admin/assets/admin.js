@@ -1204,3 +1204,40 @@ $('.undelete-product').on('click', function (e) {
     }
 });
 
+$('#update_product').on('submit', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var self = $(this);
+    var url = self.attr('action');
+    var method = self.attr('method');
+    var button = self.find(':submit');
+    var isValid = true;
+
+    button.attr('disabled', 'disabled');
+
+    isValid = controlRequiredInputsAreFilled(self.find('.required'));
+
+    if(isValid){
+        $.ajax({
+            url: url,
+            type: method,
+            data: new FormData(this),
+            contentType: false,
+            processData: false,
+            success: function(result) {
+                if (result.success) {
+                    toastr.success('Başarılı');
+                    button.removeAttr('disabled');
+
+                    //setTimeout(function() { window.location.href = location.pathname; }, 750);
+                }else{
+                    toastr.error(result.error.message);
+                    button.removeAttr('disabled');
+                }
+            }
+        });
+    }else{
+        button.removeAttr('disabled');
+    }
+});

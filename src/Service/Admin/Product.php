@@ -45,10 +45,10 @@ class Product
 
         $connection = $this->connection;
 
-        $productName = trim($productName);
-        $productPrice = floatval($productPrice);
-        $cargoPrice = floatval($cargoPrice);
-        $tax = intval($tax);
+        $productName    = $this->formatStringParameter($productName);
+        $productPrice   = $this->formatFloatParameter($productPrice);
+        $cargoPrice     = $this->formatFloatParameter($cargoPrice);
+        $tax            = $this->formatIntParameter($tax);
 
         try {
             if (!$productName) {
@@ -107,7 +107,7 @@ class Product
                 $statement->bindValue(':tax', $tax);
                 $statement->bindValue(':description', $description);
                 $statement->bindValue(':variant_title', $variantTitle);
-                $statement->bindValue(':cargo_price', $cargoPrice);
+                $statement->bindValue(':cargo_price', $cargoPrice ? $cargoPrice : 0);
                 $statement->execute();
 
                 $productId = $statement->fetchColumn();
@@ -543,6 +543,11 @@ class Product
 
         $product = $statement->fetch();
 
+        if (!$product) {
+            throw new \Exception("Ürün bulunamadı");
+            
+        }
+
         //fetch variants
         $sql = "
             SELECT
@@ -625,5 +630,252 @@ class Product
         $product['photo'] = $statement->fetchAll();
 
         return $product;
+    }
+
+    /**
+     * Update the product
+     *
+     * @param int $id
+     * @param string $productName
+     * @param float $productPrice
+     * @param float $cargoPrice
+     * @param string $description
+     * @param int[] $categoryId
+     * @param string $variantTitle
+     * @param string[] $variantName
+     * @param string[] $variantStock
+     * @param int $tax
+     * @param file $files
+     *
+     * @throws \Exception
+     */
+    public function update($id, $productName, $productPrice, $cargoPrice, $description, $categoryId, $variantTitle, $variantName, $variantStock, $variantId, $tax, $files, $imgPlaceHolder)
+    {
+        $this->authorize('product_update');
+
+        $logDetails = $this->getArguments(__FUNCTION__, func_get_args());
+
+        $logFullDetails = [
+            'entity' => 'Product',
+            'activity' => 'update',
+            'activityId' => 0,
+            'details' => $logDetails
+        ];
+
+        $connection = $this->connection;
+
+        $productName    = $this->formatStringParameter($productName);
+        $productPrice   = $this->formatFloatParameter($productPrice);
+        $cargoPrice     = $this->formatFloatParameter($cargoPrice);
+        $tax            = $this->formatIntParameter($tax);
+        $id             = $this->formatIntParameter($id);
+
+
+        try {
+
+            if (!$id) {
+                throw new \InvalidArgumentException('Ürün kodu belirtilmemiş');
+            }
+
+            if (!$productName) {
+                throw new \InvalidArgumentException('Ürün ismi belirtilmemiş');
+            }
+
+            if (!$productPrice) {
+                throw new \InvalidArgumentException('Ürün fiyatı belirtilmemiş');
+            }
+
+            if (!$categoryId) {
+                throw new \InvalidArgumentException('En az bir kategori seçiniz');
+            }
+
+            if (!$variantTitle) {
+                throw new \InvalidArgumentException('Varyant başlığı belirtilmemiş');
+            }
+
+            if (!$tax) {
+                throw new \InvalidArgumentException('Vergi Oranı belirtilmemiş');
+            }
+
+            foreach ($variantStock as $key => $value) {
+                $variantStock[$key] = intval($value);
+                if (!$variantStock[$key]) {
+                    throw new \InvalidArgumentException('Stok adedi belirtilmemiş');
+                }
+
+                if ($value && !$variantName[$key]) {
+                    throw new \InvalidArgumentException('Varyant ismi belirtilmemiş');
+                }
+            }
+
+            if (!$description) {
+                throw new \InvalidArgumentException('Açıklama belirtiniz');
+            }
+
+            // if (!$files) {
+            //     throw new \InvalidArgumentException('En az 1 fotoğraf yüklemelisiniz');
+            // }
+
+            $connection->beginTransaction();
+
+            try {
+                //update product
+                $statement = $connection->prepare('
+                    UPDATE
+                        product
+                    SET
+                        name = :name,
+                        price = :price,
+                        tax = :tax,
+                        description = :description,
+                        variant_title = :variant_title,
+                        cargo_price = :cargo_price
+                    WHERE
+                        id = :id
+                ');
+
+                $statement->bindValue(':id', $id);
+                $statement->bindValue(':name', $productName);
+                $statement->bindValue(':price', $productPrice);
+                $statement->bindValue(':tax', $tax);
+                $statement->bindValue(':description', $description);
+                $statement->bindValue(':variant_title', $variantTitle);
+                $statement->bindValue(':cargo_price', $cargoPrice);
+                $statement->execute();
+
+                //add product category
+                //delete old ones
+                $connection->executeQuery('
+                    DELETE
+                    FROM
+                        product_category
+                    WHERE
+                        product_id = :product_id
+                        ', [
+                            'product_id' => $id,
+                        ]
+                    );
+
+
+                $sql = "
+                    INSERT INTO
+                        product_category
+                            (product_id, category_id) 
+                    VALUES ";
+
+                foreach ($categoryId as $key => $value) {
+
+                    $comma = $key != 0 ? ',' : ''; //it helps for dynamic sql
+
+                    $sql .= $comma."(:product_id, ". intval($value) .")";
+                }
+
+                $statement = $connection->prepare($sql);
+
+                $statement->bindValue(':product_id', $id);
+                $statement->execute();
+
+                //update or add
+                foreach ($variantId as $key => $value) {
+                    if ($value) {
+
+                        $connection->executeQuery('
+                           UPDATE
+                                product_variant
+                            SET
+                                name = :name,
+                                stock = :stock
+                            WHERE
+                                id = :id', 
+                            [
+                                'id' => $value,
+                                'name' => $variantName[$key],
+                                'stock' => $variantStock[$key],
+                            ]
+                        );
+
+                    }else{
+                        $connection->executeQuery('
+                            INSERT INTO
+                                product_variant
+                                (product_id, name, stock) 
+                            VALUES
+                                (:product_id, :name, :stock)
+                                ', 
+                            [
+                                'product_id' => $id,
+                                'name' => $variantName[$key],
+                                'stock' => $variantStock[$key],
+                            ]
+                        );
+                    }
+                }
+
+                echo "<pre>";
+                print_r($files);
+                print_r($imgPlaceHolder);
+
+die();
+                //add photo
+                $sql = "
+                    INSERT INTO
+                        product_photo
+                            (product_id, path) 
+                    VALUES ";
+
+                foreach ($files as $key => $value) {
+                    $filename = md5(time()).rand(1, 10000);
+                    //Save Bank Logo
+                    $foo = new upload($value,"tr-TR");
+                    if ($foo->uploaded) {
+                        // save uploaded image with a new name,
+                        $foo->file_new_name_body    = $filename;
+                        $foo->file_overwrite        = true;
+                        $foo->image_resize          = true;
+                        $foo->allowed               = array("image/*");
+                        $foo->image_convert         ='png' ;
+                        $foo->image_resize          = true;
+                        $foo->image_x               = 1170;
+                        $foo->image_y               = 1170;
+                        $foo->process($_SERVER["DOCUMENT_ROOT"].'/web/img/product');
+                        if ($foo->processed) {
+                            $foo->clean();
+                        } else {
+                            throw new \InvalidArgumentException($foo->error);
+                        }
+                    }
+
+                    $comma = $key != 0 ? ',' : '';
+
+                    $sql .=  $comma."(:product_id, '/web/img/product/". $filename . ".png')";
+                }
+
+                $statement = $connection->prepare($sql);
+
+                $statement->bindValue(':product_id', $productId);
+                $statement->execute();
+
+                $connection->commit();
+                
+            } catch (Exception $e) {
+                $connection->rollBack();
+                throw $exception;
+            }
+
+            $logFullDetails['productId'] = $productId;
+            $this->logger->info('Created the new product', $logFullDetails);
+        } catch (\InvalidArgumentException $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+
+            $this->logger->error('Could not create the new product', $logFullDetails);
+
+            throw $exception;
+        } catch (\Exception $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+
+            $this->logger->error('Could not create the new product', $logFullDetails);
+
+            throw $exception;
+        }
     }
 }
