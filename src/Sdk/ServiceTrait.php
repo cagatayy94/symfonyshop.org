@@ -96,6 +96,15 @@ trait ServiceTrait
         return $parameter;
     }
 
+    public function formatFloatParameter($parameter)
+    {
+        $parameter = (float)$parameter;
+        if ($parameter == 0) {
+            $parameter = null;
+        }
+        return $parameter;
+    }
+
     public function formatBoolParameter($parameter)
     {
         if ($parameter === null) {
