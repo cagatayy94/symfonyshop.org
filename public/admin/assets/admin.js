@@ -1229,8 +1229,7 @@ $('#update_product').on('submit', function (e) {
                 if (result.success) {
                     toastr.success('Başarılı');
                     button.removeAttr('disabled');
-
-                    //setTimeout(function() { window.location.href = location.pathname; }, 750);
+                    setTimeout(function() { window.location.href = location.pathname; }, 750);
                 }else{
                     toastr.error(result.error.message);
                     button.removeAttr('disabled');
@@ -1335,5 +1334,30 @@ $('#menu_update_form').on('submit', function (e) {
         });
     } else {
         self.find('[type="submit"]').removeAttr('disabled');
+    }
+});
+
+$('.delete-image').on('click', function (e) {
+
+    var self = $(this);
+    var url = self.attr('data-delete-url');
+    self.attr('disabled', 'disabled');
+
+    if (confirm('Silmek istediğinize emin misiniz?')) {
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function(result) {
+                if (result.success) {
+                    toastr.success('Başarılı');
+                    self.closest('.photo-element').remove();
+                }else{
+                    toastr.error(result.error.message);
+                }
+                self.removeAttr('disabled');
+            }
+        });
+    }else{
+        self.removeAttr('disabled');
     }
 });

@@ -98,7 +98,6 @@
                                                         <label for="tax"><span class="element-index"><?php echo $i; ?>. </span>Varyant Stok Adedi</label>
                                                         <input type="text" class="form-control required" placeholder="Stokta kaç adet varsa sayı ile yazınız" name="variantStock[]" value="<?php echo $value['variant_stock']?>">
                                                     </div>
-                                                    <input type="hidden" name="variantId[]" value="<?php echo $value['variant_id']?>">
                                                 </div>
                                                 <?php $i++; endforeach; ?>
                                             </div>
@@ -111,32 +110,48 @@
                                     </div>                                
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="box box-info">
-                                        <div class="box-header with-border">
-                                            <h3 class="box-title">Ürün Fotoğraf</h3>
+                                    <div class="box box-info col-md-12">
+                                            <div class="box-header with-border">
+                                                <h3 class="box-title">Yüklü Fotoğraflar</h3>
+                                            </div>
+                                            <div class="box-body">
+                                                <div class="elements-holder">
+                                                    <?php foreach ($product['photo'] as $key => $value): ?>
+                                                        <div class="photo-element row" style="height: 200px; border-bottom: 1px solid gray; padding: 10px; float: left ">
+                                                            <div class="col-md-6">
+                                                                <button type="button" data-delete-url="<?php echo $this->get('router')->path('admin_product_image_delete', ['id' => $value['id']]) ?>" style="position: absolute; margin-bottom: 56px; margin-left: 109px;" class="btn btn-danger pull-right delete-image">Sil</button>
+                                                                <img width="150" height="150" class="img-viewer" src="<?php echo $value['path'] ?>" alt="your image" />
+                                                            </div>
+                                                        </div>  
+                                                    <?php endforeach; ?>
+                                                </div>
+                                            </div>
+                                            <!-- /.box-body -->
                                         </div>
-                                        <div class="box-body">
-                                            <div class="elements-holder">
-                                                <?php $i = 1; foreach ($product['photo'] as $key => $value): ?>
+                                        <div class="box box-info col-md-12">
+                                            <div class="box-header with-border">
+                                                <h3 class="box-title">Ürün Fotoğraf</h3>
+                                            </div>
+                                            <div class="box-body">
+                                                <div class="elements-holder">
                                                     <div class="photo-element row" style="height: 170px; border-bottom: 1px solid gray; padding: 10px ">
-                                                        <input type="hidden" name="imgPlaceHolder[]">
                                                         <div class="col-md-6">
-                                                            <label for="exampleInputFile"><span class="element-index"><?php echo $i ?>. </span>Fotoğraf</label>
+                                                            <label for="exampleInputFile"><span class="element-index">1. </span>Fotoğraf</label>
                                                             <input type="file" class="img-with-viewer" name="img[]">
                                                         </div>
                                                         <div class="col-md-6">
-                                                           <img width="150" height="150" class="img-viewer" src="<?php echo $value['path'] ?>" alt="your image" />
+                                                           <img style="display: none;" width="150" height="150" class="img-viewer" src="#" alt="your image" />
                                                         </div>
                                                     </div>  
-                                                <?php $i++; endforeach; ?>
+                                                </div>
+                                                <div class="form-group col-md-12">
+                                                    <p class="help-block">Aşağıdaki ekle butonuna basarak daha fazla fotoğraf ekleyebilirsiniz</p>
+                                                    <button type="button" class="btn btn-primary clone-element"><i class="fa fa-plus" aria-hidden="true"></i> Ekle</button>
+                                                    <button type="button" class="btn btn-danger delete-clone"><i class="fa fa-trash" aria-hidden="true"></i> Sil</button>
+                                                </div>
                                             </div>
-                                            <div class="form-group col-md-12">
-                                                <p class="help-block">Aşağıdaki ekle butonuna basarak daha fazla fotoğraf ekleyebilirsiniz</p>
-                                                <button type="button" class="btn btn-primary clone-element"><i class="fa fa-plus" aria-hidden="true"></i> Ekle</button>
-                                                <button type="button" class="btn btn-danger delete-clone"><i class="fa fa-trash" aria-hidden="true"></i> Sil</button>
-                                            </div>
+                                            <!-- /.box-body -->
                                         </div>
-                                        <!-- /.box-body -->
                                     </div>
                                 </div>
                             </div>

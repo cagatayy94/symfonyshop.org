@@ -240,14 +240,12 @@ class ProductController extends AbstractController
         $variantName    = $request->request->get('variantName');
         $variantTitle   = $request->request->get('variantTitle');
         $variantStock   = $request->request->get('variantStock');
-        $variantId      = $request->request->get('variantId');
         $description    = $request->request->get('description');
         $tax            = $request->request->get('tax');
-        $imgPlaceHolder = $request->request->get('imgPlaceHolder');
         $files          = $request->files->get('img');
 
         try {
-            $productService->update($id, $productName, $productPrice, $cargoPrice, $description, $categoryId, $variantTitle, $variantName, $variantStock, $variantId, $tax, $imgPlaceHolder, $files);
+            $productService->update($id, $productName, $productPrice, $cargoPrice, $description, $categoryId, $variantTitle, $variantName, $variantStock, $tax, $files);
 
             return new JsonResponse([
                 'success' => true,
@@ -261,4 +259,26 @@ class ProductController extends AbstractController
             ]);
         }
     }
+
+    /**
+     * @Route("/product/image/delete/{id}", name="product_image_delete")
+     */
+    public function deleteProductImgAction($id, ProductService $productService)
+    {
+        try {
+            $productService->deleteProductImage($id);
+
+            return new JsonResponse([
+                'success' => true,
+            ]);
+        } catch (\Exception $exception) {
+            return new JsonResponse([
+                'success' => false,
+                'error' => [
+                    'message' => $exception->getMessage()
+                ]
+            ]);
+        }
+    }
+
 }
