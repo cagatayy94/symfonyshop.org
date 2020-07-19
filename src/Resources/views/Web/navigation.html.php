@@ -1,3 +1,4 @@
+<?php $navigationData = json_decode($view['actions']->render('Web:DefaultController:/navigation/data'), true); ?>
 <header id="header" class="header-effect-shrink" data-plugin-options="{'stickyEnabled': true, 'stickyEnableOnBoxed': true, 'stickyEnableOnMobile': true, 'stickyStartAt': 120, 'stickyChangeLogo': false}">
     <div class="header-body">
         <div class="header-top">
@@ -33,7 +34,7 @@
                 <div class="header-column justify-content-start">
                     <div class="header-logo">
                         <a href="/">
-                            <img alt="EZ" width="128" height="32" src="web/img/logo-shop.png">
+                            <img alt="EZ" width="128" height="32" src="/web/img/logo-shop.png">
                         </a>
                     </div>
                 </div>
@@ -55,44 +56,28 @@
                         <div class="header-nav-main header-nav-main-effect-1 header-nav-main-sub-effect-1">
                             <nav class="collapse">
                                 <ul class="nav flex-column flex-lg-row" id="mainNav">
-                                    <li class="dropdown active">
-                                        <a class="dropdown-item active" href="/">
+                                    <li class="dropdown">
+                                        <a class="dropdown-item" href="/">
                                             Anasayfa
                                         </a>
                                     </li>
-                                    <li class="dropdown dropdown-mega">
-                                        <a class="dropdown-item" href="">
-                                            Kadın
-                                        </a>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a class="dropdown-item" href="">
-                                            Erkek
-                                        </a>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a class="dropdown-item" href="">
-                                            Çocuk
-                                        </a>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a class="dropdown-item" href="">
-                                            Ev & Yaşam
-                                        </a>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a class="dropdown-item" href="">
-                                            Elektronik
-                                        </a>
-                                    </li>
+                                    <?php if (isset($navigationData['menus'])): ?>
+                                        <?php foreach ($navigationData['menus'] as $key => $value): ?>
+                                            <li class="dropdown">
+                                                <a class="dropdown-item" href="/urunler/<?php echo $value['slug'] ?>">
+                                                    <?php echo $value['name']; ?>
+                                                </a>
+                                            </li>
+                                        <?php endforeach ?>
+                                    <?php endif; ?>
                                 </ul>
                             </nav>
                         </div>
-                        <a href="shop-login.html" class="btn btn-link text-color-default font-weight-bold order-3 d-none d-sm-block ml-auto mr-2 pt-1 text-1"></a>
+                        <a href="/login" class="btn btn-link text-color-default font-weight-bold order-3 d-none d-sm-block ml-auto mr-2 pt-1 text-1"></a>
                         <div class="mini-cart order-4">
                             <span class="font-weight-bold font-primary">Sepet / <span class="cart-total">0.00₺</span></span>
                             <div class="mini-cart-icon">
-                                <img src="web/img/icons/cart-bag.svg" class="img-fluid" alt="" />
+                                <img src="/web/img/icons/cart-bag.svg" class="img-fluid" alt="" />
                                 <span class="badge badge-primary rounded-circle">0</span>
                             </div>
                             <div class="mini-cart-content">
@@ -109,7 +94,7 @@
                                             <div class="col-5">
                                                 <div class="product-image">
                                                     <a href="#" class="btn btn-light btn-rounded justify-content-center align-items-center"><i class="fas fa-times"></i></a>
-                                                    <img src="web/img/products/product-2.jpg" class="img-fluid rounded" alt="" />
+                                                    <img src="/web/img/products/product-2.jpg" class="img-fluid rounded" alt="" />
                                                 </div>
                                             </div>
                                         </div>

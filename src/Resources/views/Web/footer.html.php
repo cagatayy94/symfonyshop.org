@@ -25,7 +25,7 @@
         <div class="row">
             <div class="col-lg-5 mb-4 mb-lg-0">
                 <a href="index" class="logo">
-                    <img alt="SiteLogo" class="img-fluid mb-3" src="web/img/logo-shop-light.png">
+                    <img alt="SiteLogo" class="img-fluid mb-3" src="/web/img/logo-shop-light.png">
                 </a>
                 <p> <?php echo $footerData['footer_text']; ?> </p>
                 <ul class="list list-icons list-unstyled">

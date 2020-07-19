@@ -9,7 +9,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use App\Service\Web\SiteSettings as SiteSettings;
-
+use App\Service\Web\Menu as MenuService;
+use App\Service\Web\Product as ProductService;
 
 class DefaultController extends AbstractController
 {
@@ -18,14 +19,19 @@ class DefaultController extends AbstractController
     /**
      * @Route("/", name="index")
      */
-    public function index(SiteSettings $siteSettings)
+    public function index(SiteSettings $siteSettings, MenuService $menuService, ProductService $productService)
     {
         $banner = $siteSettings->getBanner();
         $user = $this->getUser();
+        $menuCategories = $menuService->getAllCategory();
 
         return $this->render('Web/Default/index.html.php', [
-            'banner' => $banner,
-            'user' => $user
+            'banner'            => $banner,
+            'slug'              => null,
+            'user'              => $user,
+            'menuCategories'    => $menuCategories,
+            'maxPrice'          => $productService->getMaxPrice(),
+            'products'          => $productService->getAll()
         ]);
     }
 
@@ -77,6 +83,20 @@ class DefaultController extends AbstractController
 
         return $this->render('Web/footer.html.php', [
             'footerData' => $footerData
+        ]);
+    }
+
+    /**
+     * @Route("/navigation/data", name="navigation_data")
+     */
+    public function navigationData(SiteSettings $siteSettings, MenuService $menuService)
+    {
+        $user = $this->getUser();
+        $menus = $menuService->getAll();
+
+        return new JsonResponse([
+            'user' => $user,
+            'menus' => $menus,
         ]);
     }
 
@@ -225,5 +245,27 @@ class DefaultController extends AbstractController
                 ]
             ]);
         }
+    }
+
+    /**
+     * @Route("/urunler/{slug}", name="urunler")
+     */
+    public function productsAction($slug, SiteSettings $siteSettings, MenuService $menuService, ProductService $productService)
+    {
+        $menu = $menuService->getFromSlug($slug);
+        $menuCategories = $menuService->getMenuCategory($menu['id']);
+
+        $maxPrice = $productService->getMaxPrice();
+
+        $products = $productService->getAll();
+
+        return $this->render('Web/Default/index.html.php', [
+            'slug'              => $slug,
+            'banner'            => $siteSettings->getBanner(),
+            'menu'              => $menu,
+            'menuCategories'    => $menuCategories,
+            'maxPrice'          => $maxPrice,
+            'products'          => $products,
+        ]);
     }
 }

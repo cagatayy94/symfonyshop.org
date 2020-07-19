@@ -2668,16 +2668,19 @@ Theme Version:	1.1.0
 				priceLow = $('.price-range-low'),
 				priceHigh = $('.price-range-high'),
 				hiddenPriceLow = $('.hidden-price-range-low'),
-				hiddenPriceHigh = $('.hidden-price-range-high');
+				hiddenPriceHigh = $('.hidden-price-range-high'),
 
+				hiddenPriceLowStart = hiddenPriceLow.attr('data-start-value'),
+				hiddenPriceHighStart = hiddenPriceHigh.attr('data-start-value'),
+				hiddenPriceHighMax = hiddenPriceHigh.attr('data-max-value');
 			// Create Slider
 			noUiSlider.create($el[0], {
-				start: [ 50, 250 ],
+				start: [ hiddenPriceLowStart, hiddenPriceHighStart ],
 				connect: true,
 				step: 1,
 				range: {
 					'min': 0,
-					'max': 300
+					'max': parseInt(hiddenPriceHighMax)
 				}
 			});
 

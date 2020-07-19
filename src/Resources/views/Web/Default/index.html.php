@@ -5,16 +5,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <ul class="breadcrumb">
-                            <li><a href="index.html">Home</a></li>
-                            <li class="active">Shop</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <h1 class="font-weight-bold">4 Columns - Right Sidebar</h1>
-
+                        <h1 class="font-weight-bold">Ürünler - <?php echo isset($menu) ? $menu['name'] : 'Tümü'; ?></h1>
                     </div>
                 </div>
             </div>
@@ -27,16 +18,16 @@
                         <div class="card">
                             <div class="card-header accordion-header" role="tab" id="categories">
                                 <h5 class="mb-0">
-                                    <a href="#" data-toggle="collapse" data-target="#toggleCategories" aria-expanded="false" aria-controls="toggleCategories">FASHION</a>
+                                    <a href="#" data-toggle="collapse" data-target="#toggleCategories" aria-expanded="false" aria-controls="toggleCategories">KATEGORİLER</a>
                                 </h5>
                             </div>
                             <div id="toggleCategories" class="accordion-body collapse show" role="tabpanel" aria-labelledby="categories">
                                 <div class="card-body">
                                     <ul class="list list-unstyled mb-0">
-                                        <li><a href="#">Dresses</a></li>
-                                        <li><a href="#">Hats</a></li>
-                                        <li><a href="#">Accessories</a></li>
-                                        <li><a href="#">Shoes</a></li>
+                                        <li><a href="#">Tümü</a></li>
+                                        <?php foreach ($menuCategories as $key => $value): ?>
+                                            <li><a href="#"><?php echo $value['name']; ?></a></li>
+                                        <?php endforeach ?>
                                     </ul>
                                 </div>
                             </div>
@@ -44,7 +35,7 @@
                         <div class="card">
                             <div class="card-header accordion-header" role="tab" id="price">
                                 <h5 class="mb-0">
-                                    <a href="#" data-toggle="collapse" data-target="#togglePrice" aria-expanded="false" aria-controls="togglePrice">PRICE</a>
+                                    <a href="#" data-toggle="collapse" data-target="#togglePrice" aria-expanded="false" aria-controls="togglePrice">FİYAT</a>
                                 </h5>
                             </div>
                             <div id="togglePrice" class="accordion-body collapse show" role="tabpanel" aria-labelledby="price">
@@ -52,70 +43,21 @@
                                     <div class="slider-range-wrapper">
                                         <div class="slider-range mb-3" data-plugin-slider-range></div>
                                         <form class="d-flex align-items-center justify-content-between" method="get">
-                                                    <span>
-                                                        Price $<span class="price-range-low">0</span> - $<span class="price-range-high">0</span>
-                                                    </span>
-                                            <input type="hidden" class="hidden-price-range-low" name="priceLow" value="" />
-                                            <input type="hidden" class="hidden-price-range-high" name="priceHigh" value="" />
-                                            <button type="submit" class="btn btn-primary btn-h-1 font-weight-bold rounded-0">FILTER</button>
+                                            <span>
+                                                Price $<span class="price-range-low">0</span> - $<span class="price-range-high">0</span>
+                                            </span>
+                                            <input type="hidden" data-start-value="<?php echo isset($priceLow) ? $priceLow : 0 ?>" class="hidden-price-range-low" name="priceLow" value="10" />
+                                            <input type="hidden" data-max-value="<?php echo $maxPrice ?>" data-start-value="<?php echo isset($priceHigh) ? $priceHigh : $maxPrice ?>" class="hidden-price-range-high" name="priceHigh" value="1000" />
+                                            <button type="submit" class="btn btn-primary btn-h-1 font-weight-bold rounded-0">FİLTRELE</button>
                                         </form>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header accordion-header" role="tab" id="sizes">
-                                <h5 class="mb-0">
-                                    <a href="#" data-toggle="collapse" data-target="#toggleSizes" aria-expanded="false" aria-controls="toggleSizes">SIZES</a>
-                                </h5>
-                            </div>
-                            <div id="toggleSizes" class="accordion-body collapse show" role="tabpanel" aria-labelledby="sizes">
-                                <div class="card-body">
-                                    <ul class="list list-inline list-filter">
-                                        <li class="list-inline-item">
-                                            <a href="#">S</a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a href="#" class="active">M</a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a href="#">L</a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a href="#">XL</a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a href="#">2XL</a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a href="#">3XL</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header accordion-header" role="tab" id="brands">
-                                <h5 class="mb-0">
-                                    <a href="#" data-toggle="collapse" data-target="#toggleBrands" aria-expanded="false" aria-controls="toggleBrands">BRANDS</a>
-                                </h5>
-                            </div>
-                            <div id="toggleBrands" class="accordion-body collapse show" role="tabpanel" aria-labelledby="brands">
-                                <div class="card-body">
-                                    <ul class="list list-unstyled mb-0">
-                                        <li><a href="#">Adidas <span class="float-right">18</span></a></li>
-                                        <li><a href="#">Camel <span class="float-right">22</span></a></li>
-                                        <li><a href="#">Samsung Galaxy <span class="float-right">05</span></a></li>
-                                        <li><a href="#">Seiko <span class="float-right">68</span></a></li>
-                                        <li><a href="#">Sony <span class="float-right">03</span></a></li>
-                                    </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <?php if ($banner): ?>
                     <div class="image-frame image-frame-style-5 mt-1">
-                        <img height="1800" width="1500" src="web/img/banner/<?php echo $banner ?>" class="img-fluid" alt="">
+                        <img height="1800" width="1500" src="/web/img/banner/<?php echo $banner ?>" class="img-fluid" alt="">
                     </div>
                     <?php endif ?>
                 </aside>
@@ -125,227 +67,51 @@
                             <form method="get">
                                 <div class="custom-select-1">
                                     <select class="form-control border">
-                                        <option value="popularity">Sort by popularity</option>
-                                        <option value="rating">Sort by average rating</option>
-                                        <option value="date" selected="selected">Sort by newness</option>
-                                        <option value="price">Sort by price: low to high</option>
-                                        <option value="price-desc">Sort by price: high to low</option>
+                                        <option value="rating">Ortalama oylamaya göre sırala</option>
+                                        <option value="date" selected="selected">Yeniliğe göre sırala</option>
+                                        <option value="price">Fiyata göre sırala: düşükten yükseğe</option>
+                                        <option value="price-desc">Fiyata göre sırala: yüksekten düşüğe</option>
                                     </select>
                                 </div>
                             </form>
                         </div>
                         <div class="col-auto">
                             <div class="d-flex align-items-center">
-                                <span>Showing 1-9 of 60 results</span>
-                                <a href="#" class="text-color-dark text-3 ml-2" data-toggle="tooltip" data-placement="top" title="Grid"><i class="fas fa-th"></i></a>
-                                <a href="#" class="text-color-dark text-3 ml-2" data-toggle="tooltip" data-placement="top" title="List"><i class="fas fa-list-ul"></i></a>
+                                <span>1-12 / 60 sonuç gösteriliyor</span>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-
-                        <div class="col-sm-6 col-md-3 mb-4">
-                            <div class="product portfolio-item portfolio-item-style-2">
-                                <div class="image-frame image-frame-style-1 image-frame-effect-2 mb-3">
+                        <?php if ($products): ?>
+                            <?php foreach ($products as $key => $value): ?>
+                                <div class="col-sm-6 col-md-3 mb-4">
+                                    <div class="product portfolio-item portfolio-item-style-2">
+                                        <div class="image-frame image-frame-style-1 image-frame-effect-2 mb-3">
                                             <span class="image-frame-wrapper image-frame-wrapper-overlay-bottom image-frame-wrapper-overlay-light image-frame-wrapper-align-end">
                                                 <a href="shop-product-detail-right-sidebar.html">
-                                                    <img src="web/img/products/product-1.jpg" class="img-fluid" alt="">
+                                                    <img src="<?php echo $value['path'] ?>" class="img-fluid" alt="">
                                                 </a>
                                                 <span class="image-frame-action">
-                                                    <a href="#" class="btn btn-primary btn-rounded font-weight-semibold btn-v-3 btn-fs-2">ADD TO CART</a>
+                                                    <a href="#" class="btn btn-primary btn-rounded font-weight-semibold btn-v-3 btn-fs-2">SEPETE EKLE</a>
                                                 </span>
                                             </span>
-                                </div>
-                                <div class="product-info d-flex flex-column flex-lg-row justify-content-between">
-                                    <div class="product-info-title">
-                                        <h3 class="text-color-default text-2 line-height-1 mb-1"><a href="shop-product-detail-right-sidebar.html">Long Hoddie</a></h3>
-                                        <span class="price font-primary text-4"><strong class="text-color-dark">$59</strong></span>
-                                        <span class="old-price font-primary text-line-trough text-1"><strong class="text-color-default">$69</strong></span>
+                                        </div>
+                                        <div class="product-info d-flex flex-column flex-lg-row justify-content-between">
+                                            <div class="product-info-title">
+                                                <h3 class="text-color-default text-2 line-height-1 mb-1"><a href="shop-product-detail-right-sidebar.html"><?php echo $value['name'] ?></a></h3>
+                                                <span class="price font-primary text-4"><strong class="text-color-dark"><?php echo $value['price']-10 ?> TL</strong></span>
+                                                <span class="old-price font-primary text-line-trough text-1"><strong class="text-color-default"><?php echo $value['price'] ?> TL</strong></span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6 col-md-3 mb-4">
-                            <div class="product portfolio-item portfolio-item-style-2">
-                                <div class="image-frame image-frame-style-1 image-frame-effect-2 mb-3">
-                                            <span class="image-frame-wrapper image-frame-wrapper-overlay-bottom image-frame-wrapper-overlay-light image-frame-wrapper-align-end">
-                                                <a href="shop-product-detail-right-sidebar.html">
-                                                    <img src="web/img/products/product-2.jpg" class="img-fluid" alt="">
-                                                </a>
-                                                <span class="image-frame-action">
-                                                    <a href="#" class="btn btn-primary btn-rounded font-weight-semibold btn-v-3 btn-fs-2">ADD TO CART</a>
-                                                </span>
-                                            </span>
-                                </div>
-                                <div class="product-info d-flex flex-column flex-lg-row justify-content-between">
-                                    <div class="product-info-title">
-                                        <h3 class="text-color-default text-2 line-height-1 mb-1"><a href="shop-product-detail-right-sidebar.html">Leather Belt</a></h3>
-                                        <span class="price font-primary text-4"><strong class="text-color-dark">$19</strong></span>
-                                        <span class="old-price font-primary text-line-trough text-1"><strong class="text-color-default">$29</strong></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6 col-md-3 mb-4">
-                            <div class="product portfolio-item portfolio-item-style-2">
-                                <div class="image-frame image-frame-style-1 image-frame-effect-2 mb-3">
-                                            <span class="image-frame-wrapper image-frame-wrapper-overlay-bottom image-frame-wrapper-overlay-light image-frame-wrapper-align-end">
-                                                <a href="shop-product-detail-right-sidebar.html">
-                                                    <img src="web/img/products/product-3.jpg" class="img-fluid" alt="">
-                                                </a>
-                                                <span class="image-frame-action">
-                                                    <a href="#" class="btn btn-primary btn-rounded font-weight-semibold btn-v-3 btn-fs-2">ADD TO CART</a>
-                                                </span>
-                                            </span>
-                                </div>
-                                <div class="product-info d-flex flex-column flex-lg-row justify-content-between">
-                                    <div class="product-info-title">
-                                        <h3 class="text-color-default text-2 line-height-1 mb-1"><a href="shop-product-detail-right-sidebar.html">Jack Sandals</a></h3>
-                                        <span class="price font-primary text-4"><strong class="text-color-dark">$30</strong></span>
-                                        <span class="old-price font-primary text-line-trough text-1"><strong class="text-color-default">$40</strong></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6 col-md-3 mb-4">
-                            <div class="product portfolio-item portfolio-item-style-2">
-                                <div class="image-frame image-frame-style-1 image-frame-effect-2 mb-3">
-                                            <span class="image-frame-wrapper image-frame-wrapper-overlay-bottom image-frame-wrapper-overlay-light image-frame-wrapper-align-end">
-                                                <a href="shop-product-detail-right-sidebar.html">
-                                                    <img src="web/img/products/product-4.jpg" class="img-fluid" alt="">
-                                                </a>
-                                                <span class="image-frame-action">
-                                                    <a href="#" class="btn btn-primary btn-rounded font-weight-semibold btn-v-3 btn-fs-2">ADD TO CART</a>
-                                                </span>
-                                            </span>
-                                </div>
-                                <div class="product-info d-flex flex-column flex-lg-row justify-content-between">
-                                    <div class="product-info-title">
-                                        <h3 class="text-color-default text-2 line-height-1 mb-1"><a href="shop-product-detail-right-sidebar.html">Vintage Hat</a></h3>
-                                        <span class="price font-primary text-4"><strong class="text-color-dark">$79</strong></span>
-                                        <span class="old-price font-primary text-line-trough text-1"><strong class="text-color-default">$99</strong></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6 col-md-3 mb-4">
-                            <div class="product portfolio-item portfolio-item-style-2">
-                                <div class="image-frame image-frame-style-1 image-frame-effect-2 mb-3">
-                                            <span class="image-frame-wrapper image-frame-wrapper-overlay-bottom image-frame-wrapper-overlay-light image-frame-wrapper-align-end">
-                                                <a href="shop-product-detail-right-sidebar.html">
-                                                    <img src="web/img/products/product-5.jpg" class="img-fluid" alt="">
-                                                </a>
-                                                <span class="image-frame-action">
-                                                    <a href="#" class="btn btn-primary btn-rounded font-weight-semibold btn-v-3 btn-fs-2">ADD TO CART</a>
-                                                </span>
-                                            </span>
-                                </div>
-                                <div class="product-info d-flex flex-column flex-lg-row justify-content-between">
-                                    <div class="product-info-title">
-                                        <h3 class="text-color-default text-2 line-height-1 mb-1"><a href="shop-product-detail-right-sidebar.html">Timez Watch</a></h3>
-                                        <span class="price font-primary text-4"><strong class="text-color-dark">$119</strong></span>
-                                        <span class="old-price font-primary text-line-trough text-1"><strong class="text-color-default">$199</strong></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6 col-md-3 mb-4">
-                            <div class="product portfolio-item portfolio-item-style-2">
-                                <div class="image-frame image-frame-style-1 image-frame-effect-2 mb-3">
-                                            <span class="image-frame-wrapper image-frame-wrapper-overlay-bottom image-frame-wrapper-overlay-light image-frame-wrapper-align-end">
-                                                <a href="shop-product-detail-right-sidebar.html">
-                                                    <img src="web/img/products/product-6.jpg" class="img-fluid" alt="">
-                                                </a>
-                                                <span class="image-frame-action">
-                                                    <a href="#" class="btn btn-primary btn-rounded font-weight-semibold btn-v-3 btn-fs-2">ADD TO CART</a>
-                                                </span>
-                                            </span>
-                                </div>
-                                <div class="product-info d-flex flex-column flex-lg-row justify-content-between">
-                                    <div class="product-info-title">
-                                        <h3 class="text-color-default text-2 line-height-1 mb-1"><a href="shop-product-detail-right-sidebar.html">Clauren Bag</a></h3>
-                                        <span class="price font-primary text-4"><strong class="text-color-dark">$289</strong></span>
-                                        <span class="old-price font-primary text-line-trough text-1"><strong class="text-color-default">$299</strong></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6 col-md-3 mb-4">
-                            <div class="product portfolio-item portfolio-item-style-2">
-                                <div class="image-frame image-frame-style-1 image-frame-effect-2 mb-3">
-                                            <span class="image-frame-wrapper image-frame-wrapper-overlay-bottom image-frame-wrapper-overlay-light image-frame-wrapper-align-end">
-                                                <a href="shop-product-detail-right-sidebar.html">
-                                                    <img src="web/img/products/product-7.jpg" class="img-fluid" alt="">
-                                                </a>
-                                                <span class="image-frame-action">
-                                                    <a href="#" class="btn btn-primary btn-rounded font-weight-semibold btn-v-3 btn-fs-2">ADD TO CART</a>
-                                                </span>
-                                            </span>
-                                </div>
-                                <div class="product-info d-flex flex-column flex-lg-row justify-content-between">
-                                    <div class="product-info-title">
-                                        <h3 class="text-color-default text-2 line-height-1 mb-1"><a href="shop-product-detail-right-sidebar.html">Classik Sunglasses</a></h3>
-                                        <span class="price font-primary text-4"><strong class="text-color-dark">$99</strong></span>
-                                        <span class="old-price font-primary text-line-trough text-1"><strong class="text-color-default">$199</strong></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6 col-md-3 mb-4">
-                            <div class="product portfolio-item portfolio-item-style-2">
-                                <div class="image-frame image-frame-style-1 image-frame-effect-2 mb-3">
-                                            <span class="image-frame-wrapper image-frame-wrapper-overlay-bottom image-frame-wrapper-overlay-light image-frame-wrapper-align-end">
-                                                <a href="shop-product-detail-right-sidebar.html">
-                                                    <img src="web/img/products/product-8.jpg" class="img-fluid" alt="">
-                                                </a>
-                                                <span class="image-frame-action">
-                                                    <a href="#" class="btn btn-primary btn-rounded font-weight-semibold btn-v-3 btn-fs-2">ADD TO CART</a>
-                                                </span>
-                                            </span>
-                                </div>
-                                <div class="product-info d-flex flex-column flex-lg-row justify-content-between">
-                                    <div class="product-info-title">
-                                        <h3 class="text-color-default text-2 line-height-1 mb-1"><a href="shop-product-detail-right-sidebar.html">High Heels Shoes</a></h3>
-                                        <span class="price font-primary text-4"><strong class="text-color-dark">$79</strong></span>
-                                        <span class="old-price font-primary text-line-trough text-1"><strong class="text-color-default">$99</strong></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6 col-md-3 mb-4">
-                            <div class="product portfolio-item portfolio-item-style-2">
-                                <div class="image-frame image-frame-style-1 image-frame-effect-2 mb-3">
-                                            <span class="image-frame-wrapper image-frame-wrapper-overlay-bottom image-frame-wrapper-overlay-light image-frame-wrapper-align-end">
-                                                <a href="shop-product-detail-right-sidebar.html">
-                                                    <img src="web/img/products/product-9.jpg" class="img-fluid" alt="">
-                                                </a>
-                                                <span class="image-frame-action">
-                                                    <a href="#" class="btn btn-primary btn-rounded font-weight-semibold btn-v-3 btn-fs-2">ADD TO CART</a>
-                                                </span>
-                                            </span>
-                                </div>
-                                <div class="product-info d-flex flex-column flex-lg-row justify-content-between">
-                                    <div class="product-info-title">
-                                        <h3 class="text-color-default text-2 line-height-1 mb-1"><a href="shop-product-detail-right-sidebar.html">Dual Color Jacket</a></h3>
-                                        <span class="price font-primary text-4"><strong class="text-color-dark">$299</strong></span>
-                                        <span class="old-price font-primary text-line-trough text-1"><strong class="text-color-default">$399</strong></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                            <?php endforeach ?>
+                        <?php endif ?>
                     </div>
                     <hr class="mt-5 mb-4">
                     <div class="row align-items-center justify-content-between">
                         <div class="col-auto mb-3 mb-sm-0">
-                            <span>Showing 1-9 of 60 results</span>
+                            <span>1-12 / 60 sonuç gösteriliyor</span>
                         </div>
                         <div class="col-auto">
                             <nav aria-label="Page navigation example">
@@ -373,5 +139,4 @@
             </div>
         </div>
     </div>
-
 <?php $view['slots']->stop(); ?>
