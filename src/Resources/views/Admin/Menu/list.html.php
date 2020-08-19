@@ -43,21 +43,10 @@
 										<?php
 											if ($menu['category']) {
 												foreach ($menu['category'] as $key => $value) {
-
 													echo ($key+1 != count($menu['category'])) ? $value['name'].', ' : $value['name'];
-													# code...
 												}
 											}
-
-
-
-
-
-
-
-
-										?>
-											
+										?>	
 									</td>
 									<td>
 										<?php if ($admin->hasRole('menu_detail')): ?>
