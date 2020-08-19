@@ -1,1 +1,5 @@
 /* Add here all your CSS customizations */
+.custom-class-active{
+	font-weight: bold;
+	color: black;
+}
