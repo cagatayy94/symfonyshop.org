@@ -1,3 +1,9 @@
+$(document).ready(function() {
+    toastr.options = {
+      "preventDuplicates": true
+    }
+});
+
 $('#order_notice_form').on('submit', function (e) {
     e.preventDefault();
     e.stopPropagation();
@@ -199,3 +205,65 @@ $('#newsletter_form').on('submit', function (e) {
         button.removeAttr('disabled');
     }
 });
+
+$('.pagination-action').on('click', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var self = $(this);
+    var form = self.closest('form');
+
+    var currentPage = form.find('input[name="currentPage"]').val();
+
+    var requestedPage = self.attr('data-page');
+
+    if (currentPage == requestedPage) {
+        return false;
+    }else{
+        form.find('input[name="currentPage"]').val(requestedPage);
+        form.submit();
+    }
+});
+
+$('.order-filter-submit').on('change', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var self = $(this);
+    var form = self.closest('form');
+
+    var currentPage = form.find('input[name="currentPage"]').val();
+
+    var requestedPage = self.attr('data-page');
+
+    if (currentPage == requestedPage) {
+        return false;
+    }else{
+        form.find('input[name="currentPage"]').val(requestedPage);
+        form.submit();
+    }
+});
+
+$('.category-filter').on('click', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var self = $(this);
+    var form = self.closest('form');
+    var categoryId = self.attr('data-category-id');
+
+
+
+    var currentCategory = form.find('input[name="categoryId"]').val();
+
+    console.log(categoryId);
+    console.log(currentCategory);
+
+    if (categoryId == currentCategory) {
+        return false;
+    }else{
+        form.find('input[name="categoryId"]').val(categoryId);
+        form.submit();
+    }
+});
+
