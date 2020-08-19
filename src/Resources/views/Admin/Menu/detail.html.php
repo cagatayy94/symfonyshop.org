@@ -39,7 +39,7 @@
                                                 <input type="text" class="form-control required" id="name" name="name" value="<?php echo $menuDetail['name'] ?>">
                                             </div>
                                             <div class="form-group">
-                                                <h4>İzinler</h4>
+                                                <h4>Kategoriler</h4>
                                                 <?php foreach ($categories as $key => $category): ?>
                                                      <div class="form-check">
                                                         <label>
