@@ -14,16 +14,36 @@ use App\Service\Web\Product as ProductService;
 
 class DefaultController extends AbstractController
 {
-
-
     /**
      * @Route("/", name="index")
      */
-    public function index(SiteSettings $siteSettings, MenuService $menuService, ProductService $productService)
+    public function index(SiteSettings $siteSettings, MenuService $menuService, ProductService $productService, Request $request)
     {
         $banner = $siteSettings->getBanner();
         $user = $this->getUser();
         $menuCategories = $menuService->getAllCategory();
+
+        $perPage = 12;
+        $pageCount = 0;
+        $currentPage = (int) $request->request->get('currentPage', 1);
+
+        $order = $request->request->get('order');
+        $categoryId = $request->request->get('categoryId');
+        $search = $request->request->get('search');
+
+        if ($currentPage == "") {
+            $currentPage = 1;
+        }
+
+        if (!$order) {
+            $order = 'date';
+        }
+
+        $products = $productService->getAll($currentPage, $pageCount, $perPage, $order, null, $categoryId, $search);
+
+        if (!empty($products['total']) && $products['total'] > $perPage) {
+            $pageCount = ceil($products['total'] / $perPage);
+        }
 
         return $this->render('Web/Default/index.html.php', [
             'banner'            => $banner,
@@ -31,7 +51,13 @@ class DefaultController extends AbstractController
             'user'              => $user,
             'menuCategories'    => $menuCategories,
             'maxPrice'          => $productService->getMaxPrice(),
-            'products'          => $productService->getAll()
+            'products'          => $products,
+            'pageCount'         => $pageCount,
+            'currentPage'       => $currentPage,
+            'perPage'           => $perPage,
+            'order'             => $order,
+            'categoryId'        => $categoryId,
+            'search'            => $search,
         ]);
     }
 
@@ -250,22 +276,53 @@ class DefaultController extends AbstractController
     /**
      * @Route("/urunler/{slug}", name="urunler")
      */
-    public function productsAction($slug, SiteSettings $siteSettings, MenuService $menuService, ProductService $productService)
+    public function productsAction($slug, SiteSettings $siteSettings, MenuService $menuService, ProductService $productService, Request $request)
     {
+        $banner = $siteSettings->getBanner();
+        $user = $this->getUser();
+
+        $perPage = 12;
+        $pageCount = 0;
+        $currentPage = (int) $request->request->get('currentPage', 1);
+
+        $order = $request->request->get('order');
+        $categoryId = $request->request->get('categoryId');
+        $search = $request->request->get('search');
+
+        if ($currentPage == "") {
+            $currentPage = 1;
+        }
+
+        if (!$order) {
+            $order = 'date';
+        }
+
         $menu = $menuService->getFromSlug($slug);
+
+        $products = $productService->getAll($currentPage, $pageCount, $perPage, $order, $menu['id'], $categoryId, $search);
+
+        if (!empty($products['total']) && $products['total'] > $perPage) {
+            $pageCount = ceil($products['total'] / $perPage);
+        }
+
         $menuCategories = $menuService->getMenuCategory($menu['id']);
 
         $maxPrice = $productService->getMaxPrice();
 
-        $products = $productService->getAll();
-
         return $this->render('Web/Default/index.html.php', [
             'slug'              => $slug,
-            'banner'            => $siteSettings->getBanner(),
+            'banner'            => $banner,
             'menu'              => $menu,
             'menuCategories'    => $menuCategories,
             'maxPrice'          => $maxPrice,
             'products'          => $products,
+            'user'              => $user,
+            'pageCount'         => $pageCount,
+            'currentPage'       => $currentPage,
+            'perPage'           => $perPage,
+            'order'             => $order,
+            'categoryId'        => $categoryId,
+            'search'            => $search,
         ]);
     }
 }
