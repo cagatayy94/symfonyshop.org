@@ -120,7 +120,7 @@
                                                         <div class="photo-element row" style="height: 200px; border-bottom: 1px solid gray; padding: 10px; float: left ">
                                                             <div class="col-md-6">
                                                                 <button type="button" data-delete-url="<?php echo $this->get('router')->path('admin_product_image_delete', ['id' => $value['id']]) ?>" style="position: absolute; margin-bottom: 56px; margin-left: 109px;" class="btn btn-danger pull-right delete-image">Sil</button>
-                                                                <img width="150" height="150" class="img-viewer" src="<?php echo $value['path'] ?>" alt="your image" />
+                                                                <img width="150" height="150" class="img-viewer" src="<?php echo "web/img/product/".$value['path'] ?>" alt="your image" />
                                                             </div>
                                                         </div>  
                                                     <?php endforeach; ?>
