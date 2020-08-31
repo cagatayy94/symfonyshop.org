@@ -167,11 +167,17 @@ class Product
         
         $statement->execute();
 
-        $total = $statement->fetchAll();
+        $products = [];
+        foreach ($records as $key => $value) {
+            $products[$key] = $value;
+            $products[$key]['slug'] = $this->createSlugFromStringForProductName($value['name']);
+        }
 
+        $total = $statement->fetchAll();
+        
         return [
             'total' => count($total),
-            'records' => $records,
+            'records' => $products,
         ];
     }
 
