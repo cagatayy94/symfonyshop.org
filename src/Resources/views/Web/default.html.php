@@ -56,7 +56,6 @@
 <script src="/web/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
 <script src="/web/vendor/vide/vide.min.js"></script>
 <script src="/web/vendor/vivus/vivus.min.js"></script>
-<script src="/web/vendor/nouislider/nouislider.min.js"></script>
 <!-- Theme Base, Components and Settings -->
 <script src="/web/js/theme.js"></script>
 <!-- Current Page Vendor and Views -->
@@ -66,6 +65,8 @@
 <script src="/web/js/custom.js"></script>
 <!-- Theme Initialization Files -->
 <script src="/web/js/theme.init.js"></script>
+<!-- Examples -->
+<script src="/web/js/examples/examples.gallery.js"></script>
 <!-- toastr js -->
 <script src="/toastr/toastr.min.js"></script>
 <?php $view['slots']->output('js'); ?>
