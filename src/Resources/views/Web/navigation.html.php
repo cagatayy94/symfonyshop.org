@@ -40,9 +40,9 @@
                 </div>
                 <div class="header-column justify-content-end">
                     <div class="header-search-expanded">
-                        <form method="GET">
+                        <form method="POST" action="/">
                             <div class="input-group bg-light border">
-                                <input type="text" class="form-control text-4" name="s" placeholder="I'm looking for..." aria-label="I'm looking for...">
+                                <input type="text" class="form-control text-4" name="search" placeholder="I'm looking for..." aria-label="I'm looking for...">
                                 <span class="input-group-btn">
                                     <button class="btn" type="submit"><i class="lnr lnr-magnifier text-color-dark"></i></button>
                                 </span>
