@@ -83,7 +83,7 @@ class Product
         }else{
             $recordsSql .= "
                 ORDER BY
-                    p.created_at";
+                    p.created_at DESC";
         }
 
         // limit sql
