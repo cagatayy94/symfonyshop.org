@@ -86,11 +86,11 @@
                             <button type="button" data-container="body" data-trigger="focus" data-toggle="popover" data-placement="right" data-content="Sepete eklemek için giriş yapınız." class="add-to-cart btn btn-primary btn-rounded font-weight-semibold btn-v-3 btn-h-2 btn-fs-2 ml-3" data-original-title="" title="">SEPETE EKLE</button>
                         </form>
                         <hr class="my-4">
-                        <form action="index.php?Page=40" class="shop-cart d-flex align-items-center" method="post" enctype="multipart/form-data">
-                            <input type="hidden" value="76" name="productId">
-                            <input type="hidden" value="" name="userId">
-                            <button type="button" value="FAVORİLERE EKLE" data-container="body" data-trigger="focus" data-toggle="popover" data-placement="right" data-content="Favorilere eklemek için giriş yapınız." class="add-to-cart btn btn-primary btn-rounded font-weight-semibold btn-v-3 btn-h-2 btn-fs-2 ml-3" data-original-title="" title="">FAVORİLERE EKLE</button>
-                        </form>
+                            <?php if ($user): ?>
+                                <button type="button" data-url="<?php echo $this->get('router')->path('add_favorite') ?>" data-product-id="<?php echo $id ?>" value="FAVORİLERE EKLE" data-container="body" data-trigger="focus" class="add-to-cart btn btn-primary btn-rounded font-weight-semibold btn-v-3 btn-h-2 btn-fs-2 ml-3">FAVORİLERE EKLE</button>
+                            <?php else: ?>
+                                <button type="button" value="FAVORİLERE EKLE" data-container="body" data-trigger="focus" data-toggle="popover" data-placement="right" data-content="Favorilere eklemek için giriş yapınız." class="btn btn-primary btn-rounded font-weight-semibold btn-v-3 btn-h-2 btn-fs-2 ml-3" data-original-title="" title="">FAVORİLERE EKLE</button>
+                            <?php endif; ?>
                         <hr class="my-4">
                     </div>
                 </div>

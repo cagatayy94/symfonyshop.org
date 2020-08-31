@@ -252,12 +252,7 @@ $('.category-filter').on('click', function (e) {
     var form = self.closest('form');
     var categoryId = self.attr('data-category-id');
 
-
-
     var currentCategory = form.find('input[name="categoryId"]').val();
-
-    console.log(categoryId);
-    console.log(currentCategory);
 
     if (categoryId == currentCategory) {
         return false;

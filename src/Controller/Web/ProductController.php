@@ -16,7 +16,7 @@ class ProductController extends AbstractController
     /**
      * @Route("/product-detail/{id}", name="product_detail" )
      */
-    public function productDetail(ProductService $productService, SiteSettings $siteSettings, Request $request)
+    public function productDetailAction(ProductService $productService, SiteSettings $siteSettings, Request $request)
     {
         $id = $request->attributes->get('id');
         $productDetail = $productService->getDetail($id);
@@ -34,5 +34,28 @@ class ProductController extends AbstractController
             'id' => $id,
             'user' => $user,
         ]);
+    }
+
+    /**
+     * @Route("/add/favorite", name="add_favorite")
+     */
+    public function addFavoriteAction(Request $request, ProductService $productService)
+    {
+        $productId = $request->request->get('productId');
+        $user = $this->getUser();
+        try {
+            $productService->addFavorite($productId, $user->getId());
+
+            return new JsonResponse([
+                'success' => true,
+            ]);
+        } catch (\Exception $exception) {
+            return new JsonResponse([
+                'success' => false,
+                'error' => [
+                    'message' => $exception->getMessage()
+                ]
+            ]);
+        }
     }
 }

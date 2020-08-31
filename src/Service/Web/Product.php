@@ -318,4 +318,77 @@ class Product
 
         return $product;
     }
+
+    public function addFavorite($productId, $userId)
+    {
+        $logDetails = $this->getArguments(__FUNCTION__, func_get_args());
+
+        $logFullDetails = [
+            'entity' => 'Product',
+            'activity' => 'addFavorite',
+            'activityId' => 0,
+            'details' => $logDetails
+        ];
+
+        $connection = $this->connection;
+
+        $productId = (int) $productId;
+        $userId = (int) $userId;
+
+        try {
+            if (!$productId) {
+                throw new \InvalidArgumentException('Ürün bulunamadı');
+            }
+
+            if (!$userId) {
+                throw new \InvalidArgumentException('Kullanıcı bulunamadı');
+            }
+
+            $sql = "
+                SELECT 
+                    id
+                FROM
+                    user_favorite
+                WHERE
+                    product_id = :product_id
+                AND
+                    user_account_id = :user_account_id";
+
+            $statement = $connection->prepare($sql);
+
+            $statement->bindValue('product_id', $productId);
+            $statement->bindValue('user_account_id', $userId);
+
+            $statement->execute();
+
+            $favoriteExist = $statement->fetch();
+
+            if ($favoriteExist) {
+                throw new \InvalidArgumentException("Ürün zaten favorilere ekli durumda");
+            }
+
+            $sql = "
+                INSERT INTO user_favorite
+                    (product_id, user_account_id)
+                VALUES
+                    (:product_id, :user_account_id)";
+
+            $statement = $connection->prepare($sql);
+
+            $statement->bindValue('product_id', $productId);
+            $statement->bindValue('user_account_id', $userId);
+
+            $statement->execute();
+
+            $this->logger->info('Added favorite', $logFullDetails);
+        } catch (\InvalidArgumentException $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+            $this->logger->error('Could not added favorite', $logFullDetails);
+            throw $exception;
+        } catch (\Exception $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+            $this->logger->error('Could not added favorite', $logFullDetails);
+            throw new \Exception("Şu an bu talebinizi gerçekleştiremiyoruz lütfen daha sonra tekrar deneyiniz.");            
+        }
+    }
 }
