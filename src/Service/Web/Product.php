@@ -193,4 +193,123 @@ class Product
 
         return $statement->fetchColumn();
     }
+
+    public function getDetail($id)
+    {
+        $connection = $this->connection;
+
+        $sql = "
+            UPDATE
+                product p
+            SET
+                view = view+1
+            WHERE
+                id = :product_id;";
+
+        $statement = $connection->prepare($sql);
+
+        $statement->bindValue('product_id', $id);
+
+        $statement->execute();
+
+        $sql = "
+            SELECT
+                p.name,
+                price,
+                created_at,
+                tax,
+                description,
+                variant_title,
+                cargo_price,
+                view,
+                json_agg(pv.name) variant_name,
+                json_agg(pv.stock) variant_stock,
+                json_agg(pv.id) variant_id
+            FROM
+                product p
+            LEFT JOIN
+                product_variant pv on p.id = pv.product_id
+            WHERE
+                p.is_deleted = false
+            AND
+                p.id = :product_id
+            GROUP BY
+                p.id;";
+
+        $statement = $connection->prepare($sql);
+
+        $statement->bindValue('product_id', $id);
+
+        $statement->execute();
+
+        $product = $statement->fetch();
+
+        if (!$product) {
+            return false;
+        }
+
+        //get product rate
+        $sql = "
+            SELECT
+                AVG(pc.rate)
+            FROM
+                product_comment pc
+            WHERE
+                pc.product_id = :product_id";
+
+        $statement = $connection->prepare($sql);
+
+        $statement->bindValue('product_id', $id);
+
+        $statement->execute();
+
+        $product['rate'] = $statement->fetchColumn();
+
+        //get product photos
+        $sql = "
+            SELECT
+                pp.path
+            FROM
+                product p
+            LEFT JOIN
+                product_photo pp on p.id = pp.product_id
+            WHERE
+                p.is_deleted = false
+            AND
+                pp.is_deleted = false
+            AND
+                p.id = :product_id";
+
+        $statement = $connection->prepare($sql);
+
+        $statement->bindValue('product_id', $id);
+
+        $statement->execute();
+
+        $product['photos'] = $statement->fetchAll(\PDO::FETCH_COLUMN);
+
+        //get product reviews
+        $sql = "
+            SELECT
+                pc.created_at,
+                pc.comment,
+                pc.rate,
+                ua.name
+            FROM
+                product_comment pc
+            LEFT JOIN
+                user_account ua ON pc.user_id = ua.id
+            WHERE
+                pc.product_id = :product_id";
+
+        $statement = $connection->prepare($sql);
+
+        $statement->bindValue('product_id', $id);
+
+        $statement->execute();
+
+        $product['comments'] = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+        return $product;
+    }
 }
