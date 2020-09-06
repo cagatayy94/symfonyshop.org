@@ -30,6 +30,8 @@ class DefaultController extends AbstractController
         $order = $request->request->get('order');
         $categoryId = $request->request->get('categoryId');
         $search = $request->request->get('search');
+        $priceLow = $request->request->get('priceLow');
+        $priceHigh = $request->request->get('priceHigh');
 
         if ($currentPage == "") {
             $currentPage = 1;
@@ -39,7 +41,15 @@ class DefaultController extends AbstractController
             $order = 'date';
         }
 
-        $products = $productService->getAll($currentPage, $pageCount, $perPage, $order, null, $categoryId, $search);
+        if ($priceLow == "") {
+            $priceLow = null;
+        }
+
+        if ($priceHigh == "") {
+            $priceHigh = null;
+        }
+
+        $products = $productService->getAll($currentPage, $pageCount, $perPage, $order, null, $categoryId, $search, $priceHigh, $priceLow);
 
         if (!empty($products['total']) && $products['total'] > $perPage) {
             $pageCount = ceil($products['total'] / $perPage);
@@ -58,6 +68,8 @@ class DefaultController extends AbstractController
             'order'             => $order,
             'categoryId'        => $categoryId,
             'search'            => $search,
+            'priceLow'          => $priceLow,
+            'priceHigh'         => $priceHigh,
         ]);
     }
 
@@ -288,6 +300,8 @@ class DefaultController extends AbstractController
         $order = $request->request->get('order');
         $categoryId = $request->request->get('categoryId');
         $search = $request->request->get('search');
+        $priceLow = $request->request->get('priceLow');
+        $priceHigh = $request->request->get('priceHigh');
 
         if ($currentPage == "") {
             $currentPage = 1;
@@ -297,9 +311,17 @@ class DefaultController extends AbstractController
             $order = 'date';
         }
 
+        if ($priceLow == "") {
+            $priceLow = null;
+        }
+
+        if ($priceHigh == "") {
+            $priceHigh = null;
+        }
+
         $menu = $menuService->getFromSlug($slug);
 
-        $products = $productService->getAll($currentPage, $pageCount, $perPage, $order, $menu['id'], $categoryId, $search);
+        $products = $productService->getAll($currentPage, $pageCount, $perPage, $order, $menu['id'], $categoryId, $search, $priceHigh, $priceLow);
 
         if (!empty($products['total']) && $products['total'] > $perPage) {
             $pageCount = ceil($products['total'] / $perPage);
@@ -323,6 +345,8 @@ class DefaultController extends AbstractController
             'order'             => $order,
             'categoryId'        => $categoryId,
             'search'            => $search,
+            'priceLow'          => $priceLow,
+            'priceHigh'         => $priceHigh,
         ]);
     }
 }

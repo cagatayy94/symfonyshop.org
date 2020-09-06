@@ -68,6 +68,18 @@ class Product
                     LOWER(p.description) LIKE (:search)";
         }
 
+        if ($maxPrice) {
+            $recordsSql.="
+                AND
+                    p.price <= :max_price";
+        }
+
+        if ($minPrice) {
+            $recordsSql.="
+                AND
+                    p.price >= :min_price";
+        }
+
         $recordsSql.="
             GROUP BY
                 p.id";
@@ -106,6 +118,14 @@ class Product
 
         if ($search) {
             $statement->bindValue('search', '%'.$search.'%');
+        }
+
+        if ($maxPrice) {
+            $statement->bindValue('max_price', intval($maxPrice));
+        }
+
+        if ($minPrice) {
+            $statement->bindValue('min_price', intval($minPrice));
         }
         
         $statement->execute();
@@ -147,6 +167,18 @@ class Product
                     LOWER(p.description) LIKE (:search)";
         }
 
+        if ($maxPrice) {
+            $totalSql.="
+                AND
+                    p.price <= :max_price";
+        }
+
+        if ($minPrice) {
+            $totalSql.="
+                AND
+                    p.price >= :min_price";
+        }
+
         $totalSql.="
             GROUP BY
                 p.id "; 
@@ -163,6 +195,14 @@ class Product
 
         if ($search) {
             $statement->bindValue('search', '%'.$search.'%');
+        }
+
+        if ($maxPrice) {
+            $statement->bindValue('max_price', intval($maxPrice));
+        }
+
+        if ($minPrice) {
+            $statement->bindValue('min_price', intval($minPrice));
         }
         
         $statement->execute();

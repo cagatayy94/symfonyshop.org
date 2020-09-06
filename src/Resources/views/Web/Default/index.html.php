@@ -62,7 +62,7 @@
                                                 </span>
                                                 <input type="hidden" data-start-value="<?php echo isset($priceLow) ? $priceLow : 0 ?>" class="hidden-price-range-low" name="priceLow" value="10" />
                                                 <input type="hidden" data-max-value="<?php echo $maxPrice ?>" data-start-value="<?php echo isset($priceHigh) ? $priceHigh : $maxPrice ?>" class="hidden-price-range-high" name="priceHigh" value="1000" />
-                                                <button type="button" class="btn btn-primary btn-h-1 font-weight-bold rounded-0 price-filter-submit">FİLTRELE</button>
+                                                <button type="submit" class="btn btn-primary btn-h-1 font-weight-bold rounded-0 price-filter-submit">FİLTRELE</button>
                                             </form>
                                         </div>
                                     </div>
@@ -110,8 +110,8 @@
                                             <div class="product-info d-flex flex-column flex-lg-row justify-content-between">
                                                 <div class="product-info-title">
                                                     <h3 class="text-color-default text-2 line-height-1 mb-1"><a href="shop-product-detail-right-sidebar.html"><?php echo $value['name'] ?></a></h3>
-                                                    <span class="price font-primary text-4"><strong class="text-color-dark"><?php echo $value['price']-10 ?> TL</strong></span>
-                                                    <span class="old-price font-primary text-line-trough text-1"><strong class="text-color-default"><?php echo $value['price'] ?> TL</strong></span>
+                                                    <span class="price font-primary text-4"><strong class="text-color-dark"><?php echo $value['price'] ?> TL</strong></span>
+                                                    <span class="old-price font-primary text-line-trough text-1"><strong class="text-color-default"><?php echo $value['price']+10 ?> TL</strong></span>
                                                 </div>
                                             </div>
                                         </div>
