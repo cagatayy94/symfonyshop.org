@@ -332,7 +332,7 @@ function updateCartTotalAndQuantity(){
         success: function (result) {
             if (result.success) {
                 $('#cart-quantity').html(result.data[0].count);
-                $('#cart-total').html(parseFloat(result.data[0].sum).toFixed(2));                
+                $('#cart-total').html(parseFloat(result.data[0].sum ? result.data[0].sum : 0).toFixed(2)+" ₺");                
             }
         }
     });
@@ -370,9 +370,9 @@ function updateCart(){
 
                 generateCartItems(result.data).done(function(e){
                     $('#cart-table-tbody').html(cartItems);
-                    $('.cart-total-value').html(grandTotal.toFixed(2));
-                    $('.cart-total-value-cargo').html(totalCargoPrice.toFixed(2));
-                    $('.cart-total-value-grand').html((grandTotal+totalCargoPrice).toFixed(2));
+                    $('.cart-total-value').html(grandTotal.toFixed(2)+" ₺");
+                    $('.cart-total-value-cargo').html(totalCargoPrice.toFixed(2)+" ₺");
+                    $('.cart-total-value-grand').html((grandTotal+totalCargoPrice).toFixed(2)+" ₺");
                 });
                 updateCartTotalAndQuantity();
             }
