@@ -54,7 +54,7 @@
                                             <span class="cart-total-label">Sepet Toplamı</span>
                                         </td>
                                         <td>
-                                            <span class="cart-total-value"><?php //echo $grandTotal; ?></span>
+                                            <span class="cart-total-value"></span>
                                         </td>
                                     </tr>
                                     <tr>
@@ -62,7 +62,7 @@
                                             <span class="cart-total-label">Kargo Ücreti</span>
                                         </td>
                                         <td>
-                                            <span class="cart-total-value-cargo"><?php //echo $totalCargoPrice; ?></span>
+                                            <span class="cart-total-value-cargo"></span>
                                         </td>
                                     </tr>
                                     <tr class="border-bottom-0">
@@ -70,14 +70,14 @@
                                             <span class="cart-total-label">Toplam</span>
                                         </td>
                                         <td>
-                                            <span class="cart-total-value-grand text-color-primary text-4"><?php //echo $grandTotal + $totalCargoPrice ?></span>
+                                            <span class="cart-total-value-grand text-color-primary text-4"></span>
                                         </td>
                                     </tr>
                                     <tr class="border-bottom-0">
                                         <td colspan="6" class="px-0">
                                             <div class="row mx-0">
                                                 <div class="col-md-12 text-right px-0">
-                                                    <a href="" class="btn btn-primary btn-rounded font-weight-bold btn-h-2 btn-v-3">ALIŞVERİŞE DEVAM</a>
+                                                    <a href="<?php echo $this->get('router')->path('cart_check_out') ?>" class="btn btn-primary btn-rounded font-weight-bold btn-h-2 btn-v-3">ALIŞVERİŞE DEVAM</a>
                                                 </div>
                                             </div>
                                         </td>
