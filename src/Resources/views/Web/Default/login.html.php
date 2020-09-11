@@ -73,7 +73,7 @@
                                 <div class="form-check checkbox-custom">
                                     <input class="form-check-input required" name="agreement" value="1" type="checkbox" required id="agreement">
                                     <label class="form-check-label" for="register-agreement">
-                                        <a href="<?php echo $this->get('router')->path('uyelik-sozlesmesi'); ?>" target="_blank">Kullanıcı Sözleşmesini</a> Okudum ve Onaylıyorum.
+                                        <a href="<?php echo $this->get('router')->path('sign_up_aggreement'); ?>" target="_blank">Kullanıcı Sözleşmesini</a> Okudum ve Onaylıyorum.
                                     </label>
                                 </div>
                             </div>

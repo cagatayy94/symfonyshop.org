@@ -139,98 +139,114 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/hakkimizda", name="hakkimizda")
+     * @Route("/hakkimizda", name="about_us")
      */
     public function aboutUs(SiteSettings $siteSettings)
     {
+        $user = $this->getUser();
         $aboutUs = $siteSettings->getAgreementString('about_us');
 
         return $this->render('Web/Strings/about-us.html.php', [
-            'aboutUs' => $aboutUs
+            'aboutUs' => $aboutUs,
+            'user' => $user
         ]);
     }
 
     /**
-     * @Route("/uyelik-sozlesmesi", name="uyelik-sozlesmesi")
+     * @Route("/uyelik-sozlesmesi", name="sign_up_aggreement")
      */
     public function signUpAgreement(SiteSettings $siteSettings)
     {
+        $user = $this->getUser();
         $signUpAgreement = $siteSettings->getAgreementString('sign_up_agreement');
 
         return $this->render('Web/Strings/sign_up_agreement.html.php', [
-            'signUpAgreement' => $signUpAgreement
+            'signUpAgreement' => $signUpAgreement,
+            'user' => $user,
         ]);
     }
 
     /**
-     * @Route("/kullanim-kosullari", name="kullanim-kosullari")
+     * @Route("/kullanim-kosullari", name="terms_of_use")
      */
     public function termsOfUse(SiteSettings $siteSettings)
     {
+        $user = $this->getUser();
         $termsOfUse = $siteSettings->getAgreementString('terms_of_use');
 
         return $this->render('Web/Strings/terms_of_use.html.php', [
-            'termsOfUse' => $termsOfUse
+            'termsOfUse' => $termsOfUse,
+            'user' => $user
         ]);
     }
 
     /**
-     * @Route("/gizlilik-sozlesmesi", name="gizlilik-sozlesmesi")
+     * @Route("/gizlilik-sozlesmesi", name="confidentiality_agreement")
      */
     public function confidentialityAgreement(SiteSettings $siteSettings)
     {
+        $user = $this->getUser();
         $confidentialityAgreement = $siteSettings->getAgreementString('confidentiality_agreement');
 
         return $this->render('Web/Strings/confidentiality_agreement.html.php', [
-            'confidentialityAgreement' => $confidentialityAgreement
+            'confidentialityAgreement' => $confidentialityAgreement,
+            'user' => $user
         ]);
     }
 
     /**
-     * @Route("/mesafeli-satis-sozlesmesi", name="mesafeli-satis-sozlesmesi")
+     * @Route("/mesafeli-satis-sozlesmesi", name="distant_sale_agreement")
      */
     public function distantSaleAgreement(SiteSettings $siteSettings)
     {
+        $user = $this->getUser();
         $distantSaleAgreement = $siteSettings->getAgreementString('distant_sales_agreement');
 
         return $this->render('Web/Strings/distant_sale_agreement.html.php', [
-            'distantSaleAgreement' => $distantSaleAgreement
+            'distantSaleAgreement' => $distantSaleAgreement,
+            'user' => $user
         ]);
     }
 
     /**
-     * @Route("/teslimatlar", name="teslimatlar")
+     * @Route("/teslimatlar", name="deliverables")
      */
     public function deliverables(SiteSettings $siteSettings)
     {
+        $user = $this->getUser();
         $deliverables = $siteSettings->getAgreementString('deliverables');
-
+        
         return $this->render('Web/Strings/deliverables.html.php', [
-            'deliverables' => $deliverables
+            'deliverables' => $deliverables,
+            'user' => $user
         ]);
     }
 
     /**
-     * @Route("/iptal-iade-degisiklik", name="iptal-iade-degisiklik")
+     * @Route("/iptal-iade-degisiklik", name="cancel_refund_change")
      */
     public function cancelRefundChange(SiteSettings $siteSettings)
     {
+        $user = $this->getUser();
         $cancelRefundChange = $siteSettings->getAgreementString('cancel_refund_change');
 
         return $this->render('Web/Strings/cancel_refund_change.html.php', [
-            'cancelRefundChange' => $cancelRefundChange
+            'cancelRefundChange' => $cancelRefundChange,
+            'user' => $user
         ]);
     }
 
     /**
-     * @Route("/banka-hesaplarimiz", name="banka-hesaplarimiz")
+     * @Route("/banka-hesaplarimiz", name="bank_accounts")
      */
     public function bankAccounts(SiteSettings $siteSettings)
     {
+        $user = $this->getUser();
         $bankAccounts = $siteSettings->getBankAccounts();
 
         return $this->render('Web/Strings/bank_accounts.html.php', [
-            'bankAccounts' => $bankAccounts
+            'bankAccounts' => $bankAccounts,
+            'user' => $user
         ]);
     }
 
@@ -239,22 +255,26 @@ class DefaultController extends AbstractController
      */
     public function faq(SiteSettings $siteSettings)
     {
+        $user = $this->getUser();
         $sss = $siteSettings->getfaq();
         
         return $this->render('Web/Strings/faq.html.php', [
-            'sss' => $sss
+            'sss' => $sss,
+            'user' => $user
         ]);
     }
 
     /**
-     * @Route("/iletisim", name="iletisim")
+     * @Route("/iletisim", name="contact")
      */
     public function contactAction(SiteSettings $siteSettings)
     {
+        $user = $this->getUser();
         $siteSettings = $siteSettings->getFooterData();
-        
+
         return $this->render('Web/Strings/contact.html.php', [
-            'siteSettings' => $siteSettings
+            'siteSettings' => $siteSettings,
+            'user' => $user
         ]);
     }
 

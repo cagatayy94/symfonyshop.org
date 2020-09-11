@@ -38,11 +38,11 @@
             <div class="col-lg-2 mb-4 mb-lg-0">
                 <h2 class="text-3 mb-3">Kurumsal</h2>
                 <ul class="list list-icon list-unstyled">
-                    <li class="mb-2"><i class="fas fa-angle-right mr-2 ml-1"></i> <a href="hakkimizda">Hakkımızda</a></li>
-                    <li class="mb-2"><i class="fas fa-angle-right mr-2 ml-1"></i> <a href="banka-hesaplarimiz">Banka Hesaplarımız</a></li>
+                    <li class="mb-2"><i class="fas fa-angle-right mr-2 ml-1"></i> <a href="<?php echo $this->get('router')->path('about_us'); ?>">Hakkımızda</a></li>
+                    <li class="mb-2"><i class="fas fa-angle-right mr-2 ml-1"></i> <a href="<?php echo $this->get('router')->path('bank_accounts'); ?>">Banka Hesaplarımız</a></li>
                     <li class="mb-2"><i class="fas fa-angle-right mr-2 ml-1"></i> <a href="<?php echo $this->get('router')->path('order_notice'); ?>">Havale Bildirim Formu</a></li>
                     <li class="mb-2"><i class="fas fa-angle-right mr-2 ml-1"></i> <a href="kargom-nerede">Kargo Nerede?</a></li>
-                    <li class="mb-2"><i class="fas fa-angle-right mr-2 ml-1"></i> <a href="iletisim">İletişim</a></li>
+                    <li class="mb-2"><i class="fas fa-angle-right mr-2 ml-1"></i> <a href="<?php echo $this->get('router')->path('contact'); ?>">İletişim</a></li>
                 </ul>
             </div>
             <div class="col-lg-2 mb-4 mb-lg-0">
@@ -56,12 +56,12 @@
             <div class="col-lg-3 mb-4 mb-lg-0">
                 <h2 class="text-3 mb-3">Sözleşmeler</h2>
                 <ul class="list list-icon list-unstyled">
-                    <li class="mb-2"><i class="fas fa-angle-right mr-2 ml-1"></i> <a href="uyelik-sozlesmesi">Üyelik Sözleşmesi</a></li>
-                    <li class="mb-2"><i class="fas fa-angle-right mr-2 ml-1"></i> <a href="kullanim-kosullari">Kullanım Koşulları</a></li>
-                    <li class="mb-2"><i class="fas fa-angle-right mr-2 ml-1"></i> <a href="gizlilik-sozlesmesi">Gizlilik Sözleşmesi</a></li>
-                    <li class="mb-2"><i class="fas fa-angle-right mr-2 ml-1"></i> <a href="mesafeli-satis-sozlesmesi">Mesafeli Satış Sözleşmesi</a></li>
-                    <li class="mb-2"><i class="fas fa-angle-right mr-2 ml-1"></i> <a href="teslimatlar">Teslimatlar</a></li>
-                    <li class="mb-2"><i class="fas fa-angle-right mr-2 ml-1"></i> <a href="iptal-iade-degisiklik">İptal &amp; İade &amp; Değişim</a></li>
+                    <li class="mb-2"><i class="fas fa-angle-right mr-2 ml-1"></i> <a href="<?php echo $this->get('router')->path('sign_up_aggreement'); ?>">Üyelik Sözleşmesi</a></li>
+                    <li class="mb-2"><i class="fas fa-angle-right mr-2 ml-1"></i> <a href="<?php echo $this->get('router')->path('terms_of_use'); ?>">Kullanım Koşulları</a></li>
+                    <li class="mb-2"><i class="fas fa-angle-right mr-2 ml-1"></i> <a href="<?php echo $this->get('router')->path('confidentiality_agreement'); ?>">Gizlilik Sözleşmesi</a></li>
+                    <li class="mb-2"><i class="fas fa-angle-right mr-2 ml-1"></i> <a href="<?php echo $this->get('router')->path('distant_sale_agreement'); ?>">Mesafeli Satış Sözleşmesi</a></li>
+                    <li class="mb-2"><i class="fas fa-angle-right mr-2 ml-1"></i> <a href="<?php echo $this->get('router')->path('deliverables'); ?>">Teslimatlar</a></li>
+                    <li class="mb-2"><i class="fas fa-angle-right mr-2 ml-1"></i> <a href="<?php echo $this->get('router')->path('cancel_refund_change'); ?>">İptal &amp; İade &amp; Değişim</a></li>
                 </ul>
             </div>
 
