@@ -634,4 +634,159 @@ class User
             throw new \Exception("Bir sorun oluştu.");            
         }
     }
+
+    /**
+     * Change Password
+     *
+     * @param user object $user
+     * @param current password $currentPassword
+     * @param new password $newPassword
+     * @param new password repeat $newPasswordRepeat
+     * @throws \Exception
+     */
+    public function changePasswordOnProfile($user, $currentPassword, $newPassword, $newPasswordRepeat)
+    {
+        $logDetails = $this->getArguments(__FUNCTION__, func_get_args());
+
+        $logFullDetails = [
+            'entity' => 'User',
+            'activity' => 'changePasswordOnProfile',
+            'activityId' => 0,
+            'details' => $logDetails
+        ];
+
+        try {
+            if (empty($user)) {
+                throw new \InvalidArgumentException("Kullanıcı bulunamadı");
+            }
+
+            if (empty($currentPassword)) {
+                throw new \InvalidArgumentException("Lütfen mevcut parolanızı giriniz");
+            }
+
+            if (empty($newPassword)) {
+                throw new \InvalidArgumentException("Lütfen yeni parolanızı giriniz");
+            }
+
+            if (empty($newPasswordRepeat)) {
+                throw new \InvalidArgumentException("Lütfen yeni parolanızın tekrarını giriniz");
+            }
+
+            if ($newPasswordRepeat != $newPassword) {
+                throw new \InvalidArgumentException("Parolalar uyuşmuyor");
+            }
+
+            $isPasswordValid = $this->passwordEncoder->isPasswordValid($user, $currentPassword);
+
+            if (!$isPasswordValid) {
+                throw new \InvalidArgumentException("Parolanızı yanlış girdiniz");
+            }
+
+            $encodedNewPassword = $this->passwordEncoder->encodePassword($user, $newPassword);
+
+            $user->setPassword($encodedNewPassword);
+
+            $statement = $this->connection->prepare('
+                UPDATE
+                    user_account
+                SET
+                    password = :password
+                WHERE
+                    id = :id
+            ');
+
+            $statement->bindValue(':password', $encodedNewPassword);
+            $statement->bindValue(':id', $user->getId());
+            $statement->execute();
+
+            $logFullDetails['activityId'] = $user->getId();
+            $this->logger->info('Changed user password', $logFullDetails);
+        } catch (\InvalidArgumentException $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+            $this->logger->error('Could not changed user password', $logFullDetails);
+            throw $exception;
+        } catch (\Exception $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+            $this->logger->error('Could not changed user password', $logFullDetails);
+            throw new \Exception("Bir sorun oluştu.");            
+        }
+    }
+
+    /**
+     * Change Password
+     *
+     * @param user object $user
+     * @param mobile $mobile
+     * @throws \Exception
+     */
+    public function changeMobileOnProfile($user, $mobile)
+    {
+        $logDetails = $this->getArguments(__FUNCTION__, func_get_args());
+
+        $logFullDetails = [
+            'entity' => 'User',
+            'activity' => 'changeMobileOnProfile',
+            'activityId' => 0,
+            'details' => $logDetails
+        ];
+
+        try {
+
+            $mobile = $this->formatMobileNumber($mobile);
+
+            if (empty($user)) {
+                throw new \InvalidArgumentException("Kullanıcı bulunamadı");
+            }
+
+            if (empty($mobile)) {
+                throw new \InvalidArgumentException("Lütfen mevcut telefon belirtiniz");
+            }
+
+            //there is a phone ?
+            $mobileCount = $this->connection->executeQuery('
+                    SELECT
+                        COUNT(*)
+                    FROM
+                        user_account ua
+                    WHERE
+                        ua.mobile = :mobile
+                    AND
+                        ua.is_deleted = FALSE
+                ', [
+                    'mobile' => $mobile,
+                ]
+            )->fetchColumn();
+
+            if ($mobileCount > 0) {
+                throw new \InvalidArgumentException('Belirttiğiniz numara başka bir kişiye kayıtlı');
+            }
+
+            $user->setMobile($mobile);
+
+            $statement = $this->connection->prepare('
+                UPDATE
+                    user_account
+                SET
+                    mobile = :mobile
+                WHERE
+                    id = :id
+            ');
+
+            $statement->bindValue(':mobile', $mobile);
+            $statement->bindValue(':id', $user->getId());
+            $statement->execute();
+
+            $logFullDetails['activityId'] = $user->getId();
+            $this->logger->info('Changed user mobile', $logFullDetails);
+        } catch (\InvalidArgumentException $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+            $this->logger->error('Could not changed user mobile', $logFullDetails);
+            throw $exception;
+        } catch (\Exception $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+            $this->logger->error('Could not changed user mobile', $logFullDetails);
+            throw new \Exception($exception->getMessage());            
+            throw new \Exception("Bir sorun oluştu.");            
+        }
+    }
 }
