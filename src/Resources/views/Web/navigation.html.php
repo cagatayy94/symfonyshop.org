@@ -14,7 +14,7 @@
                                 <a href="favorilerim" class="nav-link">FAVORİLERİM</a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">HESABIM</a>
+                                <a href="<?php echo $this->get('router')->path('profile') ?>" class="nav-link">HESABIM</a>
                             </li>
                             <li class="nav-item">
                                 <a href="<?php echo $this->get('router')->path('logout'); ?>" class="nav-link">ÇIKIŞ YAP</a>
