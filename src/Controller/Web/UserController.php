@@ -196,4 +196,70 @@ class UserController extends AbstractController
             ]);
         }
     }
+
+    /**
+     * @Route("/profilim", name="profile")
+     */
+    public function profileAction(Request $request, UserService $userService)
+    {
+        $user = $this->getUser();
+    
+        return $this->render('Web/User/user-profile.html.php', [
+            'user' => $user,
+        ]);
+    }
+
+    /**
+     * @Route("/change-password-on-profile", name="change_password_on_profile")
+     */
+    public function changePasswordOnProfileAction(Request $request, UserService $userService)
+    {
+        $currentPassword = $request->request->get('current_password');
+        $newPassword = $request->request->get('new_password');
+        $newPasswordRepeat = $request->request->get('new_password_repeat');
+
+        $user = $this->getUser();
+
+        try {
+            $userService->changePasswordOnProfile($user, $currentPassword, $newPassword, $newPasswordRepeat);
+
+            return new JsonResponse([
+                'success' => true,
+            ]);
+        } catch (\Exception $exception) {
+            return new JsonResponse([
+                'success' => false,
+                'error' => [
+                    'message' => $exception->getMessage()
+                ]
+            ]);
+        }
+    }
+
+    /**
+     * @Route("/change-mobile-on-profile", name="change_mobile_on_profile")
+     */
+    public function changeMobileOnProfileAction(Request $request, UserService $userService)
+    {
+        $mobile = $request->request->get('mobile');
+
+        $user = $this->getUser();
+
+        try {
+            $userService->changeMobileOnProfile($user, $mobile);
+
+            return new JsonResponse([
+                'success' => true,
+            ]);
+        } catch (\Exception $exception) {
+            return new JsonResponse([
+                'success' => false,
+                'error' => [
+                    'message' => $exception->getMessage()
+                ]
+            ]);
+        }
+    }
+
+
 }
