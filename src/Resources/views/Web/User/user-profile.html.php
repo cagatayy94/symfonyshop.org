@@ -21,7 +21,7 @@
     <div  class="col">
         <div class="row">
             <div class="col-md-12 mb-5 mb-md-0">
-                <ul class="nav nav-tabs nav-tabs-default" id="tabDefault" role="tablist">
+                <ul class="nav nav-tabs nav-tabs-default nav-tabs-centered" id="tabDefault" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" id="profile-information-tab" data-toggle="tab" href="#profile-information" role="tab" aria-controls="profile-information" aria-expanded="true">ÜYELİK BİLGİLERİM</a>
                     </li>
