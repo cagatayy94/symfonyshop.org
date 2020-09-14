@@ -161,4 +161,18 @@ class CartController extends AbstractController
             ]);
         }
     }
+
+    /**
+     * @Route("/cart/check-out", name="cart_check_out")
+     */
+    public function cartCheckOutAction(Request $request, CartService $cartService)
+    {
+        $user = $this->getUser();
+
+        return $this->render('Web/Cart/cart_check_out.html.php', 
+            [
+                'user' => $user
+            ]
+        );
+    }
 }
