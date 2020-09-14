@@ -73,21 +73,25 @@
                         </span>
                         <p class="mt-4"><?php echo $productDetail['description']; ?></p>
                         <hr class="my-4">
-                        <form action="index.php?Page=41" class="shop-cart d-flex align-items-center" method="post" enctype="multipart/form-data">
+                        <form action="<?php echo $this->get('router')->path('cart_add') ?>" class="shop-cart d-flex align-items-center" method="post" id="cart_add">
+                            <input type="hidden" name="productId" value="<?php echo $id ?>">
                             <div class="quantity">
-                                <input type="hidden" id="productId" name="productId" value="<?php echo $id ?>">
-                                <select id="variant" class="form-control" name="variant" required="">
+                                <select id="variant" class="form-control required" name="variant" required="required">
                                     <option value="null"><?php echo $productDetail['variant_title']; ?> Seçiniz</option>
                                     <?php foreach (json_decode($productDetail['variant_name'], true) as $key => $value): ?>
                                         <option <?php echo json_decode($productDetail['variant_stock'], true)[$key] < 1 ? 'disabled' : ''; ?> value="<?php echo json_decode($productDetail['variant_id'], true)[$key] ?>"><?php echo $value; ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
-                            <button type="button" data-container="body" data-trigger="focus" data-toggle="popover" data-placement="right" data-content="Sepete eklemek için giriş yapınız." class="add-to-cart btn btn-primary btn-rounded font-weight-semibold btn-v-3 btn-h-2 btn-fs-2 ml-3" data-original-title="" title="">SEPETE EKLE</button>
+                            <?php if ($user): ?>
+                                <button type="submit" class="add-to-cart btn btn-primary btn-rounded font-weight-semibold btn-v-3 btn-h-2 btn-fs-2 ml-3">SEPETE EKLE</button>
+                            <?php else: ?>
+                                <button type="button" data-container="body" data-trigger="focus" data-toggle="popover" data-placement="right" data-content="Sepete eklemek için giriş yapınız." class="btn btn-primary btn-rounded font-weight-semibold btn-v-3 btn-h-2 btn-fs-2 ml-3" data-original-title="" title="">SEPETE EKLE</button>
+                            <?php endif; ?>
                         </form>
                         <hr class="my-4">
                             <?php if ($user): ?>
-                                <button type="button" data-url="<?php echo $this->get('router')->path('add_favorite') ?>" data-product-id="<?php echo $id ?>" value="FAVORİLERE EKLE" data-container="body" data-trigger="focus" class="add-to-cart btn btn-primary btn-rounded font-weight-semibold btn-v-3 btn-h-2 btn-fs-2 ml-3">FAVORİLERE EKLE</button>
+                                <button type="button" data-url="<?php echo $this->get('router')->path('add_favorite') ?>" data-product-id="<?php echo $id ?>" value="FAVORİLERE EKLE" data-container="body" data-trigger="focus" class="add-to-favorite btn btn-primary btn-rounded font-weight-semibold btn-v-3 btn-h-2 btn-fs-2 ml-3">FAVORİLERE EKLE</button>
                             <?php else: ?>
                                 <button type="button" value="FAVORİLERE EKLE" data-container="body" data-trigger="focus" data-toggle="popover" data-placement="right" data-content="Favorilere eklemek için giriş yapınız." class="btn btn-primary btn-rounded font-weight-semibold btn-v-3 btn-h-2 btn-fs-2 ml-3" data-original-title="" title="">FAVORİLERE EKLE</button>
                             <?php endif; ?>
@@ -112,7 +116,8 @@
                             </div>
                             <div class="tab-pane fade pt-4 pb-4" id="productDetailReviews" role="tabpanel" aria-labelledby="productDetailReviewsTab">
                                 <ul class="comments">
-                                    <?php foreach ($productDetail['comments'] as $value): ?>
+                                    <?php foreach ($productDetail['comments'] as $value): 
+                                        $nameString = explode(" ", $value['name']); ?>
                                         <li style="padding: 0">
                                             <div class="comment">
                                                 <div class="comment-block">
@@ -122,7 +127,7 @@
                                                                 <i class="fas fa-star text-color-dark mr-1"></i>
                                                             <?php endfor; ?>
                                                         </span>
-                                                        <strong class="comment-author text-color-dark"><?php echo $value['name']; ?></strong>
+                                                        <strong class="comment-author text-color-dark"><?php echo $nameString[0][0]."***** ".$nameString[1][0]."*****"; ?></strong>
                                                         <span class="comment-date border-right-0 text-color-light-3"><?php $createdAt = new \DateTime($value['created_at']); echo $createdAt->format('d.m.Y H:i:s')  ?></span> 
                                                     </span>
                                                     <p><?php echo $value['comment']; ?></p>
