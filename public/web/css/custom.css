@@ -3,3 +3,8 @@
 	font-weight: bold;
 	color: black;
 }
+
+ .custom-class-disabler {
+     opacity: 0.5;
+     margin-bottom: -200px;
+ }
