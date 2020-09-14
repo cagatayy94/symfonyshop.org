@@ -1,4 +1,5 @@
 var cartItems;
+var cartItemsInCheckOut;
 var grandTotal;
 var totalCargoPrice;
 var uniqueProduct;
@@ -10,6 +11,8 @@ $(document).ready(function() {
         "newestOnTop": true,
         "closeButton": true,
     }
+
+    $('.mobile-mask').mask('(000) 000-0000');
 });
 
 $('#order_notice_form').on('submit', function (e) {
@@ -126,7 +129,6 @@ $('#change_password_form').on('submit', function (e) {
             url: url,
             data: data,
             success: function (result) {
-                console.log(result);
                 if (result.success) {
                     toastr.success('Parolanız sıfırlandı şimdi giriş sayfasına yönlendiriliyorsunuz.');
                     self.find(':input').val('');
@@ -456,4 +458,146 @@ $('body').on('click', '.minus', function(e) {
             }
         }
     });
+});
+
+function updateCartInCheckOut(){
+    $.ajax({
+        type: 'GET',
+        url: '/cart/get-data',
+        success: function (result) {
+            if (result.success) {
+                var count = Object.keys(result.data).length;
+                generateCartItemsInCheckOut(result.data).done(function(e){
+                    $('#cart-table-tbody').html(cartItemsInCheckOut);
+                    $('.cart-total-value').html(grandTotal.toFixed(2)+" ₺");
+                    $('.cart-total-value-cargo').html(totalCargoPrice.toFixed(2)+" ₺");
+                    $('.cart-total-value-grand').html((grandTotal+totalCargoPrice).toFixed(2)+" ₺");
+                });
+                updateCartTotalAndQuantity();
+            }
+        }
+    });
+}
+
+function generateCartItemsInCheckOut(val){
+    var dfrd1 = $.Deferred();
+
+    cartItemsInCheckOut = "";
+    grandTotal = 0;
+    totalCargoPrice = 0;
+    uniqueProduct = [];
+
+    $.each(val, function(i, value) {
+
+        grandTotal += parseFloat(value.total);
+
+        if (!uniqueProduct.includes(value.product_id)) {
+            totalCargoPrice += parseFloat(value.cargo_price);
+            uniqueProduct.push(value.product_id);
+        }
+
+        cartItemsInCheckOut += 
+            '<tr class="cart-item">'+
+                '<td class="product-thumbnail">'+
+                    '<img src="/web/img/product/'+ value.path +'" class="img-fluid" width="67" alt="">'+
+                '</td>'+
+                '<td class="product-name">'+
+                    '<a href="/product-detail/'+ value.product_id +'"> '+ value.product_name +' -- '+value.variant_title+' / ' + value.variant_name +'</a>'+
+                '</td>'+
+                '<td class="product-price">'+
+                    '<span class="unit-price">'+ value.product_price+' ₺</span>'+
+                '</td>'+
+                '<td class="product-quantity">'+ value.quantity +'</td>'+
+                '<td class="product-subtotal">'+
+                    '<span class="sub-total"><strong>'+ value.total +' ₺</strong></span>'+
+                '</td>'+
+            '</tr>';
+
+    });
+    dfrd1.resolve();
+    return dfrd1.promise();
+}
+
+$('body').on('change', '#different_billing_address', function(e) {
+    if ($(this).prop('checked')) {
+        $( "input[name*='billing']" ).removeAttr('disabled');
+        $('#billing_form_div').removeClass('custom-class-disabler');
+    } else {
+        $( "input[name*='billing']" ).attr('disabled','disabled');
+        $('#billing_form_div').addClass('custom-class-disabler');
+    }
+});
+
+$('#change_mobile_form').on('submit', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var self = $(this);
+    var url = self.attr('action');
+    var method = self.attr('method');
+    var data = self.serialize();
+    var button = self.find(':submit');
+
+    button.attr('disabled', 'disabled');
+
+    var isValid = true;
+
+    isValid = controlRequiredInputsAreFilled(self.find('.required'));
+
+    if (isValid) {
+        $.ajax({
+            type: method,
+            url: url,
+            data: data,
+            success: function (result) {
+                if (result.success) {
+                    toastr.success('Başarılı');
+                    $('#change_mobile_modal').modal('toggle');
+                    $('#mobile-number-on-profile').val(self.find('input[name="mobile"]').val());
+                } else {
+                    toastr.error(result.error.message);
+                }
+                button.removeAttr('disabled');
+            }
+        });
+    } else {
+        button.removeAttr('disabled');
+    }
+});
+
+$('#change_password_on_profile_form').on('submit', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var self = $(this);
+    var url = self.attr('action');
+    var method = self.attr('method');
+    var data = self.serialize();
+    var button = self.find(':submit');
+
+    button.attr('disabled', 'disabled');
+
+    var isValid = true;
+
+    isValid = controlRequiredInputsAreFilled(self.find('.required'));
+
+    if (isValid) {
+        $.ajax({
+            type: method,
+            url: url,
+            data: data,
+            success: function (result) {
+                if (result.success) {
+                    toastr.success('Başarılı');
+                    self.trigger("reset");
+                    $('#change_password_modal').modal('toggle');
+                } else {
+                    toastr.error(result.error.message);
+                }
+                button.removeAttr('disabled');
+            }
+        });
+    } else {
+        button.removeAttr('disabled');
+    }
 });
