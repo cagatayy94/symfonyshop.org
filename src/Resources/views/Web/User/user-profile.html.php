@@ -96,12 +96,67 @@
                                 </tbody>
                             </table>
                         </div>
-
                     </div>
                     <div class="tab-pane fade pt-4 pb-4" id="addresses" role="tabpanel" aria-labelledby="addresses-tab">
-                        <p class="mb-0">
-                            adresler
-                        </p>
+                        <div class="container pt-3">
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <h4>Adresleriniz</h4>
+                                    <hr class="mb-4">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <?php if (!$addresses): ?>
+                                            <?php echo "Sisteme Kayıtlı adres bulunamadı" ?>
+                                            <?php else: ?>
+                                            <thead>
+                                                <tr>
+                                                    <th>Adres İsmi</th>
+                                                    <th>Adresteki İsim Soyisim </th>
+                                                    <th>Adres</th>
+                                                    <th>İlçe</th>
+                                                    <th>Şehir</th>
+                                                    <th>Telefon Numarası</th>
+                                                    <th colspan="2">
+                                                        <button type="button" class="btn btn-primary mb-2"  data-toggle="modal" data-target="#add_address_modal">Yeni adres ekle</button>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="addresses_body">
+                                                <?php foreach ($addresses as $key => $value): ?>
+                                                    <tr id="<?php echo $value['address_id'] ?>">
+                                                        <td>
+                                                            <?php echo $value['address_name']; ?>
+                                                        </td>
+                                                        <td>
+                                                            <?php echo $value['full_name']; ?>
+                                                        </td>
+                                                        <td>
+                                                            <?php echo $value['address']; ?>
+                                                        </td>
+                                                        <td>
+                                                            <?php echo $value['county']; ?>
+                                                        </td>
+                                                        <td>
+                                                            <?php echo $value['city']; ?>
+                                                        </td>
+                                                        <td>
+                                                            <?php echo $value['mobile']; ?>
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-success mb-2"  data-toggle="modal" data-target="#update_address_modal">Güncelle</button>
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-danger mb-2 delete_address" data-toggle="modal">Kaldır</button>
+                                                        </td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            </tbody>
+                                            <?php endif ?>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="tab-pane fade pt-4 pb-4" id="favorites" role="tabpanel" aria-labelledby="favorites-tab">
                         <p class="mb-0">
@@ -169,6 +224,75 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" >Değiştir</button>
+                    <button type="button" class="btn" data-dismiss="modal">Kapat</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="add_address_modal" tabindex="-1" role="dialog" aria-labelledby="add_address_modal" aria-hidden="true">
+    <div class="modal-dialog text-left" role="document">
+        <div class="modal-content">
+            <form action="<?php echo $this->get('router')->path('add_user_addresses') ?>" method="post" class="contact-form form-style-2" id="add_address_form">
+                <div class="modal-header">
+                    <h5 class="modal-title">Yeni adres ekleyin</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="adres-ismi" class="form-control-label">*Adres başlığı (Ev, İş)</label>
+                        <input type="text" name="address_name" class="form-control required">
+                        <label for="adres-ismi" class="form-control-label">*Adresteki isim</label>
+                        <input type="text" name="full_name" class="form-control required">
+                        <label for="adres" class="form-control-label">*Adres</label>
+                        <input type="text" name="address" class="form-control required">
+                        <label for="ilce" class="form-control-label">*İlçe</label>
+                        <input type="text"  name="county" class="form-control required">
+                        <label for="sehir" class="form-control-label">*Şehir</label>
+                        <input type="text" name="city" class="form-control required">
+                        <label for="telefon"  class="form-control-label">*Telefon</label>
+                        <input type="text" name="mobile" class="form-control mobile-mask required">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                    <button type="button" class="btn" data-dismiss="modal">Kapat</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="update_address_modal" tabindex="-1" role="dialog" aria-labelledby="update_address_modal" aria-hidden="true">
+    <div class="modal-dialog text-left" role="document">
+        <div class="modal-content">
+            <form action="<?php echo $this->get('router')->path('update_user_addresses') ?>" method="post" class="contact-form form-style-2" id="update_address_form">
+                <input type="hidden" name="address_id">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModal4Label">Adres Güncelle</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="address_name" class="form-control-label">*Adres başlığı (Ev, İş)</label>
+                        <input type="text" name="address_name" class="form-control required">
+                        <label for="adres-ismi" class="form-control-label">*Adresteki isim</label>
+                        <input type="text" name="full_name" class="form-control required">
+                        <label for="adres" class="form-control-label">*Adres</label>
+                        <input type="text" name="address" class="form-control required">
+                        <label for="ilce" class="form-control-label">*İlçe</label>
+                        <input type="text"  name="county" class="form-control required">
+                        <label for="sehir" class="form-control-label">*Şehir</label>
+                        <input type="text" name="city" class="form-control required">
+                        <label for="telefon"  class="form-control-label">*Telefon</label>
+                        <input type="tel" name="mobile" class="form-control mobile-mask required">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input align="right" class="btn btn-primary" value="Güncelle" type="Submit" class="form-control">
                     <button type="button" class="btn" data-dismiss="modal">Kapat</button>
                 </div>
             </form>

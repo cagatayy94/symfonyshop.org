@@ -789,4 +789,329 @@ class User
             throw new \Exception("Bir sorun oluştu.");            
         }
     }
+
+    /**
+     * Get user addresses
+     *
+     * @param obj $user
+     * @throws \Exception
+     */
+    public function getUserAccountAddresses($user)
+    {
+        return $this->connection->executeQuery('
+            SELECT
+                uaa.address_id address_id,
+                a.address_name address_name,
+                a.full_name full_name,
+                a.address address,
+                a.county county,
+                a.city city,
+                a.mobile mobile
+            FROM
+                address a
+            LEFT JOIN
+                user_account_address uaa ON a.id = uaa.address_id
+            WHERE
+                uaa.user_account_id = :user_account_id
+                ', [
+                    'user_account_id' => $user->getId(),
+                ]
+            )->fetchAll();
+    }
+
+    /**
+     * Create address
+     *
+     * @param string $user
+     * @param string $addressName
+     * @param string $fullName
+     * @param string $address
+     * @param string $county
+     * @param string $city
+     * @param string $mobile
+     * @throws \Exception
+     */
+    public function addUserAddresses($user, $addressName, $fullName, $address, $county, $city, $mobile)
+    {
+        $logDetails = $this->getArguments(__FUNCTION__, func_get_args());
+
+        $logFullDetails = [
+            'entity' => 'User',
+            'activity' => 'addUserAddresses',
+            'activityId' => 0,
+            'details' => $logDetails
+        ];
+
+        $connection = $this->connection;
+
+        $addressName = trim($addressName);
+        $fullName = trim($fullName);
+        $address = trim($address);
+        $county = trim($county);
+        $city = trim($city);
+        $mobile = $this->formatMobileNumber($mobile);
+
+        try {
+
+            if (!$user) {
+                throw new \InvalidArgumentException('Kullanıcı bulunamadı');
+            }
+
+            if (empty($addressName)) {
+                throw new \InvalidArgumentException('Adres ismi belirtilmemiş');
+            }
+
+            if (empty($fullName)) {
+                throw new \InvalidArgumentException('Adresteki isim belirtilmemiş');
+            }
+
+            if (empty($address)) {
+                throw new \InvalidArgumentException('Adres belirtilmemiş');
+            }
+
+            if (empty($county)) {
+                throw new \InvalidArgumentException('İlçe belirtilmemiş');
+            }
+
+            if (empty($city)) {
+                throw new \InvalidArgumentException('Şehir belirtilmemiş');
+            }
+
+            if (empty($mobile)) {
+                throw new \InvalidArgumentException('Telefon belirtilmemiş');
+            }
+
+            try {
+                $connection->beginTransaction();
+
+                $statement = $connection->prepare('
+                    INSERT INTO address
+                        (address_name, full_name, address, county, city, mobile)
+                    VALUES
+                        (:address_name, :full_name, :address, :county, :city, :mobile)
+                    RETURNING id;
+                ');
+
+                $statement->bindValue(':address_name', $addressName);
+                $statement->bindValue(':full_name', $fullName);
+                $statement->bindValue(':address', $address);
+                $statement->bindValue(':county', $county);
+                $statement->bindValue(':city', $city);
+                $statement->bindValue(':mobile', $mobile);
+
+                $statement->execute();
+
+                $addressId = $connection->lastInsertId();
+
+                $statement = $connection->prepare('
+                    INSERT INTO user_account_address
+                        (user_account_id, address_id)
+                    VALUES
+                        (:user_account_id, :address_id)
+                ');
+
+                $statement->bindValue(':user_account_id', $user->getId());
+                $statement->bindValue(':address_id', $addressId);
+                $statement->execute();
+
+                $connection->commit();
+            } catch (Exception $e) {
+                $connection->rollBack();
+                throw $exception;
+            }
+
+            $logFullDetails['activityId'] = $addressId;
+            $this->logger->info('Created the address', $logFullDetails);
+        } catch (\InvalidArgumentException $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+            $this->logger->error('Could not created the address', $logFullDetails);
+            throw $exception;
+        } catch (\Exception $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+            $this->logger->error('Could not created the address', $logFullDetails);
+            throw new \Exception("Kayıt başarısız bir sorun oluştu lütfen daha sonra tekrar deneyiniz");            
+        }
+    }
+
+    /**
+     * Remove address
+     *
+     * @param string $user
+     * @param string $id
+     * @throws \Exception
+     */
+    public function removeUserAddress($user, $id)
+    {
+        $logDetails = $this->getArguments(__FUNCTION__, func_get_args());
+
+        $logFullDetails = [
+            'entity' => 'User',
+            'activity' => 'removeUserAddress',
+            'activityId' => 0,
+            'details' => $logDetails
+        ];
+
+        $connection = $this->connection;
+
+        $addressName = intval($id);
+
+        try {
+
+            if (!$user) {
+                throw new \InvalidArgumentException('Kullanıcı bulunamadı');
+            }
+
+            if (empty($id)) {
+                throw new \InvalidArgumentException('Adres belirtilmemiş');
+            }
+
+            $statement = $connection->prepare('
+                DELETE FROM 
+                    user_account_address
+                WHERE 
+                    address_id = :id
+                AND
+                    user_account_id = :user_account_id
+            ');
+
+            $statement->bindValue(':id', $id);
+            $statement->bindValue(':user_account_id', $user->getId());
+            $statement->execute();
+
+            $logFullDetails['activityId'] = $id;
+            $this->logger->info('Deleted the address', $logFullDetails);
+        } catch (\InvalidArgumentException $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+            $this->logger->error('Could not deleted the address', $logFullDetails);
+            throw $exception;
+        } catch (\Exception $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+            $this->logger->error('Could not deleted the address', $logFullDetails);
+            throw new \Exception("İşlem başarısız bir sorun oluştu lütfen daha sonra tekrar deneyiniz");            
+        }
+    }
+
+    /**
+     * Update address
+     *
+     * @param obj $user
+     * @param int $addressId
+     * @param string $addressName
+     * @param string $fullName
+     * @param string $address
+     * @param string $county
+     * @param string $city
+     * @param string $mobile
+     * @throws \Exception
+     */
+    public function updateUserAddresses($user, $addressId, $addressName, $fullName, $address, $county, $city, $mobile)
+    {
+        $logDetails = $this->getArguments(__FUNCTION__, func_get_args());
+
+        $logFullDetails = [
+            'entity' => 'User',
+            'activity' => 'updateUserAddresses',
+            'activityId' => 0,
+            'details' => $logDetails
+        ];
+
+        $connection = $this->connection;
+
+        $addressId = intval($addressId);
+        $addressName = trim($addressName);
+        $fullName = trim($fullName);
+        $address = trim($address);
+        $county = trim($county);
+        $city = trim($city);
+        $mobile = $this->formatMobileNumber($mobile);
+
+        try {
+
+            if (!$user) {
+                throw new \InvalidArgumentException('Kullanıcı bulunamadı');
+            }
+
+            if (!$addressId) {
+                throw new \InvalidArgumentException('Adres bulunamadı');
+            }
+
+            if (empty($addressName)) {
+                throw new \InvalidArgumentException('Adres ismi belirtilmemiş');
+            }
+
+            if (empty($fullName)) {
+                throw new \InvalidArgumentException('Adresteki isim belirtilmemiş');
+            }
+
+            if (empty($address)) {
+                throw new \InvalidArgumentException('Adres belirtilmemiş');
+            }
+
+            if (empty($county)) {
+                throw new \InvalidArgumentException('İlçe belirtilmemiş');
+            }
+
+            if (empty($city)) {
+                throw new \InvalidArgumentException('Şehir belirtilmemiş');
+            }
+
+            if (empty($mobile)) {
+                throw new \InvalidArgumentException('Telefon belirtilmemiş');
+            }
+
+            $isUserHasThatAddress = $connection->executeQuery('
+                SELECT
+                    count(id)
+                FROM
+                    user_account_address
+                WHERE
+                    address_id = :address_id
+                AND
+                    user_account_id = :user_account_id
+                ', [
+                    'address_id' => $addressId,
+                    'user_account_id' => $user->getId(),
+                ]
+            )->fetchColumn();
+
+            if (!$isUserHasThatAddress) {
+                throw new \InvalidArgumentException('Adres bulunamadı');
+            }
+
+            $statement = $connection->prepare('
+                UPDATE
+                    address
+                SET
+                    address_name = :address_name,
+                    full_name = :full_name,
+                    address = :address,
+                    county = :county,
+                    city = :city,
+                    mobile = :mobile
+                WHERE
+                    id = :id
+            ');
+
+            $statement->bindValue(':address_name', $addressName);
+            $statement->bindValue(':full_name', $fullName);
+            $statement->bindValue(':address', $address);
+            $statement->bindValue(':county', $county);
+            $statement->bindValue(':city', $city);
+            $statement->bindValue(':mobile', $mobile);
+            $statement->bindValue(':id', $addressId);
+
+            $statement->execute();
+
+            $logFullDetails['activityId'] = $addressId;
+            $this->logger->info('Updated the address', $logFullDetails);
+        } catch (\InvalidArgumentException $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+            $this->logger->error('Could not updated the address', $logFullDetails);
+            throw $exception;
+        } catch (\Exception $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+            $this->logger->error('Could not updated the address', $logFullDetails);
+            throw new \Exception("Güncelleme başarısız bir sorun oluştu lütfen daha sonra tekrar deneyiniz");            
+        }
+    }
 }

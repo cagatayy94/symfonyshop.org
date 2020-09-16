@@ -601,3 +601,168 @@ $('#change_password_on_profile_form').on('submit', function (e) {
         button.removeAttr('disabled');
     }
 });
+
+function updateAddressesInProfile(){
+    $.ajax({
+        type: 'GET',
+        url: '/get-user-addresses',
+        success: function (result) {
+            if (result.success) {
+                var table = "";
+                $.each( result.addresses, function(_, value) {
+                    table += '<tr id="'+ value.address_id +'">'+
+                                '<td>'+
+                                    value.address_name +
+                                '</td>'+
+                                '<td>'+
+                                    value.full_name +
+                                '</td>'+
+                                '<td>'+
+                                    value.address +
+                                '</td>' +
+                                '<td>'+
+                                    value.county +
+                                '</td>'+
+                                '<td>'+
+                                     value.city +
+                                '</td>'+
+                                '<td>' +
+                                    value.mobile +
+                                '</td>' +
+                                '<td>' +
+                                    '<button type="button" class="btn btn-success mb-2"  data-toggle="modal" data-target="#update_address_modal">Güncelle</button>'+
+                                '</td>' +
+                                '<td>' +
+                                    '<button type="button" class="btn btn-danger mb-2 delete_address">Kaldır</button>' +
+                                '</td>' +
+                            '</tr>';
+
+                });
+                $('#addresses_body').html(table);
+            }
+        }
+    });
+}
+
+$('#add_address_form').on('submit', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var self = $(this);
+    var url = self.attr('action');
+    var method = self.attr('method');
+    var data = self.serialize();
+    var button = self.find(':submit');
+
+    button.attr('disabled', 'disabled');
+
+    var isValid = true;
+
+    isValid = controlRequiredInputsAreFilled(self.find('.required'));
+
+    if (isValid) {
+        $.ajax({
+            type: method,
+            url: url,
+            data: data,
+            success: function (result) {
+                if (result.success) {
+                    toastr.success('Başarılı');
+                    self.trigger("reset");
+                    $('#add_address_modal').modal('toggle');
+                    updateAddressesInProfile();
+                } else {
+                    toastr.error(result.error.message);
+                }
+                button.removeAttr('disabled');
+            }
+        });
+    } else {
+        button.removeAttr('disabled');
+    }
+});
+
+$('body').on('click', '.delete_address', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var self = $(this);
+
+    var rowId = self.closest('tr').attr('id');
+
+    toastr.info('<button type="button" class="btn clear" onclick="removeAddress('+ rowId +')"> Evet</button>' , 'Adresi silmek istediğinize emin misiniz?');
+});
+
+function removeAddress(id){
+    $.ajax({
+        type: 'POST',
+        url: '/remove-user-address',
+        data: {id},
+        success: function (result) {
+            if (result.success) {
+                $('tr[id="'+ id +'"]').remove();
+            } else {
+                toastr.error(result.error.message);
+            }
+        }
+    });
+}
+
+$('body').on('click', '[data-target="#update_address_modal"]', function(e) {
+    var self = $(this);
+
+    var tr = self.closest('tr');
+
+    var addressName = $(tr.children()[0]).html().trim();
+    var addressFullName = $(tr.children()[1]).html().trim();
+    var address = $(tr.children()[2]).html().trim();
+    var county = $(tr.children()[3]).html().trim();
+    var city = $(tr.children()[4]).html().trim();
+    var mobile = $(tr.children()[5]).html().trim();
+
+    $('#update_address_form').find('input[name="address_name"]').val(addressName);
+    $('#update_address_form').find('input[name="full_name"]').val(addressFullName);
+    $('#update_address_form').find('input[name="address"]').val(address);
+    $('#update_address_form').find('input[name="county"]').val(county);
+    $('#update_address_form').find('input[name="city"]').val(city);
+    $('#update_address_form').find('input[name="mobile"]').val(mobile);
+    $('#update_address_form').find('input[name="address_id"]').val(tr.attr('id'));
+});
+
+$('#update_address_form').on('submit', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var self = $(this);
+    var url = self.attr('action');
+    var method = self.attr('method');
+    var data = self.serialize();
+    var button = self.find(':submit');
+
+    button.attr('disabled', 'disabled');
+
+    var isValid = true;
+
+    isValid = controlRequiredInputsAreFilled(self.find('.required'));
+
+    if (isValid) {
+        $.ajax({
+            type: method,
+            url: url,
+            data: data,
+            success: function (result) {
+                if (result.success) {
+                    toastr.success('Başarılı');
+                    self.trigger("reset");
+                    $('#update_address_modal').modal('toggle');
+                    updateAddressesInProfile();
+                } else {
+                    toastr.error(result.error.message);
+                }
+                button.removeAttr('disabled');
+            }
+        });
+    } else {
+        button.removeAttr('disabled');
+    }
+});

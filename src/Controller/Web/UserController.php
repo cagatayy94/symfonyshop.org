@@ -203,9 +203,12 @@ class UserController extends AbstractController
     public function profileAction(Request $request, UserService $userService)
     {
         $user = $this->getUser();
+
+        $addresses = $userService->getUserAccountAddresses($user);
     
         return $this->render('Web/User/user-profile.html.php', [
             'user' => $user,
+            'addresses' => $addresses,
         ]);
     }
 
@@ -261,5 +264,114 @@ class UserController extends AbstractController
         }
     }
 
+    /**
+     * @Route("/get-user-addresses", name="get_user_addresses")
+     */
+    public function getUserAccountAddressesAction(UserService $userService)
+    {
+        $user = $this->getUser();
 
+        try {
+            $addresses = $userService->getUserAccountAddresses($user);
+
+            return new JsonResponse([
+                'success' => true,
+                'addresses' => $addresses
+            ]);
+        } catch (\Exception $exception) {
+            return new JsonResponse([
+                'success' => false,
+                'error' => [
+                    'message' => $exception->getMessage()
+                ]
+            ]);
+        }
+    }
+
+    /**
+     * @Route("/add-user-address", name="add_user_addresses")
+     */
+    public function addUserAddressesAction(Request $request, UserService $userService)
+    {
+        $user = $this->getUser();
+
+        $addressName = $request->request->get('address_name');
+        $fullName = $request->request->get('full_name');
+        $address = $request->request->get('address');
+        $county = $request->request->get('county');
+        $city = $request->request->get('city');
+        $mobile = $request->request->get('mobile');
+
+        try {
+            $addresses = $userService->addUserAddresses($user, $addressName, $fullName, $address, $county, $city, $mobile);
+
+            return new JsonResponse([
+                'success' => true,
+                'addresses' => $addresses
+            ]);
+        } catch (\Exception $exception) {
+            return new JsonResponse([
+                'success' => false,
+                'error' => [
+                    'message' => $exception->getMessage()
+                ]
+            ]);
+        }
+    }
+
+    /**
+     * @Route("/remove-user-address", name="remove_user_addresses")
+     */
+    public function removeUserAddressAction(Request $request, UserService $userService)
+    {
+        $user = $this->getUser();
+
+        $id = $request->request->get('id');
+
+        try {
+            $userService->removeUserAddress($user, $id);
+
+            return new JsonResponse([
+                'success' => true,
+            ]);
+        } catch (\Exception $exception) {
+            return new JsonResponse([
+                'success' => false,
+                'error' => [
+                    'message' => $exception->getMessage()
+                ]
+            ]);
+        }
+    }
+
+    /**
+     * @Route("/update-user-address", name="update_user_addresses")
+     */
+    public function updateUserAddressesAction(Request $request, UserService $userService)
+    {
+        $user = $this->getUser();
+
+        $addressName = $request->request->get('address_name');
+        $fullName = $request->request->get('full_name');
+        $address = $request->request->get('address');
+        $county = $request->request->get('county');
+        $city = $request->request->get('city');
+        $mobile = $request->request->get('mobile');
+        $addressId = $request->request->get('address_id');
+
+        try {
+            $addresses = $userService->updateUserAddresses($user, $addressId, $addressName, $fullName, $address, $county, $city, $mobile);
+
+            return new JsonResponse([
+                'success' => true,
+            ]);
+        } catch (\Exception $exception) {
+            return new JsonResponse([
+                'success' => false,
+                'error' => [
+                    'message' => $exception->getMessage()
+                ]
+            ]);
+        }
+    }
 }
