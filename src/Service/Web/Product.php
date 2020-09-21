@@ -388,7 +388,7 @@ class Product
                 SELECT 
                     id
                 FROM
-                    user_favorite
+                    user_account_favorite
                 WHERE
                     product_id = :product_id
                 AND
@@ -408,7 +408,7 @@ class Product
             }
 
             $sql = "
-                INSERT INTO user_favorite
+                INSERT INTO user_account_favorite
                     (product_id, user_account_id)
                 VALUES
                     (:product_id, :user_account_id)";
