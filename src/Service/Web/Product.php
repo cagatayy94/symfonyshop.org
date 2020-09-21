@@ -270,7 +270,15 @@ class Product
                 view,
                 json_agg(pv.name) variant_name,
                 json_agg(pv.stock) variant_stock,
-                json_agg(pv.id) variant_id
+                json_agg(pv.id) variant_id,
+                (
+                    SELECT
+                        ROUND(AVG(pc.rate))
+                    FROM
+                        product_comment pc
+                    WHERE
+                        pc.product_id = :product_id
+                ) rate
             FROM
                 product p
             LEFT JOIN
@@ -293,23 +301,6 @@ class Product
         if (!$product) {
             return false;
         }
-
-        //get product rate
-        $sql = "
-            SELECT
-                AVG(pc.rate)
-            FROM
-                product_comment pc
-            WHERE
-                pc.product_id = :product_id";
-
-        $statement = $connection->prepare($sql);
-
-        $statement->bindValue('product_id', $id);
-
-        $statement->execute();
-
-        $product['rate'] = $statement->fetchColumn();
 
         //get product photos
         $sql = "
