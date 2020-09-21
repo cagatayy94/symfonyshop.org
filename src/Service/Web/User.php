@@ -1114,4 +1114,115 @@ class User
             throw new \Exception("Güncelleme başarısız bir sorun oluştu lütfen daha sonra tekrar deneyiniz");            
         }
     }
+
+    /**
+     * Get user favorites
+     *
+     * @param obj $user
+     * @throws \Exception
+     */
+    public function getUserAccountFavorites($user, $limit, $currentPage)
+    {
+        return $this->connection->executeQuery('
+            SELECT
+                COUNT(*) OVER() AS total_count,
+                uaf.id fav_id,
+                p.id product_id,
+                p.name product_name,
+                p.price product_price,
+                (
+                    SELECT
+                        ROUND(AVG(pc.rate))
+                    FROM
+                        product_comment pc
+                    WHERE
+                        pc.product_id = p.id
+                ) rate,
+                (
+                    SELECT
+                        path
+                    FROM
+                        product_photo pc
+                    WHERE
+                        pc.product_id = p.id
+                    LIMIT 1
+                ) path
+            FROM
+                user_account_favorite uaf
+            LEFT JOIN
+                product p on p.id = uaf.product_id
+            WHERE
+                p.is_deleted = false
+            AND
+                uaf.user_account_id = :user_account_id
+            LIMIT
+                :limit
+            OFFSET
+                :offset
+
+                ', [
+                    'user_account_id' => $user->getId(),
+                    'limit' => $limit,
+                    'offset' => $limit * ($currentPage - 1)
+                ]
+        )->fetchAll();
+    }
+
+     /**
+     * Remove favorite
+     *
+     * @param string $user
+     * @param string $id
+     * @throws \Exception
+     */
+    public function removeUserFavorite($user, $id)
+    {
+        $logDetails = $this->getArguments(__FUNCTION__, func_get_args());
+
+        $logFullDetails = [
+            'entity' => 'User',
+            'activity' => 'removeUserFavorite',
+            'activityId' => 0,
+            'details' => $logDetails
+        ];
+
+        $connection = $this->connection;
+
+        $id = intval($id);
+
+        try {
+
+            if (!$user) {
+                throw new \InvalidArgumentException('Kullanıcı bulunamadı');
+            }
+
+            if (empty($id)) {
+                throw new \InvalidArgumentException('Favori belirtilmemiş');
+            }
+
+            $statement = $connection->prepare('
+                DELETE FROM 
+                    user_account_favorite
+                WHERE 
+                    id = :id
+                AND
+                    user_account_id = :user_account_id
+            ');
+
+            $statement->bindValue(':id', $id);
+            $statement->bindValue(':user_account_id', $user->getId());
+            $statement->execute();
+
+            $logFullDetails['activityId'] = $id;
+            $this->logger->info('Deleted the favorite', $logFullDetails);
+        } catch (\InvalidArgumentException $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+            $this->logger->error('Could not deleted the favorite', $logFullDetails);
+            throw $exception;
+        } catch (\Exception $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+            $this->logger->error('Could not deleted the favorite', $logFullDetails);
+            throw new \Exception("İşlem başarısız bir sorun oluştu lütfen daha sonra tekrar deneyiniz");            
+        }
+    }
 }

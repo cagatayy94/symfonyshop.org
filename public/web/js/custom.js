@@ -235,6 +235,65 @@ $('.pagination-action').on('click', function (e) {
     }
 });
 
+$('.my-favorites-pagination').on('click', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var self = $(this);
+
+
+    if (self.closest('.page-item').hasClass('active')) {
+        return false;
+    }
+
+    var requestedPage = self.attr('data-page');
+
+    $.ajax({
+        type: 'GET',
+        url: 'get-user-account-favorites?page='+requestedPage,
+        success: function (result) {
+            if (result.success) {
+
+                $('.my-favorites-pagination').parent('.page-item').removeClass('active');
+
+                self.parent('.page-item').addClass('active');
+
+                var table = "";
+
+                $.each( result.favorites, function(_, value) {
+
+                    var stars = "";
+                    for (i = 0; i <= value.rate; i++) {
+                        stars += '<i class="fas fa-star text-color-primary"></i>';
+                    }
+
+                    table += '<tr>' +
+                                '<td width="60">' +
+                                    '<a href="/product-detail/' + value.product_id + '">' +
+                                        '<img alt="" width="60" height="60" src="/web/img/product/' + value.path + '">' +
+                                    '</a>' +
+                                '</td>' +
+                                '<td>' +
+                                    '<a href="/product-detail/' + value.product_id + '">' + value.product_name + '</a>' +
+                                '</td>' +
+                                '<td>' +
+                                    stars +
+                                '</td>' +
+                                '<td>' +
+                                    '<button type="button" class="btn btn-danger mb-2 delete_favorite" data-favorite-id="' + value.fav_id + '">Kaldır</button>' +
+                                '</td>' +
+                            '</tr>';
+                });
+
+                $('#favorites-table').html(table);
+
+            } else {
+                toastr.error(result.error.message);
+            }
+        }
+    });
+});
+
 $('.order-filter-submit').on('change', function (e) {
     e.preventDefault();
     e.stopPropagation();
@@ -766,3 +825,29 @@ $('#update_address_form').on('submit', function (e) {
         button.removeAttr('disabled');
     }
 });
+
+$('body').on('click', '.delete_favorite', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var self = $(this);
+
+    var favId = self.attr('data-favorite-id');
+
+    toastr.info('<button type="button" class="btn clear" onclick="removeFavorite('+ favId +')"> Evet</button>' , 'Favorilerden silmek istediğinize emin misiniz?');
+});
+
+function removeFavorite(id){
+    $.ajax({
+        type: 'POST',
+        url: '/remove-user-favorite',
+        data: {id},
+        success: function (result) {
+            if (result.success) {
+                $('.delete_favorite[data-favorite-id="'+id+'"]').closest('tr').remove();
+            } else {
+                toastr.error(result.error.message);
+            }
+        }
+    });
+}

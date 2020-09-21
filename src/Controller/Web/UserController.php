@@ -15,6 +15,8 @@ use App\Service\Web\User as UserService;
 
 class UserController extends AbstractController
 {
+    const LIMIT_PER_PAGE = 5;
+
     /**
      * @Route("/register", name="register")
      */
@@ -204,11 +206,23 @@ class UserController extends AbstractController
     {
         $user = $this->getUser();
 
+        $pageCount = 0;
+        $currentPage = 1;
+
         $addresses = $userService->getUserAccountAddresses($user);
-    
+        $favorites = $userService->getUserAccountFavorites($user, self::LIMIT_PER_PAGE, $currentPage);
+
+        if (!empty($favorites[0]['total_count']) && $favorites[0]['total_count'] > self::LIMIT_PER_PAGE) {
+            $pageCount = ceil($favorites[0]['total_count'] / self::LIMIT_PER_PAGE);
+        }
+
         return $this->render('Web/User/user-profile.html.php', [
-            'user' => $user,
-            'addresses' => $addresses,
+            'user'          => $user,
+            'addresses'     => $addresses,
+            'favorites'     => $favorites,
+            'pageCount'     => $pageCount,
+            'perPage'       => self::LIMIT_PER_PAGE,
+            'currentPage'   => $currentPage,
         ]);
     }
 
@@ -361,6 +375,58 @@ class UserController extends AbstractController
 
         try {
             $addresses = $userService->updateUserAddresses($user, $addressId, $addressName, $fullName, $address, $county, $city, $mobile);
+
+            return new JsonResponse([
+                'success' => true,
+            ]);
+        } catch (\Exception $exception) {
+            return new JsonResponse([
+                'success' => false,
+                'error' => [
+                    'message' => $exception->getMessage()
+                ]
+            ]);
+        }
+    }
+
+    /**
+     * @Route("/get-user-account-favorites", name="get-user-account-favorites")
+     */
+    public function getUserAccountFavoritesAction(Request $request, UserService $userService)
+    {
+        $user = $this->getUser();
+
+        $page = $request->query->get('page');
+
+        try {
+            $favorites = $userService->getUserAccountFavorites($user, self::LIMIT_PER_PAGE, $page);
+
+            return new JsonResponse([
+                'success'   => true,
+                'favorites' => $favorites
+
+            ]);
+        } catch (\Exception $exception) {
+            return new JsonResponse([
+                'success' => false,
+                'error' => [
+                    'message' => $exception->getMessage()
+                ]
+            ]);
+        }
+    }
+
+    /**
+     * @Route("/remove-user-favorite", name="remove_user_favorite")
+     */
+    public function removeUserFavoriteAction(Request $request, UserService $userService)
+    {
+        $user = $this->getUser();
+
+        $id = $request->request->get('id');
+
+        try {
+            $userService->removeUserFavorite($user, $id);
 
             return new JsonResponse([
                 'success' => true,
