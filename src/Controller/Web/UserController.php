@@ -436,4 +436,66 @@ class UserController extends AbstractController
             ]);
         }
     }
+
+    /**
+     * @Route("/get-user-account-comments", name="get-user-account-comments")
+     */
+    public function getUserAccountCommentsAction(Request $request, UserService $userService)
+    {
+        $user = $this->getUser();
+
+        $page = $request->query->get('page');
+
+        $pageCount = 0;
+
+        try {
+            $comments = $userService->getUserAccountComments($user, self::LIMIT_PER_PAGE, $page);
+
+            if (!empty($comments[0]['total_count']) && $comments[0]['total_count'] > self::LIMIT_PER_PAGE) {
+                $pageCount = ceil($comments[0]['total_count'] / self::LIMIT_PER_PAGE);
+            }
+
+            return new JsonResponse([
+                'success'   => true,
+                'comments' => $comments,
+                'total_count' => isset($comments[0]['total_count']) ? $comments[0]['total_count'] : 0 ,
+                'perPage' => self::LIMIT_PER_PAGE,
+                'pageCount' => $pageCount,
+            ]);
+        } catch (\Exception $exception) {
+            return new JsonResponse([
+                'success' => false,
+                'error' => [
+                    'message' => $exception->getMessage()
+                ]
+            ]);
+        }
+    }
+
+    /**
+     * @Route("/remove-user-comment", name="remove_user_comment")
+     */
+    public function removeUserCommentAction(Request $request, UserService $userService)
+    {
+        $user = $this->getUser();
+
+        $id = $request->request->get('id');
+
+        try {
+            $userService->removeUserComment($user, $id);
+
+            return new JsonResponse([
+                'success' => true,
+            ]);
+        } catch (\Exception $exception) {
+            return new JsonResponse([
+                'success' => false,
+                'error' => [
+                    'message' => $exception->getMessage()
+                ]
+            ]);
+        }
+    }
+
+
 }

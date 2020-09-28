@@ -180,72 +180,27 @@
                             </div>
                         </div>
                     </div>
-                                         <table class="table">
-                                            <thead>
-                                                    <tr>
-                                                        <th></th>
-                                                        <th>Adı</th>
-                                                        <th>Puanı</th>
-                                                        <th>Fiyatı</th>
-                                                        <th></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="favorites-table">
-                                                    <?php foreach ($favorites as $key => $value): ?>
-                                                    <tr>
-                                                        <td width="60">
-                                                            <a href="<?php echo $this->get('router')->path('product_detail', ['id' => $value['product_id']])?>">
-                                                                <img alt="" width="60" height="60" src="/web/img/product/<?php echo $value['path'] ?>">
-                                                            </a>
-                                                        </td>
-                                                        <td>
-                                                            <a href="<?php echo $this->get('router')->path('product_detail', ['id' => $value['product_id']])?>"><?php echo $value['product_name'] ?></a>
-                                                        </td>
-                                                        <td>
-                                                            <?php for ($i=0; $i < $value['rate']; $i++):?>
-                                                                <i class="fas fa-star text-color-primary"></i>
-                                                            <?php endfor; ?>
-                                                        </td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-danger mb-2 delete_favorite" data-favorite-id="<?php echo $value['fav_id'] ?>">Kaldır</button>
-                                                        </td>
-                                                    </tr>
-                                                    <?php endforeach; ?>
-                                                <?php else: ?>
-                                                    <tr>
-                                                        <th colspan="8">Sisteme Kayıtlı Favori Bulunamadı.</th>
-                                                    </tr>
-                                                <?php endif; ?>
-                                            </tbody>
+                    <div class="tab-pane fade pt-4 pb-4" id="comments" role="tabpanel" aria-labelledby="comments-tab">
+                        <div class="container pt-3">
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <h4>Tüm Yorumlarınız.</h4>
+                                    <hr class="mb-4">
+                                    <div class="table-responsive-lg">
+                                        <table class="table" id="comments-table">
+         
                                         </table>
                                         <!-- start pagination -->
-                                        <?php if ($pageCount): ?>
                                         <hr class="mt-5 mb-4">
-                                        <div class="row align-items-center justify-content-between">
-                                            <div class="col-auto mb-3 mb-sm-0">
-                                                <span><?php echo ($perPage*$currentPage)-$perPage+1; ?>-<?php echo $perPage*$currentPage <= $favorites[0]['total_count'] ? $perPage*$currentPage : $favorites[0]['total_count'] ; ?> / <?php echo $favorites[0]['total_count']; ?> sonuç gösteriliyor</span>
-                                            </div>
-                                            <div class="col-auto">
-                                                <nav aria-label="Page navigation example">
-                                                    <ul class="pagination mb-0">
-                                                        <?php for ($i = 1; $i <= $pageCount; $i++): ?>
-                                                            <li <?php echo $i == $currentPage ? ' class="page-item active" ' : ' class="page-item" '; ?>><a class="page-link my-favorites-pagination" data-page="<?php echo $i ?>" href="#"><?php echo $i; ?></a></li>
-                                                        <?php endfor; ?>
-                                                    </ul>
-                                                </nav>
-                                            </div>
+                                        <div class="row align-items-center justify-content-between" id="comments-pagination">
+               
                                         </div>
-                                        <?php endif; ?>
+                                       
                                         <!-- end pagination -->
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="tab-pane fade pt-4 pb-4" id="comments" role="tabpanel" aria-labelledby="comments-tab">
-                        <p class="mb-0">
-                            yorumlarım
-                        </p>
                     </div>
                     <div class="tab-pane fade pt-4 pb-4" id="orders" role="tabpanel" aria-labelledby="orders-tab">
                         <p class="mb-0">

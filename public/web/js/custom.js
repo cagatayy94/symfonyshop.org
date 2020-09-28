@@ -848,7 +848,7 @@ function generateFavoritesInProfile(requestedPage = 1){
                     var pagination = "";
 
                     pagination +=   '<div class="col-auto mb-3 mb-sm-0">'+
-                                        '<span>' + ((result.perPage*requestedPage) - result.perPage + 1) + '-' + (result.perPage*requestedPage <= result.total_count ? result.perPage*requestedPage : result.total_count) + '/'+ result.total_count +' sonuç gösteriliyor </span>'+
+                                        '<span>' + ((result.perPage*requestedPage) - result.perPage + 1) + '-<span class="total-span">' + (result.perPage*requestedPage <= result.total_count ? result.perPage*requestedPage : result.total_count) + '</span>/<span class="grand-total-span">'+ result.total_count +'</span> sonuç gösteriliyor </span>'+
                                     '</div>';
                     if (result.pageCount) {
                         pagination +=   '<div class="col-auto">' +
@@ -876,7 +876,6 @@ function generateFavoritesInProfile(requestedPage = 1){
     });
 }
 
-
 $('body').on('click', '[href="#favorites"]', function(e) {
     generateFavoritesInProfile();
 });
@@ -893,6 +892,11 @@ $('body').on('click', '.delete_favorite', function(e) {
 });
 
 function removeFavorite(id){
+    var favoriteTotalSpan = $('#favorite-pagination').find('span.total-span');
+    var favoriteGrandTotalSpan = $('#favorite-pagination').find('span.grand-total-span');
+    var favoriteTotalPaginationVal = favoriteTotalSpan.html();
+    var favoriteGrandTotalSpanPaginationVal = favoriteGrandTotalSpan.html();
+
     $.ajax({
         type: 'POST',
         url: '/remove-user-favorite',
@@ -904,7 +908,164 @@ function removeFavorite(id){
                 if (!$('#favorites-table-body').children().length) {
                     generateFavoritesInProfile();
                 }
+
+                favoriteTotalSpan.html(favoriteTotalPaginationVal - 1);
+                favoriteGrandTotalSpan.html(favoriteGrandTotalSpanPaginationVal - 1);
                 
+            } else {
+                toastr.error(result.error.message);
+            }
+        }
+    });
+}
+
+function updateCommentsInProfile(requestedPage = 1){
+    paginationButton = $('.my-favorites-pagination[data-page="'+ requestedPage +'"]');
+    $('.my-favorites-pagination').parent('.page-item').removeClass('active');
+    paginationButton.parent('.page-item').addClass('active');
+
+    $.ajax({
+        type: 'GET',
+        url: 'get-user-account-comments?page='+requestedPage,
+        success: function (result) {
+            if (result.success) {
+
+                var table = "";
+
+                if (result.total_count) {
+
+                    table += "<thead>" +
+                            "<tr>" +
+                                "<th></th>" +
+                                "<th>Adı</th>" +
+                                "<th>Puan</th>" +
+                                "<th>Tarih</th>" +
+                                "<th>Yorum</th>" +
+                                "<th></th>" +
+                            "</tr>" +
+                        "</thead>" +
+                        "<tbody id='comments-table-body'>";
+
+                    $.each( result.comments, function(_, value) {
+
+                        var stars = "";
+                        for (i = 0; i <= value.rate; i++) {
+                            stars += '<i class="fas fa-star text-color-primary"></i>';
+                        }
+
+                        var comment = 'lalala';
+                        var date = 'asd';
+
+                        table += '<tr>' +
+                                    '<td width="60">' +
+                                        '<a href="/product-detail/' + value.product_id + '">' +
+                                            '<img alt="" width="60" height="60" src="/web/img/product/' + value.path + '">' +
+                                        '</a>' +
+                                    '</td>' +
+                                    '<td>' +
+                                        '<a href="/product-detail/' + value.product_id + '">' + value.product_name + '</a>' +
+                                    '</td>' +
+                                    '<td>' +
+                                        stars +
+                                    '</td>' +
+                                    '<td>' +
+                                        value.created_at +
+                                    '</td>' +
+                                    '<td>' +
+                                        value.comment +
+                                    '</td>' +
+                                    '<td>' +
+                                        '<button type="button" class="btn btn-danger mb-2 delete_comment" data-comment-id="' + value.comment_id + '">Kaldır</button>' +
+                                    '</td>' +
+                                '</tr>';
+                    });
+
+                    table += "</tbody>";
+
+                    var pagination = "";
+
+                    pagination +=   '<div class="col-auto mb-3 mb-sm-0">'+
+                                        '<span>' + ((result.perPage*requestedPage) - result.perPage + 1) + '-<span class="total-span">' + (result.perPage*requestedPage <= result.total_count ? result.perPage*requestedPage : result.total_count) + '</span>/<span class="grand-total-span">'+ result.total_count +'</span> sonuç gösteriliyor </span>'+
+                                    '</div>';
+                    if (result.pageCount) {
+                        pagination +=   '<div class="col-auto">' +
+                                            '<nav aria-label="Page navigation example">' +
+                                                '<ul class="pagination mb-0">';
+
+                        for (i = 1; i <= result.pageCount; i++) {
+                            pagination += '<li' + ((i == requestedPage) ? " class=\'page-item active\' " : "") +'><a class="page-link my-comments-pagination" data-page="'+ i +'" href="#">'+ i +'</a></li>';
+                        }  
+
+                        pagination += '</ul></nav></div>';
+                    }                
+                                                
+                    $('#comments-table').html(table);
+                    $('#comments-pagination').html(pagination);
+
+                }else{
+                    $('#comments-table').html("Henüz hiç yorumunuz yok");
+                }
+
+            } else {
+                toastr.error(result.error.message);
+            }
+        }
+    });
+}
+
+$('body').on('click', '[href="#comments"]', function(e) {
+    updateCommentsInProfile();
+});
+
+$('body').on('click', '.my-comments-pagination', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var self = $(this);
+
+
+    if (self.closest('.page-item').hasClass('active')) {
+        return false;
+    }
+
+    var requestedPage = self.attr('data-page');
+
+    updateCommentsInProfile(requestedPage);
+});
+
+$('body').on('click', '.delete_comment', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var self = $(this);
+
+    var commentId = self.attr('data-comment-id');
+
+    toastr.info('<button type="button" class="btn clear" onclick="removeComment('+ commentId +')"> Evet</button>' , 'Yorumunuzu silmek istediğinize emin misiniz?');
+});
+
+function removeComment(id){
+
+    var commentsTotalSpan = $('#comments-pagination').find('span.total-span');
+    var commentsGrandTotalSpan = $('#comments-pagination').find('span.grand-total-span');
+    var commentTotalPaginationVal = commentsTotalSpan.html();
+    var commentsGrandTotalSpanPaginationVal = commentsGrandTotalSpan.html();
+
+    $.ajax({
+        type: 'POST',
+        url: '/remove-user-comment',
+        data: {id},
+        success: function (result) {
+            if (result.success) {
+                $('.delete_comment[data-comment-id="'+id+'"]').closest('tr').remove();
+                
+                if (!$('#comments-table-body').children().length) {
+                    updateCommentsInProfile();
+                }
+
+                commentsTotalSpan.html(commentTotalPaginationVal - 1);
+                commentsGrandTotalSpan.html(commentsGrandTotalSpanPaginationVal - 1);
+
             } else {
                 toastr.error(result.error.message);
             }

@@ -1225,4 +1225,113 @@ class User
             throw new \Exception("İşlem başarısız bir sorun oluştu lütfen daha sonra tekrar deneyiniz");            
         }
     }
+
+    /**
+     * Get user comments
+     *
+     * @param obj $user
+     * @throws \Exception
+     */
+    public function getUserAccountComments($user, $limit, $currentPage)
+    {
+        return $this->connection->executeQuery('
+            SELECT
+                COUNT(*) OVER() AS total_count,
+                pc.id comment_id,
+                pc.created_at,
+                pc.comment,
+                pc.rate,
+                p.name product_name,
+                p.id product_id,
+                (
+                    SELECT
+                        path
+                    FROM
+                        product_photo pc
+                    WHERE
+                        pc.product_id = p.id
+                    LIMIT 1
+                ) path
+            FROM
+                product_comment pc
+            LEFT JOIN
+                product p ON pc.product_id = p.id
+            WHERE
+                pc.user_id = :user_account_id
+            AND
+                p.is_deleted = false
+            AND
+                pc.is_deleted = false
+            LIMIT
+                :limit
+            OFFSET
+                :offset
+
+                ', [
+                    'user_account_id' => $user->getId(),
+                    'limit' => $limit,
+                    'offset' => $limit * ($currentPage - 1)
+                ]
+        )->fetchAll();
+    }
+
+    /**
+     * Remove favorite
+     *
+     * @param user object $user
+     * @param string $id
+     * @throws \Exception
+     */
+    public function removeUserComment($user, $id)
+    {
+        $logDetails = $this->getArguments(__FUNCTION__, func_get_args());
+
+        $logFullDetails = [
+            'entity' => 'User',
+            'activity' => 'removeUserComment',
+            'activityId' => 0,
+            'details' => $logDetails
+        ];
+
+        $connection = $this->connection;
+
+        $id = intval($id);
+
+        try {
+
+            if (!$user) {
+                throw new \InvalidArgumentException('Kullanıcı bulunamadı');
+            }
+
+            if (empty($id)) {
+                throw new \InvalidArgumentException('Yorum belirtilmemiş');
+            }
+
+            $statement = $connection->prepare('
+                UPDATE
+                    product_comment
+                SET
+                    is_deleted = true
+                WHERE 
+                    id = :id
+                AND
+                    user_id = :user_id
+            ');
+
+            $statement->bindValue(':id', $id);
+            $statement->bindValue(':user_id', $user->getId());
+            $statement->execute();
+
+            $logFullDetails['activityId'] = $id;
+            $this->logger->info('Deleted the comment', $logFullDetails);
+        } catch (\InvalidArgumentException $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+            $this->logger->error('Could not deleted the comment', $logFullDetails);
+            throw $exception;
+        } catch (\Exception $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+            $this->logger->error('Could not deleted the comment', $logFullDetails);
+            throw new \Exception("İşlem başarısız bir sorun oluştu lütfen daha sonra tekrar deneyiniz");            
+        }
+    }
 }
