@@ -5,6 +5,10 @@ var totalCargoPrice;
 var uniqueProduct;
 updateCartTotalAndQuantity();
 
+$(window).on('hashchange', function() {
+    $('[href="'+location.hash+'"]').trigger('click');
+});
+
 $(document).ready(function() {
     toastr.options = {
         "preventDuplicates": true,
@@ -13,6 +17,8 @@ $(document).ready(function() {
     }
 
     $('.mobile-mask').mask('(000) 000-0000');
+
+    $('[href="'+location.hash+'"]').trigger('click');
 });
 
 $('#order_notice_form').on('submit', function (e) {
@@ -797,7 +803,7 @@ function generateFavoritesInProfile(requestedPage = 1){
 
                 var table = "";
 
-                if (result.favorites) {
+                if (result.total_count) {
 
                     table += "<thead>" +
                             "<tr>" +

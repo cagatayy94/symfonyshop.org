@@ -11,7 +11,7 @@
                                 <a href="siparislerim" class="nav-link">SİPARİŞLERİM</a>
                             </li>
                             <li class="nav-item">
-                                <a href="favorilerim" class="nav-link">FAVORİLERİM</a>
+                                <a href="<?php echo $this->get('router')->path('profile') ?>#favorites" class="nav-link">FAVORİLERİM</a>
                             </li>
                             <li class="nav-item">
                                 <a href="<?php echo $this->get('router')->path('profile') ?>" class="nav-link">HESABIM</a>
