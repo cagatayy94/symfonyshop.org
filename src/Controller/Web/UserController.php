@@ -206,23 +206,11 @@ class UserController extends AbstractController
     {
         $user = $this->getUser();
 
-        $pageCount = 0;
-        $currentPage = 1;
-
         $addresses = $userService->getUserAccountAddresses($user);
-        $favorites = $userService->getUserAccountFavorites($user, self::LIMIT_PER_PAGE, $currentPage);
-
-        if (!empty($favorites[0]['total_count']) && $favorites[0]['total_count'] > self::LIMIT_PER_PAGE) {
-            $pageCount = ceil($favorites[0]['total_count'] / self::LIMIT_PER_PAGE);
-        }
 
         return $this->render('Web/User/user-profile.html.php', [
             'user'          => $user,
             'addresses'     => $addresses,
-            'favorites'     => $favorites,
-            'pageCount'     => $pageCount,
-            'perPage'       => self::LIMIT_PER_PAGE,
-            'currentPage'   => $currentPage,
         ]);
     }
 
@@ -398,13 +386,21 @@ class UserController extends AbstractController
 
         $page = $request->query->get('page');
 
+        $pageCount = 0;
+
         try {
             $favorites = $userService->getUserAccountFavorites($user, self::LIMIT_PER_PAGE, $page);
 
+            if (!empty($favorites[0]['total_count']) && $favorites[0]['total_count'] > self::LIMIT_PER_PAGE) {
+                $pageCount = ceil($favorites[0]['total_count'] / self::LIMIT_PER_PAGE);
+            }
+
             return new JsonResponse([
                 'success'   => true,
-                'favorites' => $favorites
-
+                'favorites' => $favorites,
+                'total_count' => isset($favorites[0]['total_count']) ? $favorites[0]['total_count'] : 0 ,
+                'perPage' => self::LIMIT_PER_PAGE,
+                'pageCount' => $pageCount,
             ]);
         } catch (\Exception $exception) {
             return new JsonResponse([

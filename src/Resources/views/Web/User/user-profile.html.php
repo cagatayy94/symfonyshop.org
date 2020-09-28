@@ -165,7 +165,21 @@
                                     <h4>Tüm Favorileriniz</h4>
                                     <hr class="mb-4">
                                     <div class="table-responsive-lg">
-                                        <?php if ($favorites): ?>
+                                        <table class="table" id="favorites-table">
+         
+                                        </table>
+                                        <!-- start pagination -->
+                                        <hr class="mt-5 mb-4">
+                                        <div class="row align-items-center justify-content-between" id="favorite-pagination">
+               
+                                        </div>
+                                       
+                                        <!-- end pagination -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                                          <table class="table">
                                             <thead>
                                                     <tr>

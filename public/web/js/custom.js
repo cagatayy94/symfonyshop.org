@@ -235,65 +235,6 @@ $('.pagination-action').on('click', function (e) {
     }
 });
 
-$('.my-favorites-pagination').on('click', function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    var self = $(this);
-
-
-    if (self.closest('.page-item').hasClass('active')) {
-        return false;
-    }
-
-    var requestedPage = self.attr('data-page');
-
-    $.ajax({
-        type: 'GET',
-        url: 'get-user-account-favorites?page='+requestedPage,
-        success: function (result) {
-            if (result.success) {
-
-                $('.my-favorites-pagination').parent('.page-item').removeClass('active');
-
-                self.parent('.page-item').addClass('active');
-
-                var table = "";
-
-                $.each( result.favorites, function(_, value) {
-
-                    var stars = "";
-                    for (i = 0; i <= value.rate; i++) {
-                        stars += '<i class="fas fa-star text-color-primary"></i>';
-                    }
-
-                    table += '<tr>' +
-                                '<td width="60">' +
-                                    '<a href="/product-detail/' + value.product_id + '">' +
-                                        '<img alt="" width="60" height="60" src="/web/img/product/' + value.path + '">' +
-                                    '</a>' +
-                                '</td>' +
-                                '<td>' +
-                                    '<a href="/product-detail/' + value.product_id + '">' + value.product_name + '</a>' +
-                                '</td>' +
-                                '<td>' +
-                                    stars +
-                                '</td>' +
-                                '<td>' +
-                                    '<button type="button" class="btn btn-danger mb-2 delete_favorite" data-favorite-id="' + value.fav_id + '">Kaldır</button>' +
-                                '</td>' +
-                            '</tr>';
-                });
-
-                $('#favorites-table').html(table);
-
-            } else {
-                toastr.error(result.error.message);
-            }
-        }
-    });
-});
-
 $('.order-filter-submit').on('change', function (e) {
     e.preventDefault();
     e.stopPropagation();
@@ -826,6 +767,114 @@ $('#update_address_form').on('submit', function (e) {
     }
 });
 
+$('body').on('click', '.my-favorites-pagination', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var self = $(this);
+
+
+    if (self.closest('.page-item').hasClass('active')) {
+        return false;
+    }
+
+    var requestedPage = self.attr('data-page');
+
+    generateFavoritesInProfile(requestedPage, self);
+});
+
+function generateFavoritesInProfile(requestedPage = 1){
+
+    paginationButton = $('.my-favorites-pagination[data-page="'+ requestedPage +'"]');
+    $('.my-favorites-pagination').parent('.page-item').removeClass('active');
+    paginationButton.parent('.page-item').addClass('active');
+
+    $.ajax({
+        type: 'GET',
+        url: 'get-user-account-favorites?page='+requestedPage,
+        success: function (result) {
+            if (result.success) {
+
+                var table = "";
+
+                if (result.favorites) {
+
+                    table += "<thead>" +
+                            "<tr>" +
+                                "<th></th>" +
+                                "<th>Adı</th>" +
+                                "<th>Puanı</th>" +
+                                "<th>Fiyatı</th>" +
+                                "<th></th>" +
+                            "</tr>" +
+                        "</thead>" +
+                        "<tbody id='favorites-table-body'>";
+
+                    $.each( result.favorites, function(_, value) {
+
+                        var stars = "";
+                        for (i = 0; i <= value.rate; i++) {
+                            stars += '<i class="fas fa-star text-color-primary"></i>';
+                        }
+
+
+
+                        table += '<tr>' +
+                                    '<td width="60">' +
+                                        '<a href="/product-detail/' + value.product_id + '">' +
+                                            '<img alt="" width="60" height="60" src="/web/img/product/' + value.path + '">' +
+                                        '</a>' +
+                                    '</td>' +
+                                    '<td>' +
+                                        '<a href="/product-detail/' + value.product_id + '">' + value.product_name + '</a>' +
+                                    '</td>' +
+                                    '<td>' +
+                                        stars +
+                                    '</td>' +
+                                    '<td>' +
+                                        '<button type="button" class="btn btn-danger mb-2 delete_favorite" data-favorite-id="' + value.fav_id + '">Kaldır</button>' +
+                                    '</td>' +
+                                '</tr>';
+                    });
+
+                    table += "</tbody>";
+
+                    var pagination = "";
+
+                    pagination +=   '<div class="col-auto mb-3 mb-sm-0">'+
+                                        '<span>' + ((result.perPage*requestedPage) - result.perPage + 1) + '-' + (result.perPage*requestedPage <= result.total_count ? result.perPage*requestedPage : result.total_count) + '/'+ result.total_count +' sonuç gösteriliyor </span>'+
+                                    '</div>';
+                    if (result.pageCount) {
+                        pagination +=   '<div class="col-auto">' +
+                                            '<nav aria-label="Page navigation example">' +
+                                                '<ul class="pagination mb-0">';
+
+                        for (i = 1; i <= result.pageCount; i++) {
+                            pagination += '<li' + ((i == requestedPage) ? " class=\'page-item active\' " : "") +'><a class="page-link my-favorites-pagination" data-page="'+ i +'" href="#">'+ i +'</a></li>';
+                        }  
+
+                        pagination += '</ul></nav></div>';
+                    }                
+                                                
+                    $('#favorites-table').html(table);
+                    $('#favorite-pagination').html(pagination);
+
+                }else{
+                    $('#favorites-table').html("Henüz hiç favoriniz yok");
+                }
+
+            } else {
+                toastr.error(result.error.message);
+            }
+        }
+    });
+}
+
+
+$('body').on('click', '[href="#favorites"]', function(e) {
+    generateFavoritesInProfile();
+});
+
 $('body').on('click', '.delete_favorite', function(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -845,6 +894,11 @@ function removeFavorite(id){
         success: function (result) {
             if (result.success) {
                 $('.delete_favorite[data-favorite-id="'+id+'"]').closest('tr').remove();
+                
+                if (!$('#favorites-table-body').children().length) {
+                    generateFavoritesInProfile();
+                }
+                
             } else {
                 toastr.error(result.error.message);
             }
