@@ -12,7 +12,7 @@ services:
         - POSTGRES_USER=cagatay
         - POSTGRES_PASSWORD=rootpass
       ports:
-        - "8084:5432"
+        - "5432:5432"
       networks:
         default:
           ipv4_address: 192.168.0.4
@@ -27,7 +27,7 @@ services:
           - .:/application
           - ./phpdocker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
       ports:
-       - "8080:80"
+       - "80:80"
 
     php-fpm:
       build: phpdocker/php-fpm
