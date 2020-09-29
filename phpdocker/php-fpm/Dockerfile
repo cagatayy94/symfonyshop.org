@@ -12,5 +12,3 @@ RUN apt-get update \
 RUN curl -sS https://getcomposer.org/installer | \
     php -- --install-dir=/usr/bin/ --filename=composer
 
-EXPOSE 80
-ENTRYPOINT /application --port 80
