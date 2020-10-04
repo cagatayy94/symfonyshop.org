@@ -12,6 +12,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Update composer globally
+      run: composer global update
+
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress --no-suggest
 
