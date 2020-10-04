@@ -79,8 +79,6 @@ GitHub.sublime-settings
 # Build data
 /build/
 
-# Env file
-/.env
 
 # Composer PHAR
 /composer.phar
