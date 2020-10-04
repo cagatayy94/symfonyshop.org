@@ -21,11 +21,13 @@ jobs:
     # - name: Run test suite
     #   run: composer run-script test
 
-    - name: Deploy to Server
-      uses: AEnterprise/rsync-deploy@v1.0
-      env:
-          DEPLOY_KEY: ${{ secrets.SSH_KEY }}
-          SERVER_PORT: ${{ secrets.SSH_PORT }}
-          SERVER_IP: ${{ secrets.SSH_HOST }}
-          USERNAME: ${{ secrets.SSH_USER }}
-          SERVER_DESTINATION: ${{ secrets.SSH_TARGET }}
+    - name: deploy to server
+        uses: AEnterprise/rsync-deploy@v1.0
+        env:
+          DEPLOY_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          ARGS: "-e -c -r --delete"
+          SERVER_PORT: ${{ secrets.SERVER_PORT }}
+          FOLDER: "./"
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+          USERNAME: ${{ secrets.USERNAME }}
+          SERVER_DESTINATION: ${{ secrets.SERVER_DESTINATION }}
