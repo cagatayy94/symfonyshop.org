@@ -685,6 +685,7 @@ $('#add_address_form').on('submit', function (e) {
                     self.trigger("reset");
                     $('#add_address_modal').modal('toggle');
                     updateAddressesInProfile();
+                    updateAddressesInCart();
                 } else {
                     toastr.error(result.error.message);
                 }
