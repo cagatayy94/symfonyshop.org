@@ -418,6 +418,19 @@ class Cart
             throw new \Exception($exception->getMessage());            
         }
     }
+
+    public function getCargoCompanyForCart()
+    {
+        return $this->connection->executeQuery('
+            SELECT
+                id,
+                name
+            FROM
+                cargo_company
+                '
+            )->fetchAll();
+    }
+
     public function cartUpdateAddressAndCargo($user, $billingAddressId, $shippingAddressId, $cargoCompanyId)
     {
         $logDetails = $this->getArguments(__FUNCTION__, func_get_args());
