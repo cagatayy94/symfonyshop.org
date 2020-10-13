@@ -418,4 +418,67 @@ class Cart
             throw new \Exception($exception->getMessage());            
         }
     }
+    public function cartUpdateAddressAndCargo($user, $billingAddressId, $shippingAddressId, $cargoCompanyId)
+    {
+        $logDetails = $this->getArguments(__FUNCTION__, func_get_args());
+
+        $logFullDetails = [
+            'entity' => 'Cart',
+            'activity' => 'cartUpdateAddressAndCargo',
+            'activityId' => 0,
+            'details' => $logDetails
+        ];
+
+        $connection = $this->connection;
+
+        $billingAddressId = (int) $billingAddressId;
+        $shippingAddressId = (int) $shippingAddressId;
+        $cargoCompanyId = (int) $cargoCompanyId;
+
+        try {
+            if (!$user) {
+                throw new \InvalidArgumentException('Kullanıcı bulunamadı');
+            }
+
+            if (!$cargoCompanyId) {
+                throw new \InvalidArgumentException('Kargo firması bulunamadı');
+            }
+
+            if (!$billingAddressId && $this->isThisAddressBelongsTheCurrentUser($user, $billingAddressId)) {
+                throw new \InvalidArgumentException('Fatura adresi bulunamadı');
+            }
+
+            if (!$shippingAddressId && $this->isThisAddressBelongsTheCurrentUser($user, $shippingAddressId)) {
+                throw new \InvalidArgumentException('Kargo Adresi bulunamadı');
+            }
+
+            $connection->executeQuery('
+                UPDATE
+                    cart
+                SET
+                    cargo_company_id = :cargo_company_id,
+                    shipping_address_id = :shipping_address_id,
+                    billing_address_id = :billing_address_id
+                WHERE
+                    user_account_id = :user_account_id
+                    ', [
+                        'cargo_company_id' => $cargoCompanyId,
+                        'shipping_address_id' => $shippingAddressId,
+                        'billing_address_id' => $billingAddressId,
+                        'user_account_id' => $user->getId(),
+                    ]
+                );
+
+
+            $this->logger->info('Updated cargo and billing details', $logFullDetails);
+        } catch (\InvalidArgumentException $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+            $this->logger->error('Could not updated cargo and billing details', $logFullDetails);
+            throw $exception;
+        } catch (\Exception $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+            $this->logger->error('Could not updated cargo and billing details', $logFullDetails);
+            throw new \Exception($exception->getMessage());            
+        }
+    }
 }
