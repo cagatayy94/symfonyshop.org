@@ -383,15 +383,15 @@ function updateCart(){
                     $('.empty-cart-holder').html("<h2 class='text-center'>Sepetinizde hiç ürün yok alışverişe devam etmek için <a href='/'>tıklayın</a></h2>");
 
                 }else{
-                generateCartItems(result.data).done(function(e){
-                    $('#cart-table-tbody').html(cartItems);
-                    $('.cart-total-value').html(grandTotal.toFixed(2)+" ₺");
-                    $('.cart-total-value-cargo').html(totalCargoPrice.toFixed(2)+" ₺");
-                    $('.cart-total-value-grand').html((grandTotal+totalCargoPrice).toFixed(2)+" ₺");
-                });
-                updateCartTotalAndQuantity();
+                    generateCartItems(result.data).done(function(e){
+                        $('#cart-table-tbody').html(cartItems);
+                        $('.cart-total-value').html(grandTotal.toFixed(2)+" ₺");
+                        $('.cart-total-value-cargo').html(totalCargoPrice.toFixed(2)+" ₺");
+                        $('.cart-total-value-grand').html((grandTotal+totalCargoPrice).toFixed(2)+" ₺");
+                    });
+                    updateCartTotalAndQuantity();
+                }
             }
-        }
         }
     });
 }
@@ -1071,3 +1071,155 @@ function removeComment(id){
         }
     });
 }
+
+function updateAddressesInCart(){
+    $.ajax({
+        type: 'GET',
+        url: '/get-user-addresses',
+        success: function (result) {
+            if (result.success) {
+                var billingAddressTable = "";
+                var cargoAddressTable = "";
+
+                var count = Object.keys(result.addresses).length;
+
+                if (count) {
+                        $.each( result.addresses, function(_, value) {
+                            billingAddressTable += '<div class="card mb-4">'+
+                                                '<div class="card-header">'+
+                                                    '<div class="float-left"><input type="radio" name="billing_address_id" class="required" value="'+value.address_id+'"></div>'+
+                                                    '<div class="float-right">' +
+                                                        '<button type="button" class="btn btn-success" data-toggle="modal" data-target="#update_address_modal_in_cart"><i class="fas fa-pencil-alt"></i></button>'+
+                                                        '<button type="button" class="btn btn-danger delete_address_in_cart"><i class="fas fa-trash-alt"></i></button>'+
+                                                    '</div>'+
+                                                '</div>'+
+                                                '<div class="card-body address">'+
+                                                    '<span class="address_name font-weight-bold">'+ value.address_name +'</span><br>'+
+                                                    '<span class="full_name">'+ value.full_name +'</span><br>'+
+                                                    '<span class="city">'+ value.city +'</span>-'+
+                                                    '<span class="county">'+ value.county +'</span><br>'+
+                                                    '<span class="mobile">'+ value.mobile +'</span><br>'+
+                                                    '<span class="address">'+ value.address +'</span>'+
+                                                '</div>'+
+                                            '</div>';
+
+                            cargoAddressTable += '<div class="card mb-4">'+
+                                                '<div class="card-header">'+
+                                                    '<div class="float-left"><input type="radio" name="shipping_address_id" class="required" value="'+value.address_id+'"></div>'+
+                                                    '<div class="float-right">' +
+                                                        '<button type="button" class="btn btn-success" data-toggle="modal" data-target="#update_address_modal_in_cart"><i class="fas fa-pencil-alt"></i></button>'+
+                                                        '<button type="button" class="btn btn-danger delete_address_in_cart"><i class="fas fa-trash-alt"></i></button>'+
+                                                    '</div>'+
+                                                '</div>'+
+                                                '<div class="card-body address">'+
+                                                    '<span class="address_name font-weight-bold">'+ value.address_name +'</span><br>'+
+                                                    '<span class="full_name">'+ value.full_name +'</span><br>'+
+                                                    '<span class="city">'+ value.city +'</span>-'+
+                                                    '<span class="county">'+ value.county +'</span><br>'+
+                                                    '<span class="mobile">'+ value.mobile +'</span><br>'+
+                                                    '<span class="address">'+ value.address +'</span>'+
+                                                '</div>'+
+                                            '</div>';
+
+                        });
+
+                        $('.billing_address_holder').html(billingAddressTable);
+                        $('.shipping_address_holder').html(cargoAddressTable);
+                        
+
+                    }else{
+                        $('.billing_address_holder').html("<h6 class='text-center'>Hiç adresiniz yok. Yeni adres eklemek için <a style='cursor: pointer;' data-toggle='modal' data-target='#add_address_modal'>tıklayın</a></h6>");
+                        $('.shipping_address_holder').html("<h6 class='text-center'>Hiç adresiniz yok. Yeni adres eklemek için <a style='cursor: pointer;' data-toggle='modal' data-target='#add_address_modal'>tıklayın</a></h6>");
+                        $('.empty-cart-holder').html("");
+                    }
+            }
+        }
+    });
+}
+
+$('body').on('click', '.delete_address_in_cart', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var self = $(this);
+
+    var addressId = $(self.parent().siblings()[0]).find('[type="radio"]').val();
+
+    toastr.info('<button type="button" class="btn clear" onclick="removeAddressInCart('+ addressId +')"> Evet</button>' , 'Adresi silmek istediğinize emin misiniz?');
+});
+
+function removeAddressInCart(id){
+    $.ajax({
+        type: 'POST',
+        url: '/remove-user-address',
+        data: {id},
+        success: function (result) {
+            if (result.success) {
+                updateAddressesInCart();
+            } else {
+                toastr.error(result.error.message);
+            }
+        }
+    });
+}
+
+$('body').on('click', '[data-target="#update_address_modal_in_cart"]', function(e) {
+    var self = $(this);
+
+    var addressId = $(self.parent().siblings()[0]).find('[type="radio"]').val();
+    var address = $(self.parent().parent().siblings()[0]);
+
+    var addressName = address.find('span.address_name').html();
+    var addressFullName = address.find('span.full_name').html();
+    var addressText = address.find('span.address').html();
+    var county = address.find('span.county').html();
+    var city = address.find('span.city').html();
+    var mobile = address.find('span.mobile').html();
+
+    $('#update_address_form_in_cart').find('input[name="address_name"]').val(addressName);
+    $('#update_address_form_in_cart').find('input[name="full_name"]').val(addressFullName);
+    $('#update_address_form_in_cart').find('input[name="address"]').val(addressText);
+    $('#update_address_form_in_cart').find('input[name="county"]').val(county);
+    $('#update_address_form_in_cart').find('input[name="city"]').val(city);
+    $('#update_address_form_in_cart').find('input[name="mobile"]').val(mobile);
+    $('#update_address_form_in_cart').find('input[name="address_id"]').val(addressId);
+});
+
+$('#update_address_form_in_cart').on('submit', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var self = $(this);
+    var url = self.attr('action');
+    var method = self.attr('method');
+    var data = self.serialize();
+    var button = self.find(':submit');
+
+    button.attr('disabled', 'disabled');
+
+    var isValid = true;
+
+    isValid = controlRequiredInputsAreFilled(self.find('.required'));
+
+    if (isValid) {
+        $.ajax({
+            type: method,
+            url: url,
+            data: data,
+            success: function (result) {
+                if (result.success) {
+                    toastr.success('Başarılı');
+                    self.trigger("reset");
+                    $('#update_address_modal_in_cart').modal('toggle');
+                    updateAddressesInCart();
+                } else {
+                    toastr.error(result.error.message);
+                }
+                button.removeAttr('disabled');
+            }
+        });
+    } else {
+        button.removeAttr('disabled');
+    }
+});
+
