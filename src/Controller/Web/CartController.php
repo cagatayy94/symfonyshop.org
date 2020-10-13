@@ -163,6 +163,22 @@ class CartController extends AbstractController
     }
 
     /**
+     * @Route("/cart/cargo-select", name="cart_cargo_select")
+     */
+    public function cartCargoSelectAction(Request $request, CartService $cartService)
+    {
+        $user = $this->getUser();
+        $cargoCompany = $cartService->getCargoCompanyForCart();
+
+        return $this->render('Web/Cart/cargo_select.html.php', 
+            [
+                'user' => $user,
+                'cargoCompany' => $cargoCompany,
+            ]
+        );
+    }
+
+    /**
      * @Route("/cart/check-out", name="cart_check_out")
      */
     public function cartCheckOutAction(Request $request, CartService $cartService)
