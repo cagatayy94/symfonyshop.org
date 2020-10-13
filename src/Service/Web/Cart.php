@@ -494,4 +494,24 @@ class Cart
             throw new \Exception($exception->getMessage());            
         }
     }
+
+    public function isThisAddressBelongsTheCurrentUser($user, $addressId)
+    {
+        return $this->connection->executeQuery('
+            SELECT
+                count(a.id)
+            FROM
+                address a
+            LEFT JOIN
+                user_account_address uaa ON a.id = uaa.address_id
+            WHERE
+                uaa.user_account_id = :user_account_id
+            AND
+                a.id = :address_id
+                ', [
+                    'user_account_id' => $user->getId(),
+                    'address_id' => $addressId
+                ]
+            )->fetchColumn();
+    }
 }
