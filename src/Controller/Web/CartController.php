@@ -175,4 +175,31 @@ class CartController extends AbstractController
             ]
         );
     }
+    /**
+     * @Route("/cart/update-address-and-cargo", name="cart_update_address_and_cargo")
+     */
+    public function cartUpdateAddressAndCargoAction(Request $request, CartService $cartService)
+    {
+        $user = $this->getUser();
+
+        $billingAddressId = $request->request->get('billing_address_id');
+        $shippingAddressId = $request->request->get('shipping_address_id');
+        $shippingCompanyId = $request->request->get('shipping_company_id');
+
+        try {
+
+            $cartService->cartUpdateAddressAndCargo($user, $billingAddressId, $shippingAddressId, $shippingCompanyId);
+
+            return new JsonResponse([
+                'success' => true,
+            ]);
+        } catch (\Exception $exception) {
+            return new JsonResponse([
+                'success' => false,
+                'error' => [
+                    'message' => $exception->getMessage()
+                ]
+            ]);
+        }
+    }
 }
