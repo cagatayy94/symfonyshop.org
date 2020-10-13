@@ -532,16 +532,6 @@ function generateCartItemsInCheckOut(val){
     return dfrd1.promise();
 }
 
-$('body').on('change', '#different_billing_address', function(e) {
-    if ($(this).prop('checked')) {
-        $( "input[name*='billing']" ).removeAttr('disabled');
-        $('#billing_form_div').removeClass('custom-class-disabler');
-    } else {
-        $( "input[name*='billing']" ).attr('disabled','disabled');
-        $('#billing_form_div').addClass('custom-class-disabler');
-    }
-});
-
 $('#change_mobile_form').on('submit', function (e) {
     e.preventDefault();
     e.stopPropagation();
