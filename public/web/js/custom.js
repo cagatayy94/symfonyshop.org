@@ -376,6 +376,13 @@ function updateCart(){
 
                 var count = Object.keys(result.data).length;
 
+                if (!count) {
+                    $('.cart_cargo_select').hide();
+                    $('.shop-cart-table').hide();
+                    $('.cart-summary').hide();
+                    $('.empty-cart-holder').html("<h2 class='text-center'>Sepetinizde hiç ürün yok alışverişe devam etmek için <a href='/'>tıklayın</a></h2>");
+
+                }else{
                 generateCartItems(result.data).done(function(e){
                     $('#cart-table-tbody').html(cartItems);
                     $('.cart-total-value').html(grandTotal.toFixed(2)+" ₺");
@@ -384,6 +391,7 @@ function updateCart(){
                 });
                 updateCartTotalAndQuantity();
             }
+        }
         }
     });
 }
