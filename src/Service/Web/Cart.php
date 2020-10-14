@@ -151,6 +151,46 @@ class Cart
 
                 p.price*c.quantity::float(2) as total,
 
+                cc.name cargo_company_name,
+
+                (
+                    SELECT
+                        ROW_TO_JSON(a) as billing_address
+                    FROM
+                         (
+                             SELECT
+                                address_name,
+                                full_name,
+                                address,
+                                county,
+                                city,
+                                mobile
+                             FROM
+                                address
+                             WHERE
+                                id = c.billing_address_id
+                         ) a
+                ) billing_address,
+
+                (
+                    SELECT
+                        ROW_TO_JSON(a) as shipping_address
+                    FROM
+                         (
+                             SELECT
+                                address_name,
+                                full_name,
+                                address,
+                                county,
+                                city,
+                                mobile
+                             FROM
+                                address
+                             WHERE
+                                id = c.shipping_address_id
+                         ) a
+                ) shipping_address,
+
                 (
                     SELECT
                         path
@@ -166,10 +206,12 @@ class Cart
                 product p ON p.id = c.product_id
             LEFT JOIN
                 product_variant pv on c.variant_id = pv.id
+            LEFT JOIN
+                cargo_company cc on c.cargo_company_id = cc.id
             WHERE
                 user_account_id = :user_account_id
             GROUP BY
-                c.id, p.id, p.name, c.quantity, p.cargo_price, p.variant_title, p.price, pv.name";
+                c.id, p.id, p.name, c.quantity, p.cargo_price, p.variant_title, p.price, pv.name, cc.name";
 
         $statement = $connection->prepare($sql);
         $statement->bindValue('user_account_id', $productId);

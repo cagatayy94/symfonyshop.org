@@ -184,13 +184,16 @@ class CartController extends AbstractController
     public function cartCheckOutAction(Request $request, CartService $cartService)
     {
         $user = $this->getUser();
+        $cargoCompany = $cartService->getCargoCompanyForCart();
 
         return $this->render('Web/Cart/cart_check_out.html.php', 
             [
-                'user' => $user
+                'user' => $user,
+                'cargoCompany' => $cargoCompany,
             ]
         );
     }
+
     /**
      * @Route("/cart/update-address-and-cargo", name="cart_update_address_and_cargo")
      */
