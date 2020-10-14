@@ -480,12 +480,23 @@ function updateCartInCheckOut(){
         url: '/cart/get-data',
         success: function (result) {
             if (result.success) {
+                var cargoCompanyName = result.data[0].cargo_company_name;
+                var billingAddressJson = JSON.parse(result.data[0].billing_address);
+                var shippingAddressJson = JSON.parse(result.data[0].shipping_address);
+
+                var billingAddress = billingAddressJson.full_name+" / "+billingAddressJson.mobile+"<br>"+billingAddressJson.address+" "+billingAddressJson.county+" "+billingAddressJson.city;
+                var shippingAddress = shippingAddressJson.full_name+" / "+shippingAddressJson.mobile+"<br>"+shippingAddressJson.address+" "+shippingAddressJson.county+" "+shippingAddressJson.city;
+
                 var count = Object.keys(result.data).length;
                 generateCartItemsInCheckOut(result.data).done(function(e){
                     $('#cart-table-tbody').html(cartItemsInCheckOut);
                     $('.cart-total-value').html(grandTotal.toFixed(2)+" ₺");
                     $('.cart-total-value-cargo').html(totalCargoPrice.toFixed(2)+" ₺");
                     $('.cart-total-value-grand').html((grandTotal+totalCargoPrice).toFixed(2)+" ₺");
+                    $('.cart-total-value-cargo-company-name').html(cargoCompanyName);
+                    $('.cart-total-value-billing').html(billingAddress);
+                    $('.cart-total-value-shipping').html(shippingAddress);
+
                 });
                 updateCartTotalAndQuantity();
             }
@@ -1223,3 +1234,49 @@ $('#update_address_form_in_cart').on('submit', function (e) {
     }
 });
 
+$('body').on('submit', '#address_selection', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var self = $(this);
+    var url = self.attr('action');
+    var method = self.attr('method');
+    var data = self.serialize();
+    var button = self.find(':submit');
+    var billingAddress = self.find('input[name="billing_address_id"]:checked').val();
+    var cargoAddress = self.find('input[name="shipping_address_id"]:checked').val();
+
+    if (!billingAddress) {
+        toastr.error("Fatura adresi seçiniz");
+        return false;
+    }
+
+    if (!cargoAddress) {
+        toastr.error("Kargo adresi seçiniz");
+        return false;
+    }
+
+    button.attr('disabled', 'disabled');
+
+    var isValid = true;
+
+    isValid = controlRequiredInputsAreFilled(self.find('.required'));
+
+    if (isValid) {
+        $.ajax({
+            type: method,
+            url: url,
+            data: data,
+            success: function (result) {
+                if (result.success) {
+                    location.href = "check-out";
+                } else {
+                    toastr.error(result.error.message);
+                }
+                button.removeAttr('disabled');
+            }
+        });
+    } else {
+        button.removeAttr('disabled');
+    }
+});
