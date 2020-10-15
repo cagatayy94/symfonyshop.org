@@ -30,8 +30,12 @@ jobs:
       if: steps.composer-cache.outputs.cache-hit != 'true'
       run: composer install --prefer-dist --no-progress --no-suggest
 
-    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
-    # Docs: https://getcomposer.org/doc/articles/scripts.md
-
-    # - name: Run test suite
-    #   run: composer run-script test
+    - name: Deploy to Server
+      uses: AEnterprise/rsync-deploy@v1.0
+      env:
+          DEPLOY_KEY: ${{ secrets.SSH_KEY }}
+          SERVER_PORT: ${{ secrets.SSH_PORT }}
+          FOLDER: "dist/"
+          SERVER_IP: ${{ secrets.SSH_HOST }}
+          USERNAME: ${{ secrets.SSH_USER }}
+          SERVER_DESTINATION: ${{ secrets.SSH_TARGET }}
