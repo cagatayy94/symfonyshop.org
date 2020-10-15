@@ -39,5 +39,4 @@ jobs:
         KEY: ${{ secrets.SSH_KEY }}
       with:
         source: "."
-        target: "/opt/app"
-        
+        target: "/var/www/dev-symfonyshop"
