@@ -161,7 +161,7 @@
                     </tr>
                     <tr>
                         <td bgcolor="#ffffff" align="left" style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;">Bir sorunuz var ise site içerisindeki <a style="color: #FFA73B;" target="_blank" href="<?php echo $this->get('router')->url('iletisim') ?>">iletişim formundan</a> bize ulaşabilirsiniz.</p>
+                            <p style="margin: 0;">Bir sorunuz var ise site içerisindeki <a style="color: #FFA73B;" target="_blank" href="<?php echo $this->get('router')->url('contact') ?>">iletişim formundan</a> bize ulaşabilirsiniz.</p>
                         </td>
                     </tr>
                     <tr>
@@ -178,7 +178,7 @@
                     <tr>
                         <td bgcolor="#FFECD1" align="center" style="padding: 30px 30px 30px 30px; border-radius: 4px 4px 4px 4px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
                             <h2 style="font-size: 20px; font-weight: 400; color: #111111; margin: 0;">Yardıma mı ihtiyacınız var?</h2>
-                            <p style="margin: 0;"><a href="<?php echo $this->get('router')->url('iletisim') ?>" target="_blank" style="color: #FFA73B;">Bizimle iletişime geçin</a></p>
+                            <p style="margin: 0;"><a href="<?php echo $this->get('router')->url('contact') ?>" target="_blank" style="color: #FFA73B;">Bizimle iletişime geçin</a></p>
                         </td>
                     </tr>
                 </table>
