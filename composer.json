@@ -1,4 +1,6 @@
 {
+    "name":"cagatayy94/symfonyshop",
+    "description":"SymfonyShop is symfony 4.4 based ecommerce project",
     "type": "project",
     "license": "proprietary",
     "require": {
@@ -28,7 +30,6 @@
         "symfony/validator": "4.4.*",
         "symfony/web-link": "4.4.*",
         "symfony/yaml": "4.4.*",
-        "symfony/profiler-pack": "*",
         "ticketpark/htmlphpexcel": "^1.1"
     },
     "require-dev": {

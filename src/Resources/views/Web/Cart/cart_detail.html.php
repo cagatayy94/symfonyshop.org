@@ -21,7 +21,7 @@
         <section class="section pt-0">
             <div class="container">
                 <div class="row mb-5">
-                    <div class="col">
+                    <div class="col empty-cart-holder">
                         <form class="shop-cart" method="post" action="#">
                             <div class="table-responsive">
                                 <table class="shop-cart-table w-100">
@@ -43,7 +43,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row cart-summary">
                     <div class="col-md-12">
                         <h2 class="font-weight-bold text-4 mb-3">Sepet Özeti</h2>
                         <div class="table-responsive">
@@ -77,7 +77,7 @@
                                         <td colspan="6" class="px-0">
                                             <div class="row mx-0">
                                                 <div class="col-md-12 text-right px-0">
-                                                    <a href="<?php echo $this->get('router')->path('cart_check_out') ?>" class="btn btn-primary btn-rounded font-weight-bold btn-h-2 btn-v-3">ALIŞVERİŞE DEVAM</a>
+                                                    <a href="<?php echo $this->get('router')->path('cart_cargo_select') ?>" class="btn btn-primary btn-rounded font-weight-bold btn-h-2 btn-v-3 cart_cargo_select">ALIŞVERİŞE DEVAM</a>
                                                 </div>
                                             </div>
                                         </td>

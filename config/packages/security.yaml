@@ -73,4 +73,6 @@ security:
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/cart/detail, roles: ROLE_USER }
+        - { path: ^/cart/cargo-select, roles: ROLE_USER }
+        - { path: ^/cart/check-out, roles: ROLE_USER }
         - { path: ^/profilim, roles: ROLE_USER }

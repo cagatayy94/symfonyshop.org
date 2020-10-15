@@ -103,7 +103,7 @@
                                                         <img src="/web/img/product/<?php echo json_decode($value['photo'], true)[0] ?>" class="img-fluid" alt="">
                                                     </a>
                                                     <span class="image-frame-action">
-                                                        <a href="#" class="btn btn-primary btn-rounded font-weight-semibold btn-v-3 btn-fs-2">SEPETE EKLE</a>
+                                                        <a href="<?php echo '/product-detail/'.$value['id'] ?>" class="btn btn-primary btn-rounded font-weight-semibold btn-v-3 btn-fs-2">SEPETE EKLE</a>
                                                     </span>
                                                 </span>
                                             </div>

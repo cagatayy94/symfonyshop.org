@@ -151,6 +151,46 @@ class Cart
 
                 p.price*c.quantity::float(2) as total,
 
+                cc.name cargo_company_name,
+
+                (
+                    SELECT
+                        ROW_TO_JSON(a) as billing_address
+                    FROM
+                         (
+                             SELECT
+                                address_name,
+                                full_name,
+                                address,
+                                county,
+                                city,
+                                mobile
+                             FROM
+                                address
+                             WHERE
+                                id = c.billing_address_id
+                         ) a
+                ) billing_address,
+
+                (
+                    SELECT
+                        ROW_TO_JSON(a) as shipping_address
+                    FROM
+                         (
+                             SELECT
+                                address_name,
+                                full_name,
+                                address,
+                                county,
+                                city,
+                                mobile
+                             FROM
+                                address
+                             WHERE
+                                id = c.shipping_address_id
+                         ) a
+                ) shipping_address,
+
                 (
                     SELECT
                         path
@@ -166,10 +206,12 @@ class Cart
                 product p ON p.id = c.product_id
             LEFT JOIN
                 product_variant pv on c.variant_id = pv.id
+            LEFT JOIN
+                cargo_company cc on c.cargo_company_id = cc.id
             WHERE
                 user_account_id = :user_account_id
             GROUP BY
-                c.id, p.id, p.name, c.quantity, p.cargo_price, p.variant_title, p.price, pv.name";
+                c.id, p.id, p.name, c.quantity, p.cargo_price, p.variant_title, p.price, pv.name, cc.name";
 
         $statement = $connection->prepare($sql);
         $statement->bindValue('user_account_id', $productId);
@@ -417,5 +459,101 @@ class Cart
             $this->logger->error('Could not updated quantity cart element', $logFullDetails);
             throw new \Exception($exception->getMessage());            
         }
+    }
+
+    public function getCargoCompanyForCart()
+    {
+        return $this->connection->executeQuery('
+            SELECT
+                id,
+                name
+            FROM
+                cargo_company
+                '
+            )->fetchAll();
+    }
+
+    public function cartUpdateAddressAndCargo($user, $billingAddressId, $shippingAddressId, $cargoCompanyId)
+    {
+        $logDetails = $this->getArguments(__FUNCTION__, func_get_args());
+
+        $logFullDetails = [
+            'entity' => 'Cart',
+            'activity' => 'cartUpdateAddressAndCargo',
+            'activityId' => 0,
+            'details' => $logDetails
+        ];
+
+        $connection = $this->connection;
+
+        $billingAddressId = (int) $billingAddressId;
+        $shippingAddressId = (int) $shippingAddressId;
+        $cargoCompanyId = (int) $cargoCompanyId;
+
+        try {
+            if (!$user) {
+                throw new \InvalidArgumentException('Kullanıcı bulunamadı');
+            }
+
+            if (!$cargoCompanyId) {
+                throw new \InvalidArgumentException('Kargo firması bulunamadı');
+            }
+
+            if (!$billingAddressId && $this->isThisAddressBelongsTheCurrentUser($user, $billingAddressId)) {
+                throw new \InvalidArgumentException('Fatura adresi bulunamadı');
+            }
+
+            if (!$shippingAddressId && $this->isThisAddressBelongsTheCurrentUser($user, $shippingAddressId)) {
+                throw new \InvalidArgumentException('Kargo Adresi bulunamadı');
+            }
+
+            $connection->executeQuery('
+                UPDATE
+                    cart
+                SET
+                    cargo_company_id = :cargo_company_id,
+                    shipping_address_id = :shipping_address_id,
+                    billing_address_id = :billing_address_id
+                WHERE
+                    user_account_id = :user_account_id
+                    ', [
+                        'cargo_company_id' => $cargoCompanyId,
+                        'shipping_address_id' => $shippingAddressId,
+                        'billing_address_id' => $billingAddressId,
+                        'user_account_id' => $user->getId(),
+                    ]
+                );
+
+
+            $this->logger->info('Updated cargo and billing details', $logFullDetails);
+        } catch (\InvalidArgumentException $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+            $this->logger->error('Could not updated cargo and billing details', $logFullDetails);
+            throw $exception;
+        } catch (\Exception $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+            $this->logger->error('Could not updated cargo and billing details', $logFullDetails);
+            throw new \Exception($exception->getMessage());            
+        }
+    }
+
+    public function isThisAddressBelongsTheCurrentUser($user, $addressId)
+    {
+        return $this->connection->executeQuery('
+            SELECT
+                count(a.id)
+            FROM
+                address a
+            LEFT JOIN
+                user_account_address uaa ON a.id = uaa.address_id
+            WHERE
+                uaa.user_account_id = :user_account_id
+            AND
+                a.id = :address_id
+                ', [
+                    'user_account_id' => $user->getId(),
+                    'address_id' => $addressId
+                ]
+            )->fetchColumn();
     }
 }

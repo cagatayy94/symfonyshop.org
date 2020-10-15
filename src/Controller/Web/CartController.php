@@ -163,16 +163,62 @@ class CartController extends AbstractController
     }
 
     /**
+     * @Route("/cart/cargo-select", name="cart_cargo_select")
+     */
+    public function cartCargoSelectAction(Request $request, CartService $cartService)
+    {
+        $user = $this->getUser();
+        $cargoCompany = $cartService->getCargoCompanyForCart();
+
+        return $this->render('Web/Cart/cargo_select.html.php', 
+            [
+                'user' => $user,
+                'cargoCompany' => $cargoCompany,
+            ]
+        );
+    }
+
+    /**
      * @Route("/cart/check-out", name="cart_check_out")
      */
     public function cartCheckOutAction(Request $request, CartService $cartService)
     {
         $user = $this->getUser();
+        $cargoCompany = $cartService->getCargoCompanyForCart();
 
         return $this->render('Web/Cart/cart_check_out.html.php', 
             [
-                'user' => $user
+                'user' => $user,
+                'cargoCompany' => $cargoCompany,
             ]
         );
+    }
+
+    /**
+     * @Route("/cart/update-address-and-cargo", name="cart_update_address_and_cargo")
+     */
+    public function cartUpdateAddressAndCargoAction(Request $request, CartService $cartService)
+    {
+        $user = $this->getUser();
+
+        $billingAddressId = $request->request->get('billing_address_id');
+        $shippingAddressId = $request->request->get('shipping_address_id');
+        $shippingCompanyId = $request->request->get('shipping_company_id');
+
+        try {
+
+            $cartService->cartUpdateAddressAndCargo($user, $billingAddressId, $shippingAddressId, $shippingCompanyId);
+
+            return new JsonResponse([
+                'success' => true,
+            ]);
+        } catch (\Exception $exception) {
+            return new JsonResponse([
+                'success' => false,
+                'error' => [
+                    'message' => $exception->getMessage()
+                ]
+            ]);
+        }
     }
 }
