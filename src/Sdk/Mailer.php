@@ -43,14 +43,19 @@ class Mailer
      */
     public function send($toAddress, $subject, $view, $data = [])
     {
-        $message = (new \Swift_Message($subject))
-        ->setFrom($this->from)
-        ->setTo($toAddress)
-        ->setBody(
-            $this->templating->renderResponse($view, $data)->getContent(), 
-            'text/html'
-        );
+        try {
+            $message = (new \Swift_Message($subject))
+            ->setFrom($this->from)
+            ->setTo($toAddress)
+            ->setBody(
+                $this->templating->renderResponse($view, $data)->getContent(), 
+                'text/html'
+            );
 
-        $this->swiftMailer->send($message);
+            $this->swiftMailer->send($message);
+            
+        } catch (\Exception $e) {
+            throw $e;
+        }
     }
 }
