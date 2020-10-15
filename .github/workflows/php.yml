@@ -30,12 +30,13 @@ jobs:
       if: steps.composer-cache.outputs.cache-hit != 'true'
       run: composer install --prefer-dist --no-progress --no-suggest
 
-    - name: Deploy to Server
-      uses: AEnterprise/rsync-deploy@v1.0
+    - name: Copy file via scp
+      uses: appleboy/scp-action@master
       env:
-          DEPLOY_KEY: ${{ secrets.SSH_KEY }}
-          SERVER_PORT: ${{ secrets.SSH_PORT }}
-          FOLDER: "dist/"
-          SERVER_IP: ${{ secrets.SSH_HOST }}
-          USERNAME: ${{ secrets.SSH_USER }}
-          SERVER_DESTINATION: ${{ secrets.SSH_TARGET }}
+        HOST: ${{ secrets.SSH_HOST }}
+        USERNAME: ${{ secrets.SSH_USER }}
+        PORT: ${{ secrets.SSH_PORT }}
+        KEY: ${{ secrets.SSHKEY }}
+      with:
+        source: "."
+        target: "/opt/app"
