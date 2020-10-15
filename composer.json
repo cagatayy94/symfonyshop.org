@@ -1,4 +1,6 @@
 {
+    "name":"cagatayy94/symfonyshop",
+    "description":"SymfonyShop is symfony 4.4 based ecommerce project",
     "type": "project",
     "license": "proprietary",
     "require": {
