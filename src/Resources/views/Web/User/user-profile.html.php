@@ -101,8 +101,8 @@
                         <div class="container pt-3">
                             <div class="row mb-3">
                                 <div class="col">
-                                    <h4>Adresleriniz</h4>
-                                    <hr class="mb-4">
+                                    <h4 class="float-left">Adresleriniz</h4>
+                                    <button type="button" class="btn btn-primary mb-2 float-right"  data-toggle="modal" data-target="#add_address_modal">Yeni adres ekle</button>
                                     <div class="table-responsive">
                                         <table class="table">
                                             <?php if (!$addresses): ?>
@@ -117,7 +117,7 @@
                                                     <th>Şehir</th>
                                                     <th>Telefon Numarası</th>
                                                     <th colspan="2">
-                                                        <button type="button" class="btn btn-primary mb-2"  data-toggle="modal" data-target="#add_address_modal">Yeni adres ekle</button>
+                                                        
                                                     </th>
                                                 </tr>
                                             </thead>
