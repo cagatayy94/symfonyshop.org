@@ -14,7 +14,7 @@
                     <strong>Hata!</strong> Email adresi veya aktivasyon kodu hatalı ya da kodun süresi geçmiş olabilir. Tekrar kod almak için<a href="<?php echo $this->get('router')->path('new_email_activation_code') ?>" class="alert-link"> tıklayınız.</a>
                 </div>
                 <div class="col-md-8 col-lg-6">
-                    <a href="index.html" class="btn btn-primary btn-rounded btn-v-3 btn-h-3 font-weight-bold appear-animation animated fadeInUpShorter appear-animation-visible" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="800" style="animation-delay: 800ms;"><i class="fas fa-angle-left mr-3 text-3"></i> ANASAYFA</a>
+                    <a href="/" class="btn btn-primary btn-rounded btn-v-3 btn-h-3 font-weight-bold appear-animation animated fadeInUpShorter appear-animation-visible" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="800" style="animation-delay: 800ms;"><i class="fas fa-angle-left mr-3 text-3"></i> ANASAYFA</a>
                 </div>
             </div>
         </div>
