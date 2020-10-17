@@ -105,9 +105,6 @@
                                     <button type="button" class="btn btn-primary mb-2 float-right"  data-toggle="modal" data-target="#add_address_modal">Yeni adres ekle</button>
                                     <div class="table-responsive">
                                         <table class="table">
-                                            <?php if (!$addresses): ?>
-                                            <?php echo "Sisteme Kayıtlı adres bulunamadı" ?>
-                                            <?php else: ?>
                                             <thead>
                                                 <tr>
                                                     <th>Adres İsmi</th>
@@ -122,36 +119,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody id="addresses_body">
-                                                <?php foreach ($addresses as $key => $value): ?>
-                                                    <tr id="<?php echo $value['address_id'] ?>">
-                                                        <td>
-                                                            <?php echo $value['address_name']; ?>
-                                                        </td>
-                                                        <td>
-                                                            <?php echo $value['full_name']; ?>
-                                                        </td>
-                                                        <td>
-                                                            <?php echo $value['address']; ?>
-                                                        </td>
-                                                        <td>
-                                                            <?php echo $value['county']; ?>
-                                                        </td>
-                                                        <td>
-                                                            <?php echo $value['city']; ?>
-                                                        </td>
-                                                        <td>
-                                                            <?php echo $value['mobile']; ?>
-                                                        </td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-success mb-2"  data-toggle="modal" data-target="#update_address_modal">Güncelle</button>
-                                                        </td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-danger mb-2 delete_address" data-toggle="modal">Kaldır</button>
-                                                        </td>
-                                                    </tr>
-                                                <?php endforeach; ?>
                                             </tbody>
-                                            <?php endif ?>
                                         </table>
                                     </div>
                                 </div>
