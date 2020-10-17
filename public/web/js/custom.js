@@ -890,6 +890,10 @@ $('body').on('click', '[href="#favorites"]', function(e) {
     generateFavoritesInProfile();
 });
 
+$('body').on('click', '[href="#addresses"]', function(e) {
+    updateAddressesInProfile();
+});
+
 $('body').on('click', '.delete_favorite', function(e) {
     e.preventDefault();
     e.stopPropagation();
