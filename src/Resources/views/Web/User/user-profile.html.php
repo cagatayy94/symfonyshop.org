@@ -104,22 +104,9 @@
                                     <h4 class="float-left">Adresleriniz</h4>
                                     <button type="button" class="btn btn-primary mb-2 float-right"  data-toggle="modal" data-target="#add_address_modal">Yeni adres ekle</button>
                                     <div class="table-responsive">
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Adres İsmi</th>
-                                                    <th>Adresteki İsim Soyisim </th>
-                                                    <th>Adres</th>
-                                                    <th>İlçe</th>
-                                                    <th>Şehir</th>
-                                                    <th>Telefon Numarası</th>
-                                                    <th colspan="2">
-                                                        
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="addresses_body">
-                                            </tbody>
+                                        <table class="table" id="addresses-table">
+
+                                            
                                         </table>
                                     </div>
                                 </div>
