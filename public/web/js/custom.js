@@ -617,48 +617,6 @@ $('#change_password_on_profile_form').on('submit', function (e) {
     }
 });
 
-function updateAddressesInProfile(){
-    $.ajax({
-        type: 'GET',
-        url: '/get-user-addresses',
-        success: function (result) {
-            if (result.success) {
-                var table = "";
-                $.each( result.addresses, function(_, value) {
-                    table += '<tr id="'+ value.address_id +'">'+
-                                '<td>'+
-                                    value.address_name +
-                                '</td>'+
-                                '<td>'+
-                                    value.full_name +
-                                '</td>'+
-                                '<td>'+
-                                    value.address +
-                                '</td>' +
-                                '<td>'+
-                                    value.county +
-                                '</td>'+
-                                '<td>'+
-                                     value.city +
-                                '</td>'+
-                                '<td>' +
-                                    value.mobile +
-                                '</td>' +
-                                '<td>' +
-                                    '<button type="button" class="btn btn-success mb-2"  data-toggle="modal" data-target="#update_address_modal">Güncelle</button>'+
-                                '</td>' +
-                                '<td>' +
-                                    '<button type="button" class="btn btn-danger mb-2 delete_address">Kaldır</button>' +
-                                '</td>' +
-                            '</tr>';
-
-                });
-                $('#addresses_body').html(table);
-            }
-        }
-    });
-}
-
 $('#add_address_form').on('submit', function (e) {
     e.preventDefault();
     e.stopPropagation();
@@ -716,7 +674,7 @@ function removeAddress(id){
         data: {id},
         success: function (result) {
             if (result.success) {
-                $('tr[id="'+ id +'"]').remove();
+                updateAddressesInProfile();
             } else {
                 toastr.error(result.error.message);
             }
@@ -798,6 +756,68 @@ $('body').on('click', '.my-favorites-pagination', function(e) {
 
     generateFavoritesInProfile(requestedPage, self);
 });
+
+function updateAddressesInProfile(){
+    $.ajax({
+        type: 'GET',
+        url: '/get-user-addresses',
+        success: function (result) {
+            if (result.success) {
+                if (result.addresses.length) {
+                    var table = '<thead>'+
+                                    '<tr>' +
+                                        '<th>Adres İsmi</th>'+
+                                        '<th>Adresteki İsim Soyisim </th>'+
+                                        '<th>Adres</th>'+
+                                        '<th>İlçe</th>'+
+                                        '<th>Şehir</th>'+
+                                        '<th>Telefon Numarası</th>'+
+                                        '<th colspan="2">'+
+                                        '</th>'+
+                                    '</tr>'+
+                                '</thead>'+
+                                '<tbody id="addresses_body">';
+
+                    $.each( result.addresses, function(_, value) {
+                        table += '<tr id="'+ value.address_id +'">'+
+                                    '<td>'+
+                                        value.address_name +
+                                    '</td>'+
+                                    '<td>'+
+                                        value.full_name +
+                                    '</td>'+
+                                    '<td>'+
+                                        value.address +
+                                    '</td>' +
+                                    '<td>'+
+                                        value.county +
+                                    '</td>'+
+                                    '<td>'+
+                                         value.city +
+                                    '</td>'+
+                                    '<td>' +
+                                        value.mobile +
+                                    '</td>' +
+                                    '<td>' +
+                                        '<button type="button" class="btn btn-success mb-2"  data-toggle="modal" data-target="#update_address_modal">Güncelle</button>'+
+                                    '</td>' +
+                                    '<td>' +
+                                        '<button type="button" class="btn btn-danger mb-2 delete_address">Kaldır</button>' +
+                                    '</td>' +
+                                '</tr>';
+                        });
+
+                    table += "</tbody>";
+                        
+                    } else {
+                        table = "Henüz hiç adresiniz yok";
+                    }
+                
+                $('#addresses-table').html(table);
+            }
+        }
+    });
+}
 
 function generateFavoritesInProfile(requestedPage = 1){
 
