@@ -99,17 +99,17 @@
                                         <div class="product portfolio-item portfolio-item-style-2">
                                             <div class="image-frame image-frame-style-1 image-frame-effect-2 mb-3">
                                                 <span class="image-frame-wrapper image-frame-wrapper-overlay-bottom image-frame-wrapper-overlay-light image-frame-wrapper-align-end">
-                                                    <a href="<?php echo '/product-detail/'.$value['id'] ?>">
+                                                    <a href="<?php echo '/product-detail/'.strtolower(preg_replace('~-+~', '-', trim(preg_replace('~[^-\w]+~', '', iconv('utf-8', 'us-ascii//TRANSLIT', preg_replace('~[^\pL\d]+~u', '-', $value['name']))), '-'))).'/'.$value['id'] ?>">
                                                         <img src="/web/img/product/<?php echo json_decode($value['photo'], true)[0] ?>" class="img-fluid" alt="">
                                                     </a>
                                                     <span class="image-frame-action">
-                                                        <a href="<?php echo '/product-detail/'.$value['id'] ?>" class="btn btn-primary btn-rounded font-weight-semibold btn-v-3 btn-fs-2">SEPETE EKLE</a>
+                                                        <a href="<?php echo '/product-detail/'.strtolower(preg_replace('~-+~', '-', trim(preg_replace('~[^-\w]+~', '', iconv('utf-8', 'us-ascii//TRANSLIT', preg_replace('~[^\pL\d]+~u', '-', $value['name']))), '-'))).'/'.$value['id'] ?>" class="btn btn-primary btn-rounded font-weight-semibold btn-v-3 btn-fs-2">SEPETE EKLE</a>
                                                     </span>
                                                 </span>
                                             </div>
                                             <div class="product-info d-flex flex-column flex-lg-row justify-content-between">
                                                 <div class="product-info-title">
-                                                    <h3 class="text-color-default text-2 line-height-1 mb-1"><a href="shop-product-detail-right-sidebar.html"><?php echo $value['name'] ?></a></h3>
+                                                    <h3 class="text-color-default text-2 line-height-1 mb-1"><a href="<?php echo '/product-detail/'.strtolower(preg_replace('~-+~', '-', trim(preg_replace('~[^-\w]+~', '', iconv('utf-8', 'us-ascii//TRANSLIT', preg_replace('~[^\pL\d]+~u', '-', $value['name']))), '-'))).'/'.$value['id'] ?>"><?php echo $value['name'] ?></a></h3>
                                                     <span class="price font-primary text-4"><strong class="text-color-dark"><?php echo $value['price'] ?> TL</strong></span>
                                                     <span class="old-price font-primary text-line-trough text-1"><strong class="text-color-default"><?php echo $value['price']+10 ?> TL</strong></span>
                                                 </div>

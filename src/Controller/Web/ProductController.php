@@ -14,7 +14,7 @@ use App\Service\Web\SiteSettings as SiteSettings;
 class ProductController extends AbstractController
 {
     /**
-     * @Route("/product-detail/{id}", name="product_detail" )
+     * @Route("/product-detail/{slug}/{id}", name="product_detail" )
      */
     public function productDetailAction(ProductService $productService, SiteSettings $siteSettings, Request $request)
     {
