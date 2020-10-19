@@ -43,7 +43,7 @@
                     <?php foreach ($adminAccountList as $key => $adminAccount): ?>
                         <tr>
                             <td><?php echo $adminAccount['id']; ?></td>
-                            <td><?php echo $adminAccount['name']; ?></td>
+                            <td><?php echo $adminAccount['name']. ' ' .$adminAccount['surname']; ?></td>
                             <td><?php echo $adminAccount['email']; ?></td>
                             <td><?php echo $adminAccount['mobile']; ?></td>
                             <td><?php echo $adminAccount['profile_name']; ?></td>
