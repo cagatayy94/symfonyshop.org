@@ -25,7 +25,7 @@ jobs:
           ${{ runner.os }}-php-
 
     - name: Create .env file
-      run: touch .env && echo DATABASE_URL=asdasd > .env && cat .env
+      run: touch .env && echo ${{ secrets.PROD_ENV }} > .env && cat .env
 
 
     - name: Install dependencies
