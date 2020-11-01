@@ -149,26 +149,26 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="siparis-sonucu" method="post" class="contact-form form-style-2">
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="recipient-name" class="form-control-label"> <b>Banka Havalesi ile ödeme yapmaya çalışıyorsunuz! <br>Banka Havalesi ile ödeme yapmak için lütfen aşağıdaki adımları takip ettiğinizden emin olun. Aksi takdirde <a style="color: red">siparişiniz geçersiz</a> sayılacaktır!</b></label>
-                        <label for="recipient-name" class="form-control-label">
-                            <ol>
-                                <li>Sepet tutarını <a target="_blank" href="banka-hesaplarimiz"><b>Banka Hesaplarımız</b></a> sayfasındaki hesaplardan birisine Havale/EFT yöntemi ile gönderiniz.
-                                </li>
-                                <li>Havale/EFT işlemi ardından <a target="_blank" href="havale-bildirimi"><b>Havale Bildirim Formu</b></a> aracılığı ile tarafımıza işlemi yaptığınıza dair bilgi veriniz.
-                                </li>
-                                <li>Yukarıdaki işlemleri eksiksiz bir şekilde tamamladıktan sonra sipariş ver butonuna tıklayabilirsiniz. Aksi takdirde siparişiniz 2 iş günü içerisinde <a style="color:red;">geçersiz</a> olacaktır. </li>
-                            </ol>
-                        </label>
+                <form action="<?php echo $this->get('router')->path('order_bank_transfer') ?>" method="post" id="order_bank_transfer_form" class="contact-form form-style-2">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="form-control-label"> <b>Banka Havalesi ile ödeme yapmaya çalışıyorsunuz! <br>Banka Havalesi ile ödeme yapmak için lütfen aşağıdaki adımları takip ettiğinizden emin olun. Aksi takdirde <a style="color: red">siparişiniz geçersiz</a> sayılacaktır!</b></label>
+                            <label class="form-control-label">
+                                <ol>
+                                    <li>Sepet tutarını <a target="_blank" href="<?php echo $this->get('router')->path('bank_accounts') ?>"><b>Banka Hesaplarımız</b></a> sayfasındaki hesaplardan birisine Havale/EFT yöntemi ile gönderiniz.
+                                    </li>
+                                    <li>Havale/EFT işlemi ardından <a target="_blank" href="<?php echo $this->get('router')->path('order_notice') ?>"><b>Havale Bildirim Formu</b></a> aracılığı ile tarafımıza işlemi yaptığınıza dair bilgi veriniz.
+                                    </li>
+                                    <li>Yukarıdaki işlemleri eksiksiz bir şekilde tamamladıktan sonra sipariş ver butonuna tıklayabilirsiniz. Aksi takdirde siparişiniz 2 iş günü içerisinde <a style="color:red;">geçersiz</a> olacaktır. </li>
+                                </ol>
+                            </label>
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <input align="right" class="btn btn-primary" value="Sipariş Ver" type="Submit" class="form-control" id="recipient-name">
+                    <div class="modal-footer">
+                        <button align="right" class="btn btn-primary" type="submit">Sipariş Ver</button>
 
-                    <button type="button" class="btn" data-dismiss="modal">Vazgeç</button>
-                </div>
+                        <button type="button" class="btn" data-dismiss="modal">Vazgeç</button>
+                    </div>
                 </form>
             </div>
         </div>
