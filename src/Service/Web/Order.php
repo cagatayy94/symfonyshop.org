@@ -178,6 +178,7 @@ class Order
 
             //send notification mail
             
+            
 
 
             $this->logger->info('Finalized bank transfer order', $logFullDetails);
