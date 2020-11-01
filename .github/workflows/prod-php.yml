@@ -24,12 +24,17 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-php-
 
-    - name: Create .env file
-      run: touch .env && echo ${{ secrets.PROD_ENV }} > .env && cat .env
-
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
       run: composer install --prefer-dist --no-progress --no-suggest
+      env:
+        APP_ENV: prod
+        APP_SECRET: ${{ secrets.APP_SECRET }}
+        MAILER_URL: ${{ secrets.MAILER_URL }}
+        MAIL_FROM_ADDRESS: symfonyshop.tk@yandex.com
+        DATABASE_URL: ${{ secrets.PROD_DATABASE_URL }}
+        APP_NAME: SymfonyShop
+        MAIN_MAIL_ADDRESS: mustafa.cagatay.yilmaz@gmail.com
 
     - name: Copy file via scp
       uses: appleboy/scp-action@master
