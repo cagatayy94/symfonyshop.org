@@ -26,7 +26,17 @@ jobs:
 
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
-      run: composer install --prefer-dist --no-progress --no-suggest
+      run: 
+        touch .env && 
+        echo APP_ENV=prod >> .env  && 
+        echo APP_DEBUG=0 >> .env  && 
+        echo APP_SECRET=${{ secrets.APP_SECRET }} >> .env  && 
+        echo MAILER_URL=${{ secrets.MAILER_URL   }} >> .env  && 
+        echo MAIL_FROM_ADDRESS=symfonyshop.tk@yandex.com >> .env  && 
+        echo DATABASE_URL=${{ secrets.PROD_DATABASE_URL }} >> .env  && 
+        echo APP_NAME=SymfonyShopDev >> .env  && 
+        echo MAIN_MAIL_ADDRESS=mustafa.cagatay.yilmaz@gmail.com >> .env  && 
+        composer install --prefer-dist --no-progress --no-suggest
 
     - name: Copy file via scp
       uses: appleboy/scp-action@master
