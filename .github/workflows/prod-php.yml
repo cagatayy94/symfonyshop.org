@@ -25,8 +25,7 @@ jobs:
           ${{ runner.os }}-php-
 
     - name: Create .env file
-      run: touch .env && echo ${{ secrets.PROD_ENV }} > .env && cat .env
-
+      run: touch .env && echo ${{ secrets.PROD_ENV }} > .env
 
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
