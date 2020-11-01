@@ -25,7 +25,6 @@ jobs:
           ${{ runner.os }}-php-
 
     - name: Create .env file
-      run: touch .env
       run: cat ${{ secrets.PROD_ENV }} >> .env 
 
     - name: Install dependencies
