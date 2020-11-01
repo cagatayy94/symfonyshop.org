@@ -24,6 +24,9 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-php-
 
+    - name: Create .env file
+      run: touch .env
+
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
       run: composer install --prefer-dist --no-progress --no-suggest
