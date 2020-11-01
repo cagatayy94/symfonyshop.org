@@ -24,8 +24,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-php-
 
-    - name: Install dependencies
-      if: steps.composer-cache.outputs.cache-hit != 'true'
+    - name: Create .env
       run: 
         touch .env && 
         echo APP_ENV=prod >> .env  && 
@@ -35,8 +34,11 @@ jobs:
         echo MAIL_FROM_ADDRESS=symfonyshop.tk@yandex.com >> .env  && 
         echo DATABASE_URL=${{ secrets.PROD_DATABASE_URL }} >> .env  && 
         echo APP_NAME=SymfonyShopDev >> .env  && 
-        echo MAIN_MAIL_ADDRESS=mustafa.cagatay.yilmaz@gmail.com >> .env  && 
-        composer install --prefer-dist --no-progress --no-suggest
+        echo MAIN_MAIL_ADDRESS=mustafa.cagatay.yilmaz@gmail.com >> .env
+
+    - name: Install dependencies
+      if: steps.composer-cache.outputs.cache-hit != 'true'
+      run: composer install --prefer-dist --no-progress --no-suggest
 
     - name: Copy file via scp
       uses: appleboy/scp-action@master
