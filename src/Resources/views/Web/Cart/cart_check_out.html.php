@@ -116,13 +116,13 @@
                                     <div class="form-row">
                                         <div class="col">
                                             <br>
-                                            <!-- <button class="btn btn-primary btn-rounded font-weight-bold btn-h-2 btn-v-3" type="submit">ÖDEME YAP</button> -->
-                                            <button type="button" class="btn btn-primary btn-3 btn-fs-3 mb-2" data-container="body" data-trigger="focus" data-toggle="popover" data-placement="right" data-content="Kredi kartı ile ödeme sistemimiz çok yakın zamanda entegre edilecektir. Dilerseniz banka havalesi ile ödeme yapabilirsiniz." data-original-title="" title="">
+                                            <button type="button" data-url="<?php echo $this->get('router')->path('get_iyzico_form') ?>" class="btn btn-primary btn-3 btn-fs-3 mb-2" data-toggle="modal" data-target="#paymentModal">
                                                 SİPARİŞ VER
                                             </button>
                                         </div>
                                     </div>
                                 </form>
+
                             </div>
                             <div class="tab-pane fade pt-4 pb-4" id="minimal-process" role="tabpanel" aria-labelledby="minimal-process-tab">
                                 <p class="mb-0">Banka Havalesi / EFT ile ürün satın alabilmek için öncelikle alışveriş sepeti tutarını <a href="banka-hesaplarimiz"><strong>"Banka Hesaplarımız"</strong></a> sayfasında bulunan herhangi bir hesaba ödeme yaptıktan sonra <a href="havale-bildirimi"><strong>"Havale Bildirim Formu"</strong></a> aracılığı ile lütfen tarafımıza bilgi veriniz. <strong>"Ödeme Yap"</strong> butonuna tıkladığınız anda siparişiniz kayıt edilecektir.</p>
@@ -170,6 +170,14 @@
                         <button type="button" class="btn" data-dismiss="modal">Vazgeç</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModal4Label" aria-hidden="true">
+        <div class="modal-dialog text-left" role="document">
+            <div class="modal-content p-5 text-center">
+                <div id="loader"></div>
             </div>
         </div>
     </div>
