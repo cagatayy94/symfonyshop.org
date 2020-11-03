@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1257d5f3429eaa6b93f6be1b03d23cea",
+    "content-hash": "3265a1a5fa0b23ab2fe13bf5e70c2521",
     "packages": [
         {
             "name": "composer/package-versions-deprecated",
@@ -1416,6 +1416,58 @@
                 "validator"
             ],
             "time": "2020-09-26T15:48:38+00:00"
+        },
+        {
+            "name": "iyzico/iyzipay-php",
+            "version": "v2.0.48",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/iyzico/iyzipay-php.git",
+                "reference": "4eaa6fe37d739055fd5bee1a6d59b3f47be07c41"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/iyzico/iyzipay-php/zipball/4eaa6fe37d739055fd5bee1a6d59b3f47be07c41",
+                "reference": "4eaa6fe37d739055fd5bee1a6d59b3f47be07c41",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0",
+                "satooshi/php-coveralls": "~0.6.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "iyzico and contributors",
+                    "homepage": "https://github.com/iyzico/iyzipay-php/contributors"
+                }
+            ],
+            "description": "iyzipay api php client",
+            "homepage": "https://www.iyzico.com",
+            "keywords": [
+                "iyzico",
+                "iyzico.com",
+                "iyzipay",
+                "iyzipay api",
+                "iyzipay api php",
+                "iyzipay api php client",
+                "iyzipay php",
+                "payment processing"
+            ],
+            "time": "2020-04-15T15:25:32+00:00"
         },
         {
             "name": "markbaker/complex",
