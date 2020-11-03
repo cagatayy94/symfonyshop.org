@@ -27,10 +27,11 @@ class Iyzico
     {
         $request = new \Iyzipay\Request\CreateCheckoutFormInitializeRequest();
         $request->setLocale(\Iyzipay\Model\Locale::TR);
-        $request->setConversationId($details['order_id']);
-        $request->setPrice($details['grand_total_order_amount']);
-        $request->setPaidPrice($details['total_order_amount']);
+        $request->setConversationId($this->uId());
+        $request->setPrice($details['total_order_amount']);
+        $request->setPaidPrice($details['grand_total_order_amount']);
         $request->setCurrency(\Iyzipay\Model\Currency::TL);
+        $request->setBasketId($details['order_id']);
         $request->setPaymentGroup(\Iyzipay\Model\PaymentGroup::PRODUCT);
         $request->setCallbackUrl("https://www.merchant.com/callback");
 
@@ -39,15 +40,15 @@ class Iyzico
         $request->setBuyer($buyer);
 
         //set shipping address
-        $shippingAddress = $this->setBillingAddress($details['shipping_address']);
+        $shippingAddress = $this->setShippingAddress($details['shipping_address']);
         $request->setShippingAddress($shippingAddress);
 
         //set billing address
         $billingAddress = $this->setBillingAddress($details['billing_address']);
         $request->setBillingAddress($billingAddress);
 
-        //set basket Items
-        $basketItems = $this->setBasketItems($details['cartItems']);
+        //set basket items
+        $basketItems = $this->setBasketItems($details['cart_items']);
         $request->setBasketItems($basketItems);
 
         $checkoutFormInitialize = \Iyzipay\Model\CheckoutFormInitialize::create($request, $this->options);
@@ -68,10 +69,10 @@ class Iyzico
     public function setShippingAddress($shippingAddress)
     {
         $shippingAddressObj = new \Iyzipay\Model\Address();
-        $shippingAddressObj->setContactName($billingAddress['name'].' '.$billingAddress['surname']);
-        $shippingAddressObj->setCity($billingAddress['city']);
+        $shippingAddressObj->setContactName($shippingAddress['name'].' '.$shippingAddress['surname']);
+        $shippingAddressObj->setCity($shippingAddress['city']);
         $shippingAddressObj->setCountry("Turkey");
-        $shippingAddressObj->setAddress($billingAddress['address']);
+        $shippingAddressObj->setAddress($shippingAddress['address']);
         return $shippingAddressObj;
     }
 
@@ -82,7 +83,7 @@ class Iyzico
         $buyerObj->setName($buyer['name']);
         $buyerObj->setSurname($buyer['surname']);
         $buyerObj->setEmail($buyer['email']);
-        $buyerObj->setIdentityNumber($buyer['id']);
+        $buyerObj->setIdentityNumber("74300864791");
         $buyerObj->setRegistrationAddress($buyer['address']);
         $buyerObj->setIp($buyer['ip']);
         $buyerObj->setCity($buyer['city']);

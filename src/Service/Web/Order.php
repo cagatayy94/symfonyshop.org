@@ -315,7 +315,7 @@ class Order
 
         $grandTotalOrderAmount = $totalOrderAmount + $totalCargoPrice;
 
-        $result['cartItems'] = $cartDetail;
+        $result['cart_items'] = $cartDetail;
         $result['billing_address'] = $billingAddress;
         $result['shipping_address'] = $shippingAddress;
         $result['buyer'] = [
