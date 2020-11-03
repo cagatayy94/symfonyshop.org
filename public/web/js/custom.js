@@ -1337,3 +1337,22 @@ $('body').on('submit', '#order_bank_transfer_form', function(e) {
         button.removeAttr('disabled');
     }
 });
+
+$('body').on('click', '[data-target="#paymentModal"]', function(e) {
+
+    var self = $(this);
+    var url = self.attr('data-url');
+
+    $.ajax({
+        type: 'GET',
+        url: url,
+        success: function (result) {
+            if (result.success) {
+                $('#paymentModal').find('.modal-content').html(result.data);
+            } else {
+                toastr.error(result.error.message);
+            }
+        }
+    });
+
+});

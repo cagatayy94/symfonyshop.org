@@ -174,4 +174,26 @@ trait ServiceTrait
 
         return $transform;
     }
+
+    public function nameParser($name)
+    {
+        $namesArray = explode(' ', $name);
+        $name = '';
+        $surname = '';
+
+        foreach ($namesArray as $key => $value) {
+            if ($key == array_key_first($namesArray)) {
+                $name .= $value;
+            }else if($key == array_key_last($namesArray)){
+                $surname .= $value;
+            }else{
+                 $name .= ' '.$value;
+            }
+        }
+
+        return [
+            'name' => $name,
+            'surname' => $surname,
+        ];
+    }
 }
