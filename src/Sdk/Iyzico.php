@@ -1,9 +1,10 @@
 <?php
-
 namespace App\Sdk;
 
 use App\Sdk\ServiceTrait;
-
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface as Router;
+use Doctrine\DBAL\Driver\Connection as Connection;
+use App\Service\Web\Order as OrderService;
 
 class Iyzico
 {
@@ -14,13 +15,30 @@ class Iyzico
      */
     private $options;
 
-    public function __construct($key, $secret, $baseUrl)
-    {   
+    /**
+     * @var router
+     */
+    private $router;
+
+    public function __construct(Router $router, Connection $connection)
+    {
+        $settings = $connection->executeQuery('
+            SELECT
+                iyzico_api_key,
+                iyzico_secret_key,
+                iyzico_base_url
+            FROM
+                iyzico
+            LIMIT 1
+        ')->fetch();
+
         $options = new \Iyzipay\Options();
-        $options->setApiKey($key);
-        $options->setSecretKey($secret);
-        $options->setBaseUrl($baseUrl);
+        $options->setApiKey($settings['iyzico_api_key']);
+        $options->setSecretKey($settings['iyzico_secret_key']);
+        $options->setBaseUrl($settings['iyzico_base_url']);
+
         $this->options = $options;
+        $this->router = $router;
     }
 
     public function renderForm($details)
@@ -33,7 +51,7 @@ class Iyzico
         $request->setCurrency(\Iyzipay\Model\Currency::TL);
         $request->setBasketId($details['order_id']);
         $request->setPaymentGroup(\Iyzipay\Model\PaymentGroup::PRODUCT);
-        $request->setCallbackUrl("https://www.merchant.com/callback");
+        $request->setCallbackUrl($this->router->generate('get_iyzico_form_result'));
 
         //set buyer
         $buyer = $this->setBuyer($details['buyer']);
@@ -53,7 +71,15 @@ class Iyzico
 
         $checkoutFormInitialize = \Iyzipay\Model\CheckoutFormInitialize::create($request, $this->options);
 
-        return $checkoutFormInitialize->getCheckoutFormContent().'<div id="iyzipay-checkout-form" class="responsive"></div>';
+        $status = $checkoutFormInitialize->getStatus();
+        $errorMessage = $checkoutFormInitialize->getErrorMessage();
+        $form = $checkoutFormInitialize->getCheckoutFormContent().'<div id="iyzipay-checkout-form" class="responsive"></div>';
+
+        return [
+            'status' => $status,
+            'errorMessage' => $errorMessage,
+            'form' => $form
+        ];
     }
 
     public function setBillingAddress($billingAddress)
@@ -107,5 +133,24 @@ class Iyzico
         }
 
         return $basketItems;
+    }
+
+    public function getPaymentResult($token)
+    { 
+        $request = new \Iyzipay\Request\RetrieveCheckoutFormRequest();
+        $request->setLocale(\Iyzipay\Model\Locale::TR);
+        $request->setToken($token);
+
+        $checkoutForm = \Iyzipay\Model\CheckoutForm::retrieve($request, $this->options);
+
+        $status = $checkoutForm->getStatus();
+        $paymentStatus = $checkoutForm->getPaymentStatus();
+        $rawResult = $checkoutForm->getRawResult();
+        
+        return [
+            'status' => $status,
+            'paymentStatus' => $paymentStatus,
+            'rawResult' => $rawResult,
+        ];
     }
 }

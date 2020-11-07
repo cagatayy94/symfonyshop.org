@@ -50,12 +50,17 @@ class OrderController extends AbstractController
         try {
 
             $details = $orderService->getCartDetailForIyzico($user, $ipAddress);
+            
 
             $data = $iyzicoSdk->renderForm($details);
 
+            if (!$data['status']) {
+                throw new \Exception("Form oluşturulurken bir sorun oluştu banka havalesi ile ödemeyi deneyebilirsiniz");
+            }
+
             return new JsonResponse([
                 'success' => true,
-                'data' => $data
+                'data' => $data['form']
             ]);
         } catch (\Exception $exception) {
             return new JsonResponse([
@@ -64,6 +69,37 @@ class OrderController extends AbstractController
                     'message' => $exception->getMessage()
                 ]
             ]);
+        }
+    }
+
+    /**
+     * @Route("/get/iyzico-form/result", name="get_iyzico_form_result")
+     */
+    public function getIyzicoFormResultAction(Request $request, OrderService $orderService, IyzicoSdk $iyzicoSdk)
+    {
+        $user = $this->getUser();
+        $token = $request->request->get('token');
+
+        $data = $iyzicoSdk->getPaymentResult($token);
+
+        if (!$data['status']) {
+            throw new \Exception("Ödeme sonucu alınırken bir hata oluştu");
+        }
+
+        if ($data['paymentStatus'] != 'SUCCESS') {
+            return $this->render('Web/Order/order_fail.html.php', 
+                [
+                    'user' => $user,
+                ]
+            );
+        }
+
+        if ($data['paymentStatus'] == 'SUCCESS') {
+            return $this->render('Web/Order/order_success.html.php', 
+                [
+                    'user' => $user,
+                ]
+            );
         }
     }
 }
