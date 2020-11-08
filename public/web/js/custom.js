@@ -1302,42 +1302,6 @@ $('body').on('submit', '#address_selection', function(e) {
     }
 });
 
-$('body').on('submit', '#order_bank_transfer_form', function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    var self = $(this);
-    var url = self.attr('action');
-    var method = self.attr('method');
-    var data = self.serialize();
-    var button = self.find(':submit');
-
-    button.attr('disabled', 'disabled');
-
-    var isValid = true;
-
-    isValid = controlRequiredInputsAreFilled(self.find('.required'));
-
-    if (isValid) {
-        $.ajax({
-            type: method,
-            url: url,
-            data: data,
-            success: function (result) {
-                if (result.success) {
-                    toastr.success("Siparişiniz alındı siparişlerim sayfasına yönlendiriliyorsunuz");
-                    setTimeout(function(){ location.href = "/"; }, 2000);
-                } else {
-                    toastr.error(result.error.message);
-                }
-                button.removeAttr('disabled');
-            }
-        });
-    } else {
-        button.removeAttr('disabled');
-    }
-});
-
 $('body').on('click', '[data-target="#paymentModal"]', function(e) {
 
     var self = $(this);
