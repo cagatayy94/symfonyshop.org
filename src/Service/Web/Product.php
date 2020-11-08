@@ -278,7 +278,15 @@ class Product
                         product_comment pc
                     WHERE
                         pc.product_id = :product_id
-                ) rate
+                ) rate,
+                (
+                    SELECT
+                        count(id)
+                    FROM
+                        product_comment
+                    WHERE
+                        product_id = :product_id
+                ) comment_count
             FROM
                 product p
             LEFT JOIN
@@ -324,28 +332,6 @@ class Product
         $statement->execute();
 
         $product['photos'] = $statement->fetchAll(\PDO::FETCH_COLUMN);
-
-        //get product reviews
-        $sql = "
-            SELECT
-                pc.created_at,
-                pc.comment,
-                pc.rate,
-                ua.name
-            FROM
-                product_comment pc
-            LEFT JOIN
-                user_account ua ON pc.user_id = ua.id
-            WHERE
-                pc.product_id = :product_id";
-
-        $statement = $connection->prepare($sql);
-
-        $statement->bindValue('product_id', $id);
-
-        $statement->execute();
-
-        $product['comments'] = $statement->fetchAll(\PDO::FETCH_ASSOC);
 
         return $product;
     }
@@ -419,6 +405,157 @@ class Product
         } catch (\Exception $exception) {
             $logFullDetails['details']['exception'] = $exception->getMessage();
             $this->logger->error('Could not added favorite', $logFullDetails);
+            throw new \Exception("Şu an bu talebinizi gerçekleştiremiyoruz lütfen daha sonra tekrar deneyiniz.");            
+        }
+    }
+
+    public function getProductComments($productId, $offset = 0)
+    {
+        $connection = $this->connection;
+
+        $sql = "
+            SELECT
+                pc.id,
+                pc.created_at,
+                pc.comment,
+                pc.rate,
+                ua.name,
+                ua.id,
+                (SELECT
+                    count(o.id) > 0
+                FROM
+                    orders o
+                WHERE
+                    user_account_id = ua.id
+                AND
+                    product_id = :product_id
+                ) buyed
+            FROM
+                product_comment pc
+            LEFT JOIN
+                user_account ua ON pc.user_id = ua.id
+            WHERE
+                pc.product_id = :product_id
+            ORDER BY
+                pc.id
+            LIMIT
+                10
+            OFFSET
+                :offset";
+
+        $statement = $connection->prepare($sql);
+        $statement->bindValue('product_id', $productId);
+        $statement->bindValue('offset', $offset);
+
+        $statement->execute();
+
+        return $statement->fetchAll();
+    }
+
+    public function addComment($productId, $userId, $rate, $ipAddress, $comment = null)
+    {
+        $logDetails = $this->getArguments(__FUNCTION__, func_get_args());
+
+        $logFullDetails = [
+            'entity' => 'Product',
+            'activity' => 'addComment',
+            'activityId' => 0,
+            'details' => $logDetails
+        ];
+
+        $connection = $this->connection;
+
+        $productId = (int) $productId;
+        $userId = (int) $userId;
+        $rate = (int) $rate;
+
+        try {
+            if (!$productId) {
+                throw new \InvalidArgumentException('Ürün bulunamadı');
+            }
+
+            if (!$userId) {
+                throw new \InvalidArgumentException('Kullanıcı bulunamadı');
+            }
+
+            if (!$rate) {
+                throw new \InvalidArgumentException('Puan bulunamadı');
+            }
+
+            $sql = "
+                SELECT 
+                    id
+                FROM
+                    product_comment
+                WHERE
+                    product_id = :product_id
+                AND
+                    user_id = :user_id";
+
+            $statement = $connection->prepare($sql);
+
+            $statement->bindValue('product_id', $productId);
+            $statement->bindValue('user_id', $userId);
+
+            $statement->execute();
+
+            $commentExist = $statement->fetch();
+
+            if ($commentExist) {
+                throw new \InvalidArgumentException("Aynı ürüne iki kere yorum yapamazsınız, yorumunuzu silip tekrar yorum yapabilirsiniz");
+            }
+
+            $sql = "
+                INSERT INTO product_comment
+                    (product_id, user_id, ip_address, comment, rate)
+                VALUES
+                    (:product_id, :user_id, :ip_address, :comment, :rate)";
+
+            $statement = $connection->prepare($sql);
+
+            $statement->bindValue('product_id', $productId);
+            $statement->bindValue('user_id', $userId);
+            $statement->bindValue('ip_address', $ipAddress);
+            $statement->bindValue('comment', $comment);
+            $statement->bindValue('rate', $rate);
+
+            $statement->execute();
+
+            $data = $connection->executeQuery(
+                '
+                    SELECT
+                        count(o.id) > 0 as buyed,
+                        (
+                            SELECT
+                                name
+                            FROM
+                                user_account
+                            WHERE
+                                id=:user_id
+                        )
+                    FROM
+                        orders o
+                    LEFT JOIN
+                        user_account ua ON ua.id = o.user_account_id
+                    WHERE
+                        o.user_account_id = :user_id
+                    AND
+                        o.product_id = :product_id
+                ', [
+                    'product_id' => $productId , 
+                    'user_id' => $userId
+                    ])->fetch();
+
+            $this->logger->info('Added comment', $logFullDetails);
+
+            return $data;
+        } catch (\InvalidArgumentException $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+            $this->logger->error('Could not added comment', $logFullDetails);
+            throw $exception;
+        } catch (\Exception $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+            $this->logger->error('Could not added comment', $logFullDetails);
             throw new \Exception("Şu an bu talebinizi gerçekleştiremiyoruz lütfen daha sonra tekrar deneyiniz.");            
         }
     }

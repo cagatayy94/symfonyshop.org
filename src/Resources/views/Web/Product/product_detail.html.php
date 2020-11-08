@@ -105,7 +105,7 @@
                                 <a class="nav-link font-weight-bold active show" id="productDetailDescTab" data-toggle="tab" href="#productDetailDesc" role="tab" aria-controls="productDetailDesc" aria-expanded="true" aria-selected="true">AÇIKLAMA</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link font-weight-bold" id="productDetailReviewsTab" data-toggle="tab" href="#productDetailReviews" role="tab" aria-controls="productDetailReviews" aria-selected="false">ÜRÜN YORUMLARI ( <?php echo count($productDetail['comments']); ?> )</a>
+                                <a class="nav-link font-weight-bold" id="productDetailReviewsTab" data-toggle="tab" href="#productDetailReviews" role="tab" aria-controls="productDetailReviews" aria-selected="false">ÜRÜN YORUMLARI ( <?php echo $productDetail['comment_count']; ?> )</a>
                             </li>
                         </ul>
                         <div class="tab-content" id="contentTabProductDetail">
@@ -115,60 +115,64 @@
                                 </p>                            
                             </div>
                             <div class="tab-pane fade pt-4 pb-4" id="productDetailReviews" role="tabpanel" aria-labelledby="productDetailReviewsTab">
-                                <ul class="comments">
-                                    <?php foreach ($productDetail['comments'] as $value): 
-                                        $nameString = explode(" ", $value['name']); ?>
-                                        <li style="padding: 0">
-                                            <div class="comment">
-                                                <div class="comment-block">
-                                                    <span class="comment-by">
-                                                        <span class="comment-rating">
-                                                            <?php for ($i=0; $i < $value['rate'] ; $i++): ?>
-                                                                <i class="fas fa-star text-color-dark mr-1"></i>
-                                                            <?php endfor; ?>
-                                                        </span>
-                                                        <strong class="comment-author text-color-dark"><?php echo $nameString[0][0]."***** ".$nameString[1][0]."*****"; ?></strong>
-                                                        <span class="comment-date border-right-0 text-color-light-3"><?php $createdAt = new \DateTime($value['created_at']); echo $createdAt->format('d.m.Y H:i:s')  ?></span> 
-                                                    </span>
-                                                    <p><?php echo $value['comment']; ?></p>
-                                                </div>
+                                <div class="row">
+                                    <ul data-custom-load data-custom-load-url="<?php echo $this->get('router')->path('product_detail_comments', ['productId' => $id]); ?>" class="comments comments-holder-block" >
+                                    </ul>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 d-flex justify-content-center">
+                                        <div id="portfolioLoadMoreLoader" class="portfolio-load-more-loader" style="height: 67.5312px; display:none;">
+                                            <div class="bounce-loader">
+                                                <div class="bounce1"></div>
+                                                <div class="bounce2"></div>
+                                                <div class="bounce3"></div>
                                             </div>
-                                        </li>
-                                    <?php endforeach ?>
-                                </ul>
+                                        </div>
+
+                                        <button id="commentsLoadMore" data-custom-load-url="<?php echo $this->get('router')->path('product_detail_comments', ['productId' => $id]); ?>"type="button" class="btn btn-primary btn-rounded btn-wide-5 btn-icon-effect-2 outline-none font-weight-semibold text-0" >
+                                            <span>Daha Fazla Yorum Yükle</span>
+                                            <i class="fas fa-ellipsis-h"></i>
+                                        </button>
+                                    </div>
+                                </div>
                                 <div class="row mt-4 pt-2">
                                     <div class="col">
                                         <h2 class="font-weight-bold text-3 mb-3">ÜRÜNÜ DEĞERLENDİR</h2>
-                                        <form class="form-style-2" action="#" method="post">
+                                        <form class="form-style-2" id="add_comment_form" action="<?php echo $this->get('router')->path('add_comment'); ?>" method="post">
+                                            <input type="hidden" name="productId" value="<?php echo $id ?>">
                                             <div class="form-row">
                                                 <div class="form-group">
                                                     <div class="rating p-1">
                                                         <label>
-                                                        <input type="radio" name="rating" value="5" title="5 stars"> 5
+                                                            <input class="required" type="radio" name="rate" value="5" title="5 stars"> 5
                                                         </label>
                                                         <label>
-                                                        <input type="radio" name="rating" value="4" title="4 stars"> 4
+                                                            <input class="required" type="radio" name="rate" value="4" title="4 stars"> 4
                                                         </label>
                                                         <label>
-                                                        <input type="radio" name="rating" value="3" title="3 stars"> 3
+                                                            <input class="required" type="radio" name="rate" value="3" title="3 stars"> 3
                                                         </label>
                                                         <label>
-                                                        <input type="radio" name="rating" value="2" title="2 stars"> 2
+                                                            <input class="required" type="radio" name="rate" value="2" title="2 stars"> 2
                                                         </label>
                                                         <label>
-                                                        <input type="radio" name="rating" value="1" title="1 star"> 1
+                                                            <input class="required" type="radio" name="rate" value="1" title="1 star"> 1
                                                         </label>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-row">
                                                 <div class="form-group col">
-                                                    <textarea class="form-control bg-light-5 border-0 rounded-0" placeholder="Yorumunuz" rows="6" name="review" required=""></textarea>
+                                                    <textarea class="form-control bg-light-5 border-0 rounded-0" placeholder="Yorumunuz" rows="6" name="comment"></textarea>
                                                 </div>
                                             </div>
                                             <div class="form-row mt-2">
                                                 <div class="col">
-                                                    <input type="submit" value="YORUM YAP" class="btn btn-primary btn-rounded btn-h-2 btn-v-2 font-weight-bold">
+                                                    <?php if ($user): ?>
+                                                        <input type="submit" value="YORUM YAP" class="btn btn-primary btn-rounded btn-h-2 btn-v-2 font-weight-bold">
+                                                    <?php else: ?>
+                                                        <button type="button" value="YORUM YAP" data-container="body" data-trigger="focus" data-toggle="popover" data-placement="right" data-content="Yorum eklemek için giriş yapınız." class="btn btn-primary btn-rounded font-weight-semibold btn-v-3 btn-h-2 btn-fs-2 ml-3" data-original-title="" title="">YORUM YAP</button>
+                                                    <?php endif; ?>
                                                 </div>
                                             </div>
                                         </form>
@@ -182,4 +186,46 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    function defer(method) {
+        if (window.jQuery) {
+            method();
+        } else {
+            setTimeout(function() { defer(method) }, 50);
+        }
+    }
+
+    defer(function () {
+        $('#commentsLoadMore').on('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            var self = $(this);
+            var commentsHolder = $('.comments-holder-block');
+            var url = self.attr('data-custom-load-url');
+            var method = 'GET'
+            var offset = commentsHolder.children().length;
+
+            self.hide();
+            $('#portfolioLoadMoreLoader').show();
+
+            $.ajax({
+                type: method,
+                url: url,
+                data: {offset},
+                success: function (result) {
+                    if (result) {
+                        commentsHolder.append(result);
+                        self.show();
+                        $('#portfolioLoadMoreLoader').hide();
+                    } else {
+                        self.hide();
+                        $('#portfolioLoadMoreLoader').hide();
+                    }
+                }
+            });
+
+        });
+    });
+</script>
 <?php $view['slots']->stop(); ?>

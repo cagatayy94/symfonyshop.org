@@ -19,7 +19,26 @@ $(document).ready(function() {
     $('.mobile-mask').mask('(000) 000-0000');
 
     $('[href="'+location.hash+'"]').trigger('click');
+
+    loadCustomLoads();
 });
+
+function loadCustomLoads(){
+
+    var customLoadElement = $('[data-custom-load]')
+
+    var url = customLoadElement.attr('data-custom-load-url');
+
+    $.ajax({
+        type: 'GET',
+        url: url,
+        success: function (result) {    
+            if (result) {
+                customLoadElement.html(result);
+            }
+        }
+    });
+}
 
 $('#order_notice_form').on('submit', function (e) {
     e.preventDefault();
@@ -1303,7 +1322,6 @@ $('body').on('submit', '#address_selection', function(e) {
 });
 
 $('body').on('click', '[data-target="#paymentModal"]', function(e) {
-
     var self = $(this);
     var url = self.attr('data-url');
 
@@ -1316,6 +1334,72 @@ $('body').on('click', '[data-target="#paymentModal"]', function(e) {
             } else {
                 toastr.error(result.error.message);
             }
+        }
+    });
+});
+
+$('body').on('submit', '#add_comment_form', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var self = $(this);
+    var url = self.attr('action');
+    var method = self.attr('method');
+    var data = self.serialize();
+    var button = self.find(':submit');
+    var rating = self.find('input[name="rate"]:checked').val();
+    var review = self.find('[name="comment"]').val();
+
+    if (!rating) {
+        toastr.warning("Puan seçiniz");
+        return false;
+    }
+
+    button.attr('disabled', 'disabled');
+
+    $.ajax({
+        type: method,
+        url: url,
+        data: data,
+        success: function (result) {
+            if (result.success) {
+
+                var stars = "";
+                for (i = 0; i < rating; i++) {
+                  stars += '<i class="fas fa-star text-color-dark mr-1"></i>';
+                }
+
+                var badge = "";
+                if (result.data.buyed) {
+                    badge = '<span class="badge badge-primary badge-xs mb-2">Ürünü Satın Aldı</span>';
+                }
+
+                var customLi =
+                '<li style="padding: 0">'+
+                    '<div class="comment">'+
+                        '<div class="comment-block">'+
+                            '<span class="comment-by">'+
+                                '<span class="comment-rating">'+
+                                    stars+
+                                '</span>'+
+                                '<strong class="comment-author text-color-dark">'+ result.data.name +
+                                    badge+
+                                '</strong>'+
+                                '<span class="comment-date border-right-0 text-color-light-3">0 Saniye Önce</span>'+
+                            '</span>'+
+                            '<p>' + review + '</p>'
+                        '</div>' +
+                    '</div>' +
+                '</li>';
+
+                $('.comments-holder-block').append(customLi);
+
+                self.trigger("reset");
+                
+            } else {
+                toastr.error(result.error.message);
+            }
+            button.removeAttr('disabled');
         }
     });
 

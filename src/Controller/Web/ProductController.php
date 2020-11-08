@@ -37,6 +37,22 @@ class ProductController extends AbstractController
     }
 
     /**
+     * @Route("/product-detail-comments", name="product_detail_comments" )
+     */
+    public function productDetailCommentsAction(ProductService $productService, Request $request)
+    {
+        $id = $request->query->get('productId');
+        $offset = $request->query->get('offset');
+
+        $comments = $productService->getProductComments($id, $offset);
+
+        return $this->render('Web/Product/product_detail_comments.html.php', [
+            'comments' => $comments,
+            'productId' => $id,
+        ]);
+    }
+
+    /**
      * @Route("/add/favorite", name="add_favorite")
      */
     public function addFavoriteAction(Request $request, ProductService $productService)
@@ -48,6 +64,39 @@ class ProductController extends AbstractController
 
             return new JsonResponse([
                 'success' => true,
+            ]);
+        } catch (\Exception $exception) {
+            return new JsonResponse([
+                'success' => false,
+                'error' => [
+                    'message' => $exception->getMessage()
+                ]
+            ]);
+        }
+    }
+
+    /**
+     * @Route("/add/comment", name="add_comment")
+     */
+    public function addCommentAction(Request $request, ProductService $productService)
+    {
+        $user = $this->getUser();
+
+        $productId = $request->request->get('productId');
+        $rate = $request->request->get('rate');
+        $comment = $request->request->get('comment');
+        $ipAddress = $request->getClientIp();
+
+        if ($comment == "") {
+            $comment = null;
+        }
+
+        try {
+            $data = $productService->addComment($productId, $user->getId(), $rate, $ipAddress, $comment);
+
+            return new JsonResponse([
+                'success' => true,
+                'data' => $data,
             ]);
         } catch (\Exception $exception) {
             return new JsonResponse([
