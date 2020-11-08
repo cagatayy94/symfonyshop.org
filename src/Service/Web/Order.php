@@ -8,13 +8,13 @@ class Order
 {
     use ServiceTrait;
 
-    public function createBankTransferOrder($user, $ipAddress)
+    public function createOrder($userId, $ipAddress, $type, $rawResult = null)
     {
         $logDetails = $this->getArguments(__FUNCTION__, func_get_args());
 
         $logFullDetails = [
             'entity' => 'Order',
-            'activity' => 'createBankTransferOrder',
+            'activity' => 'createOrder',
             'activityId' => 0,
             'details' => $logDetails
         ];
@@ -22,7 +22,7 @@ class Order
         $connection = $this->connection;
 
         try {
-            if (!$user) {
+            if (!$userId) {
                 throw new \InvalidArgumentException('Kullanıcı bulunamadı');
             }
 
@@ -109,7 +109,7 @@ class Order
                     shipping_address IS NOT NULL
 
                     ', [
-                        'user_account_id' => $user->getId()
+                        'user_account_id' => $userId
                     ]
                 )->fetchAll();
 
@@ -118,14 +118,14 @@ class Order
             }
 
             $sql = "INSERT INTO 
-                        orders (user_account_id, order_id, product_id, product_name, product_price, product_quantity, cargo_company, cargo_price, product_pic, variant_title, variant_selection, shipping_address_detail, billing_address_detail, payment_selection, order_ip, order_total_amount)
+                        orders (user_account_id, order_id, product_id, product_name, product_price, product_quantity, cargo_company, cargo_price, product_pic, variant_title, variant_selection, shipping_address_detail, billing_address_detail, payment_selection, order_ip, order_total_amount, raw_result)
                     VALUES";
 
             $totalCargoPrice = 0;
             $totalOrderAmount = 0;
             $uniqueProduct = [];
             foreach ($cartDetail as $key => $value) {
-                $sql .= sprintf("( %d, %d, %d, '%s', %f, %d, '%s', %f, '%s', '%s', '%s', '%s', '%s', '%s', '%s', %s)", 
+                $sql .= sprintf("( %d, %d, %d, '%s', %f, %d, '%s', %f, '%s', '%s', '%s', '%s', '%s', '%s', '%s', %s, %s)", 
                                     $value['user_account_id'],
                                     $value['order_id'],
                                     $value['product_id'],
@@ -139,9 +139,10 @@ class Order
                                     $value['variant_selection'],
                                     $value['shipping_address_detail'],
                                     $value['billing_address_detail'],
-                                    'bank_transfer',
+                                    $type,
                                     $ipAddress,
-                                    ':order_total_amount'
+                                    ':order_total_amount',
+                                    ':raw_result'
                                 );
 
                 if ($key != array_key_last($cartDetail)){
@@ -162,6 +163,7 @@ class Order
             $statement = $connection->prepare($sql);
 
             $statement->bindValue(':order_total_amount', $grandTotalOrderAmount);
+            $statement->bindValue(':raw_result', $rawResult);
 
             $statement->execute();
 
@@ -172,7 +174,7 @@ class Order
                 WHERE
                     user_account_id = :user_account_id', 
                     [
-                        'user_account_id' => $user->getId()
+                        'user_account_id' => $userId
                     ]
             );
 
@@ -181,14 +183,14 @@ class Order
             
 
 
-            $this->logger->info('Finalized bank transfer order', $logFullDetails);
+            $this->logger->info('Finalized order', $logFullDetails);
         } catch (\InvalidArgumentException $exception) {
             $logFullDetails['details']['exception'] = $exception->getMessage();
-            $this->logger->error('Could not finalized bank transfer order', $logFullDetails);
+            $this->logger->error('Could not finalized order', $logFullDetails);
             throw $exception;
         } catch (\Exception $exception) {
             $logFullDetails['details']['exception'] = $exception->getMessage();
-            $this->logger->error('Could not finalized bank transfer order', $logFullDetails);
+            $this->logger->error('Could not finalized order', $logFullDetails);
             throw new \Exception($exception->getMessage());            
         }
     }

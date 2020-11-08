@@ -1334,4 +1334,25 @@ class User
             throw new \Exception("İşlem başarısız bir sorun oluştu lütfen daha sonra tekrar deneyiniz");            
         }
     }
+
+     /**
+     * Get user by cartId
+     *
+     * @param in $cartId
+     */
+    public function getUserAccountByCartId($cartId)
+    {
+        return $this->connection->executeQuery('
+            SELECT
+                user_account_id
+            FROM
+                cart
+            WHERE
+                cart_no = :cart_no
+
+                ', [
+                    'cart_no' => $cartId
+                ]
+            )->fetchColumn();
+    }
 }

@@ -34,7 +34,11 @@ jobs:
         echo MAIL_FROM_ADDRESS=symfonyshop.tk@yandex.com >> .env  && 
         echo DATABASE_URL=${{ secrets.PROD_DATABASE_URL }} >> .env  && 
         echo APP_NAME=SymfonyShopDev >> .env  && 
-        echo MAIN_MAIL_ADDRESS=mustafa.cagatay.yilmaz@gmail.com >> .env
+        echo MAIN_MAIL_ADDRESS=mustafa.cagatay.yilmaz@gmail.com >> .env &&
+        echo IYZICO_API_KEY=${{ secrets.IYZICO_API_KEY }} >> .env &&
+        echo IYZICO_SECRET_KEY=${{ secrets.IYZICO_SECRET_KEY }} >> .env &&
+        echo IYZICO_BASE_URL=${{ secrets.IYZICO_BASE_URL }} >> .env
+
 
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'

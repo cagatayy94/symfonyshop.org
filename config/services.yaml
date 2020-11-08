@@ -55,14 +55,6 @@ services:
             - [setLogger, ["@logger"]]
             - [setMailer, ["@app.sdk-mailer"]]
 
-    App\Sdk\Iyzico:
-        arguments:
-          - '%env(IYZICO_API_KEY)%'
-          - '%env(IYZICO_SECRET_KEY)%'
-          - '%env(IYZICO_BASE_URL)%'
-
-
-
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
     App\Controller\:
