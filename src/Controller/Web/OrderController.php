@@ -96,7 +96,13 @@ class OrderController extends AbstractController
         }
 
         if ($data['paymentStatus'] == 'SUCCESS') {
-            $userId = $userService->getUserAccountByCartId($data['basketId']);
+
+            if (!$user) {
+                $userId = $userService->getUserAccountByCartId($data['basketId']);
+            }else{
+                $userId = $user->getId();
+            }
+
             $orderService->createOrder($userId, $ipAddress, 'credit_card', $data['rawResult']);
             return $this->render('Web/Order/order_success.html.php', 
                 [
