@@ -8,7 +8,7 @@
                         <ul class="nav">
                             <?php if ($user): ?>
                             <li class="nav-item">
-                                <a href="siparislerim" class="nav-link">SİPARİŞLERİM</a>
+                                <a href="<?php echo $this->get('router')->path('profile') ?>#orders" class="nav-link">SİPARİŞLERİM</a>
                             </li>
                             <li class="nav-item">
                                 <a href="<?php echo $this->get('router')->path('profile') ?>#favorites" class="nav-link">FAVORİLERİM</a>
