@@ -62,6 +62,9 @@
                     <?php if($admin->hasRole('cargo_list')): ?>
                     <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_settings_cargo_list'); ?>">Kargo Listesi</a></li>
                     <?php endif; ?>
+                    <?php if($admin->hasRole('iyzico_settings_show')): ?>
+                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_settings_iyzico'); ?>">Izyico Ayarları</a></li>
+                    <?php endif; ?>
                 </ul>
             </li>
             <?php endif; ?>

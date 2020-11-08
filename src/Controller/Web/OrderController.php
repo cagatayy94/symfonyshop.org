@@ -26,16 +26,9 @@ class OrderController extends AbstractController
         try {
             $orderService->createOrder($user->getId(), $ipAddress, 'bank_transfer');
 
-            return new JsonResponse([
-                'success' => true,
-            ]);
+            return $this->render('Web/Order/order_success.html.php', ['user' => $user]);
         } catch (\Exception $exception) {
-            return new JsonResponse([
-                'success' => false,
-                'error' => [
-                    'message' => $exception->getMessage()
-                ]
-            ]);
+            return $this->render('Web/Order/order_fail.html.php', ['user' => $user]);
         }
     }
 

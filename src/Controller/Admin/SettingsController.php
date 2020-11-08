@@ -526,4 +526,46 @@ class SettingsController extends AbstractController
             ]);
         }
     }
+
+    /**
+     * @Route("/iyzico", name="iyzico")
+     */
+    public function iyzicoAction(SiteSettingsService $siteSettingsService)
+    {
+        $admin = $this->getUser();
+
+        $iyzicoSettings = $siteSettingsService->getIyzicoSettings();
+
+        return $this->render('Admin/SiteSettings/iyzico-settings.html.php', [
+            'admin' => $admin,
+            'iyzicoSettings' => $iyzicoSettings
+        ]);
+    }
+
+    /**
+     * @Route("/iyzico/update", name="iyzico_update")
+     */
+    public function iyzicoUpdateAction(Request $request, SiteSettingsService $siteSettingsService)
+    {
+        $admin = $this->getUser();
+
+        $iyzicoApiKey = $request->request->get('iyzico_api_key');
+        $iyzicoSecretKey = $request->request->get('iyzico_secret_key');
+        $iyzicoBaseUrl = $request->request->get('iyzico_base_url');
+
+        try {
+            $siteSettingsService->updateIyzicoSettings($iyzicoApiKey, $iyzicoSecretKey, $iyzicoBaseUrl);
+
+            return new JsonResponse([
+                'success' => true,
+            ]);
+        } catch (\Exception $exception) {
+            return new JsonResponse([
+                'success' => false,
+                'error' => [
+                    'message' => $exception->getMessage()
+                ]
+            ]);
+        }
+    }
 }

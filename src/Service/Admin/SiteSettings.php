@@ -1489,4 +1489,101 @@ class SiteSettings
             throw $exception;
         }
     }
+
+    /**
+     * get iyzico settings
+     *
+     * @return array Mixed
+     */
+    public function getIyzicoSettings()
+    {
+        $this->authorize('iyzico_settings_show');
+        
+        $connection = $this->connection;
+
+        $sql = "
+            SELECT
+                iyzico_api_key,
+                iyzico_secret_key,
+                iyzico_base_url
+            FROM
+                iyzico
+            LIMIT 1";
+
+        $statement = $connection->prepare($sql);
+
+        $statement->execute();
+
+        return $statement->fetch();
+    }
+
+     /**
+     * Update the iyzico settings
+     *
+     * @param string $iyzicoApiKey
+     * @param string $iyzicoSecretKey
+     * @param string $iyzicoBaseUrl
+     *
+     * @throws \Exception
+     */
+    public function updateIyzicoSettings($iyzicoApiKey, $iyzicoSecretKey, $iyzicoBaseUrl)
+    {
+        $this->authorize('iyzico_settings_update');
+
+        $logDetails = $this->getArguments(__FUNCTION__, func_get_args());
+
+        $logFullDetails = [
+            'entity' => 'SiteSettings',
+            'activity' => 'updateIyzicoSettings',
+            'activityId' => 0,
+            'details' => $logDetails
+        ];
+
+        $connection = $this->connection;
+
+        try {
+
+            if (!$iyzicoApiKey) {
+                throw new \InvalidArgumentException('Api Key belirtilmemiş');
+            }
+            if (!$iyzicoSecretKey) {
+                throw new \InvalidArgumentException('Secret Key belirtilmemiş');
+            }
+            if (!$iyzicoBaseUrl) {
+                throw new \InvalidArgumentException('Base Url belirtilmemiş');
+            }
+
+            $sql = '
+                UPDATE 
+                    iyzico
+                SET 
+                    iyzico_api_key = :iyzico_api_key,
+                    iyzico_secret_key = :iyzico_secret_key,
+                    iyzico_base_url = :iyzico_base_url
+                WHERE 
+                    id = 1
+            ';
+
+            $statement = $connection->prepare($sql);
+
+            $statement->bindValue(':iyzico_api_key', $iyzicoApiKey);
+            $statement->bindValue(':iyzico_secret_key', $iyzicoSecretKey);
+            $statement->bindValue(':iyzico_base_url', $iyzicoBaseUrl);
+            $statement->execute();
+
+            $this->logger->info('Updated the iyzico settings', $logFullDetails);
+        } catch (\InvalidArgumentException $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+
+            $this->logger->error('Could not updated the iyzico settings', $logFullDetails);
+
+            throw $exception;
+        } catch (\Exception $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+
+            $this->logger->error('Could not updated the iyzico settings', $logFullDetails);
+
+            throw $exception;
+        }
+    }
 }

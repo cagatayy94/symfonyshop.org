@@ -177,7 +177,13 @@
     <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModal4Label" aria-hidden="true">
         <div class="modal-dialog text-left" role="document">
             <div class="modal-content p-5 text-center">
-                <div id="loader"></div>
+                <div id="portfolioLoadMoreLoader" class="portfolio-load-more-loader" style="height: 67.5312px; display:block;">
+                    <div class="bounce-loader">
+                        <div class="bounce1"></div>
+                        <div class="bounce2"></div>
+                        <div class="bounce3"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
