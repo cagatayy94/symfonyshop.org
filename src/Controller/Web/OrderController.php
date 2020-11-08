@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Service\Web\Order as OrderService;
+use App\Service\Web\User as UserService;
 use App\Sdk\Iyzico as IyzicoSdk;
 
 class OrderController extends AbstractController
@@ -23,7 +24,7 @@ class OrderController extends AbstractController
         $ipAddress = $request->getClientIp();
 
         try {
-            $orderService->createBankTransferOrder($user, $ipAddress);
+            $orderService->createOrder($user->getId(), $ipAddress, 'bank_transfer');
 
             return new JsonResponse([
                 'success' => true,
@@ -50,9 +51,8 @@ class OrderController extends AbstractController
         try {
 
             $details = $orderService->getCartDetailForIyzico($user, $ipAddress);
-            
-
             $data = $iyzicoSdk->renderForm($details);
+
 
             if (!$data['status']) {
                 throw new \Exception("Form oluşturulurken bir sorun oluştu banka havalesi ile ödemeyi deneyebilirsiniz");
@@ -75,10 +75,11 @@ class OrderController extends AbstractController
     /**
      * @Route("/get/iyzico-form/result", name="get_iyzico_form_result")
      */
-    public function getIyzicoFormResultAction(Request $request, OrderService $orderService, IyzicoSdk $iyzicoSdk)
+    public function getIyzicoFormResultAction(Request $request, OrderService $orderService, IyzicoSdk $iyzicoSdk, UserService $userService)
     {
         $user = $this->getUser();
         $token = $request->request->get('token');
+        $ipAddress = $request->getClientIp();
 
         $data = $iyzicoSdk->getPaymentResult($token);
 
@@ -95,6 +96,8 @@ class OrderController extends AbstractController
         }
 
         if ($data['paymentStatus'] == 'SUCCESS') {
+            $userId = $userService->getUserAccountByCartId($data['basketId']);
+            $orderService->createOrder($userId, $ipAddress, 'credit_card', $data['rawResult']);
             return $this->render('Web/Order/order_success.html.php', 
                 [
                     'user' => $user,

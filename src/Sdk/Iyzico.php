@@ -51,7 +51,7 @@ class Iyzico
         $request->setCurrency(\Iyzipay\Model\Currency::TL);
         $request->setBasketId($details['order_id']);
         $request->setPaymentGroup(\Iyzipay\Model\PaymentGroup::PRODUCT);
-        $request->setCallbackUrl($this->router->generate('get_iyzico_form_result'));
+        $request->setCallbackUrl($this->router->generate('get_iyzico_form_result', [], 0));
 
         //set buyer
         $buyer = $this->setBuyer($details['buyer']);
@@ -146,11 +146,13 @@ class Iyzico
         $status = $checkoutForm->getStatus();
         $paymentStatus = $checkoutForm->getPaymentStatus();
         $rawResult = $checkoutForm->getRawResult();
+        $basketId = $checkoutForm->getBasketId();
         
         return [
             'status' => $status,
             'paymentStatus' => $paymentStatus,
             'rawResult' => $rawResult,
+            'basketId' => $basketId,
         ];
     }
 }
