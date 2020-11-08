@@ -102,6 +102,19 @@
             </li>
         <?php endif; ?>
 
+        <?php if($admin->hasRole('order_list')): ?>
+            <li class="treeview">
+                <a href=""><i class="fa fa-shopping-bag" aria-hidden="true"></i><span>Siparişler</span>
+                    <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span>
+                </a>
+                <ul class="treeview-menu">
+                    <?php if ($admin->hasRole('order_list')):?>
+                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_order_list'); ?>">Sipariş Listesi</a></li>
+                    <?php endif; ?>
+                </ul>
+            </li>
+        <?php endif; ?>
+
         <?php if($admin->hasRole('menu_list')): ?>
             <li class="treeview">
                 <a href=""><i class="fa fa-bars" aria-hidden="true"></i><span>Menüler</span>
