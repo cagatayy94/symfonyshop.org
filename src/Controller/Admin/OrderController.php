@@ -12,7 +12,6 @@ use App\Service\Admin\Order as OrderService;
 use App\Service\Admin\Category as CategoryService;
 use App\Sdk\Excel as ExcelService;
 
-
 /**
  * @Route("/admin", name="admin_")
  */
@@ -25,7 +24,7 @@ class OrderController extends AbstractController
     {
         $admin = $this->getUser();
 
-        $perPage = 5;
+        $perPage = 50;
         $pageCount = 0;
         $currentPage = (int) $request->query->get('currentPage', 1);
 
@@ -70,4 +69,75 @@ class OrderController extends AbstractController
         return $this->render($view, $data);
     }
 
+     /**
+     * @Route("/order-detail", name="order_detail")
+     */
+    public function orderDetailAction(Request $request, OrderService $orderService)
+    {
+        $admin = $this->getUser();
+
+        $orderId = $request->query->get('orderId');
+
+        $orderDetail = $orderService->getOrderDetail($orderId);
+
+
+
+
+        return $this->render('Admin/Order/detail.html.php', [
+            'admin' => $admin,
+            'orderDetail' => $orderDetail,
+            'orderId' => $orderId,
+        ]);
+    }
+
+    /**
+     * @Route("/approve-the-order", name="approve_the_order")
+     */
+    public function approveOrderAction(Request $request, OrderService $orderService)
+    {
+        $admin = $this->getUser();
+
+        $orderId = $request->request->get('orderId');
+
+        try {
+            $orderService->approveTheOrder($orderId);
+
+            return new JsonResponse([
+                'success' => true,
+            ]);
+        } catch (\Exception $exception) {
+            return new JsonResponse([
+                'success' => false,
+                'error' => [
+                    'message' => $exception->getMessage()
+                ]
+            ]);
+        }
+    }
+
+    /**
+     * @Route("/ship-the-order", name="ship_the_order")
+     */
+    public function shipTheOrderAction(Request $request, OrderService $orderService)
+    {
+        $admin = $this->getUser();
+
+        $orderId = $request->request->get('orderId');
+        $cargoSendCode = $request->request->get('cargo_send_code');
+
+        try {
+            $orderService->shipTheOrder($orderId, $cargoSendCode);
+
+            return new JsonResponse([
+                'success' => true,
+            ]);
+        } catch (\Exception $exception) {
+            return new JsonResponse([
+                'success' => false,
+                'error' => [
+                    'message' => $exception->getMessage()
+                ]
+            ]);
+        }
+    }
 }

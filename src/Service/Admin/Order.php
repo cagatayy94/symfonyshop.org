@@ -12,7 +12,7 @@ class Order
     use AdminServiceTrait;
 
     /**
-     * Get All Products
+     * Get All Orders
      *
      * @param int $currentPage
      * @param int $pageCount
@@ -44,7 +44,9 @@ class Order
                 o.order_id,
                 ua.name,
                 o.created_at,
-                o.order_total_amount
+                o.order_total_amount,
+                o.is_approved,
+                o.is_shipped
             FROM
                 orders o
             LEFT JOIN
@@ -71,7 +73,7 @@ class Order
         // limit sql
         $recordsSql .= '
             GROUP BY
-                o.order_id, ua.name, o.created_at, o.order_total_amount
+                o.order_id, ua.name, o.created_at, o.order_total_amount, is_approved, is_shipped
             ORDER BY
                 o.order_id DESC
             LIMIT
@@ -109,4 +111,200 @@ class Order
         ];
     }
 
+    /**
+     * Get Order Detail
+     *
+     * @param int $orderId
+     *
+     * @return mixed[]
+     *
+     * @throws \Exception
+     */
+    public function getOrderDetail($orderId)
+    {
+        $this->authorize('order_detail');
+
+        $orderId = $this->formatIntParameter($orderId);
+
+        if (!$orderId) {
+            throw new \Exception("Sipariş bulunamadı");
+        }
+
+        $connection = $this->connection;
+
+        $order = $connection->executeQuery('
+            SELECT
+                o.product_id,
+                o.product_name,
+                o.product_quantity,
+                o.cargo_price,
+                o.product_price,
+                o.product_pic,
+                o.order_total_amount,
+                o.variant_title,
+                o.variant_selection,
+                o.shipping_address_detail,
+                o.billing_address_detail,
+                o.payment_selection,
+                o.created_at,
+                o.order_ip,
+                o.is_approved,
+                o.is_shipped,
+                o.cargo_send_code,
+                o.raw_result,
+                o.user_account_id
+            FROM
+                orders o
+            WHERE
+                o.order_id = :order_id
+        ',[
+            'order_id' => $orderId
+        ])->fetchAll();
+
+        if (!$order) {
+            throw new \Exception("Sipariş bulunamadı");
+        }
+
+        $userAccount = $connection->executeQuery('
+            SELECT
+                ua.id id,
+                ua.name as name,
+                ua.email email,
+                ua.mobile mobile,
+                ua.is_mobile_approved is_mobile_approved
+            FROM
+                user_account ua
+            WHERE 
+                ua.id = :user_account_id
+        ',[
+            'user_account_id' => $order[0]['user_account_id']
+        ])->fetch();
+
+        return [
+            'userAccount' => $userAccount,
+            'order' => $order,
+        ];
+    }
+
+     /**
+     * Approve The Order
+     *
+     * @param int $orderId
+     *
+     * @throws \Exception
+     */
+    public function approveTheOrder($orderId)
+    {
+        $this->authorize('approve_the_order');
+
+        $logDetails = $this->getArguments(__FUNCTION__, func_get_args());
+
+        $logFullDetails = [
+            'entity' => 'Order',
+            'activity' => 'approveTheOrder',
+            'activityId' => 0,
+            'details' => $logDetails
+        ];
+
+        $connection = $this->connection;
+
+        $orderId = intval($orderId);
+
+        try {
+            if (!$orderId) {
+                throw new \InvalidArgumentException('Id belirtilmemiş');
+            }
+
+            $sql = '
+                UPDATE 
+                    orders
+                SET
+                    is_approved = TRUE
+                WHERE
+                    order_id = :order_id';
+
+            $statement = $connection->prepare($sql);
+
+            $statement->bindValue(':order_id', $orderId);
+
+            $statement->execute();
+
+            $logFullDetails['activityId'] = $orderId;
+            $this->logger->info('Approved the order', $logFullDetails);
+        } catch (\InvalidArgumentException $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+
+            $this->logger->error('Could not approved the order', $logFullDetails);
+
+            throw $exception;
+        } catch (\Exception $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+
+            $this->logger->error('Could not approved the order', $logFullDetails);
+
+            throw $exception;
+        }
+    }
+
+    /**
+     * Ship The Order
+     *
+     * @param int $orderId
+     *
+     * @throws \Exception
+     */
+    public function shipTheOrder($orderId, $cargoSendCode)
+    {
+        $this->authorize('ship_the_order');
+
+        $logDetails = $this->getArguments(__FUNCTION__, func_get_args());
+
+        $logFullDetails = [
+            'entity' => 'Order',
+            'activity' => 'shipTheOrder',
+            'activityId' => 0,
+            'details' => $logDetails
+        ];
+
+        $connection = $this->connection;
+
+        $orderId = intval($orderId);
+
+        try {
+            if (!$orderId) {
+                throw new \InvalidArgumentException('Id belirtilmemiş');
+            }
+
+            $sql = '
+                UPDATE 
+                    orders
+                SET
+                    is_shipped = TRUE,
+                    cargo_send_code = :cargo_send_code
+                WHERE
+                    order_id = :order_id';
+
+            $statement = $connection->prepare($sql);
+
+            $statement->bindValue(':order_id', $orderId);
+            $statement->bindValue(':cargo_send_code', $cargoSendCode);
+
+            $statement->execute();
+
+            $logFullDetails['activityId'] = $orderId;
+            $this->logger->info('Shipped the order', $logFullDetails);
+        } catch (\InvalidArgumentException $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+
+            $this->logger->error('Could not shipped the order', $logFullDetails);
+
+            throw $exception;
+        } catch (\Exception $exception) {
+            $logFullDetails['details']['exception'] = $exception->getMessage();
+
+            $this->logger->error('Could not shipped the order', $logFullDetails);
+
+            throw $exception;
+        }
+    }
 }

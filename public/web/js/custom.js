@@ -1003,9 +1003,6 @@ function updateCommentsInProfile(requestedPage = 1){
                             stars += '<i class="fas fa-star text-color-primary"></i>';
                         }
 
-                        var comment = 'lalala';
-                        var date = 'asd';
-
                         table += '<tr>' +
                                     '<td width="60">' +
                                         '<a href="/product-detail/' + value.product_id + '">' +

@@ -14,7 +14,7 @@
 	</section>
 	<section class="content">
 	  <div class="row">
-		<div class="col-md-8">
+		<div class="col-md-12">
 		  <div class="box">
 		  <div class="box-header with-border">
 			<h3 class="box-title">Sipariş Listesi <span class="label label-warning"><?php echo "Toplam :".$orders['total']; ?></span></h3>
@@ -31,6 +31,8 @@
 						<th style="width: 55px" class="text-center">Sipariş Id</th>
 						<th style="width: 250px" class="text-center">Alıcı Adı</th>
 						<th style="width: 250px" class="text-center">Toplam Tutar</th>
+						<th style="width: 250px" class="text-center">Sipariş Onay Durumu</th>
+						<th style="width: 250px" class="text-center">Kargo Gönderim Durumu</th>
 						<th style="width: 180px" class="text-center">Oluşturulma Tarihi</th>
 						<th></th>
 					</tr>
@@ -43,27 +45,43 @@
 							<input class="form-control" type="text" name="name" value="<?php echo $name ?>">
 						</th>
 						<th></th>
+						<th></th>
+						<th></th>
 						<th style="min-width: 180px" class="text-center">
 						  <input value="<?php echo $createdAtStart ?>" autocomplete="off" style="width: 80px" name="createdAtStart" value="" type="text" class="form-control pull-left datepicker d-inline-flex p-2 bd-highlight">
 						  <input value="<?php echo $createdAtEnd ?>" autocomplete="off" style="width: 80px" name="createdAtEnd" value="" type="text" class="form-control pull-right datepicker d-inline-flex p-2 bd-highlight">
 						</th>
 						<th class="text-center">
 						  <?php if (!$excelExport): ?>
+							<button style="margin: 2px" type="submit" class="btn btn-sm btn-primary submit-filter"><i class="fa fa-fw fa-filter"></i> Filtrele</button>
 							<button style="margin: 2px" type="submit" class="btn btn-sm btn-success submit-filter-excel"><i class="fa fa-fw fa-file-excel-o"></i> Excel</button>
-							<button style="margin: 2px" type="submit" class="btn btn-sm btn-primary submit-filter"><i class="fa fa-fw fa-filter"></i> Filtrele</button>                            
-						  <?php endif ?>
+						<?php endif ?>
 						</th>
 					</tr>
 					<?php endif ?>
 					<?php foreach ($orders['records'] as $value): ?>
 					  <tr data-order-id="<?php echo $value['order_id']; ?>">
-						<td class="text-center"><a href="<?php echo $this->get('router')->path('admin_product_detail', ['id' => $value['order_id']]) ?>"><?php echo $value['order_id'] ?></a></td>
+						<td class="text-center"><a href="<?php echo $this->get('router')->path('admin_order_detail', ['orderId' => $value['order_id']]) ?>"><?php echo $value['order_id'] ?></a></td>
 						<td class="text-center"><?php echo $value['name'] ?></td>
 						<td class="text-center"><?php echo $value['order_total_amount'] ?></td>
 						<td class="text-center">
+				            <?php if (!$value['is_approved']):?>
+				                <small class="label bg-red">Sipariş Onaylanmamış</small>
+				            <?php else: ?>
+				                <small class="label bg-green">Sipariş Onaylanmış</small>
+				            <?php endif;?>
+						</td>
+						<td class="text-center">
+							<?php if (!$value['is_shipped']):?>
+								<small class="label bg-red">Kargoya Verilmemiş</small>
+							<?php else: ?>
+								<small class="label bg-green">Kargoya Verilmiş</small>
+							<?php endif;?>			
+						</td>
+						<td class="text-center">
 						  <?php $created_at = new \DateTime($value['created_at']); echo $created_at->format('d.m.Y H:i:s'); ?> 
 						</td>
-						<td></td>
+						<td><a class="btn btn-primary" href="<?php echo $this->get('router')->path('admin_order_detail', ['orderId' => $value['order_id']]) ?>">Detay</a></td>
 					  </tr>
 					<?php endforeach ?>
 				  </tbody>
