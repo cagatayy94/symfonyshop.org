@@ -1,0 +1,1 @@
+cd /var/www/symfonyshop.tk; php bin/console cache:clear
