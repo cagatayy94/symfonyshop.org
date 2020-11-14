@@ -117,7 +117,7 @@
                         <div class="container pt-3">
                             <div class="row mb-3">
                                 <div class="col">
-                                    <h4>Tüm Favorileriniz</h4>
+                                    <h4>Favorileriniz</h4>
                                     <hr class="mb-4">
                                     <div class="table-responsive-lg">
                                         <table class="table" id="favorites-table">
@@ -139,7 +139,7 @@
                         <div class="container pt-3">
                             <div class="row mb-3">
                                 <div class="col">
-                                    <h4>Tüm Yorumlarınız.</h4>
+                                    <h4>Yorumlarınız</h4>
                                     <hr class="mb-4">
                                     <div class="table-responsive-lg">
                                         <table class="table" id="comments-table">
@@ -158,9 +158,23 @@
                         </div>
                     </div>
                     <div class="tab-pane fade pt-4 pb-4" id="orders" role="tabpanel" aria-labelledby="orders-tab">
-                        <p class="mb-0">
-                            siparişlerim
-                        </p>
+                        <div class="container pt-3">
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <h4>Siparişleriniz</h4>
+                                    <hr class="mb-4">
+                                    <div class="table-responsive-lg">
+                                        <table class="table" id="orders-table">
+                                        </table>
+                                        <!-- start pagination -->
+                                        <hr class="mt-5 mb-4">
+                                        <div class="row align-items-center justify-content-between" id="orders-pagination">
+                                        </div>
+                                        <!-- end pagination -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

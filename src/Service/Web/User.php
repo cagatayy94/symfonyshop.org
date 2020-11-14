@@ -1355,4 +1355,46 @@ class User
                 ]
             )->fetchColumn();
     }
+
+    /**
+     * Get user order list
+     *
+     * @param obj $user
+     * @param int $limit Limit Per Page
+     * @param int $currentPage 
+     * @throws \Exception
+     */
+    public function getUserOrderList($user, $limit, $currentPage)
+    {
+        return $this->connection->executeQuery('
+            SELECT
+                COUNT(*) OVER() AS total_count,
+                o.order_id,
+                o.created_at,
+                o.order_total_amount,
+                o.is_approved,
+                o.is_shipped,
+                o.cargo_send_code,
+                o.cargo_company
+            FROM
+                orders o
+            LEFT JOIN
+                user_account ua ON o.user_account_id = ua.id
+            WHERE
+                ua.id = :user_account_id
+            GROUP BY
+                o.order_id, ua.name, o.created_at, o.order_total_amount, is_approved, is_shipped, cargo_send_code, cargo_company
+            ORDER BY
+                o.created_at DESC
+            LIMIT
+                :limit
+            OFFSET
+                :offset
+                ', [
+                    'user_account_id' => $user->getId(),
+                    'limit' => $limit,
+                    'offset' => $limit * ($currentPage - 1)
+                ]
+        )->fetchAll();
+    }
 }

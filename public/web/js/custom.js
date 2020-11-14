@@ -5,6 +5,11 @@ var totalCargoPrice;
 var uniqueProduct;
 updateCartTotalAndQuantity();
 
+function formatDate(dateStr){
+    var date = new Date(dateStr);
+    return  ("00" + (date.getDate() + 1)).slice(-2) + "." + ("00" + date.getMonth()).slice(-2) + "." + date.getFullYear() + " " + ("00" + date.getHours()).slice(-2) + ":" + ("00" + date.getMinutes()).slice(-2) + ":" + ("00" + date.getSeconds()).slice(-2);
+}
+
 $(window).on('hashchange', function() {
     $('[href="'+location.hash+'"]').trigger('click');
 });
@@ -1401,3 +1406,117 @@ $('body').on('submit', '#add_comment_form', function(e) {
     });
 
 });
+
+function updateOrdersInProfile(requestedPage = 1){
+    paginationButton = $('.my-orders-pagination[data-page="'+ requestedPage +'"]');
+    $('.my-orders-pagination').parent('.page-item').removeClass('active');
+    paginationButton.parent('.page-item').addClass('active');
+
+    $.ajax({
+        type: 'GET',
+        url: 'get-user-account-orders?page='+requestedPage,
+        success: function (result) {
+            if (result.success) {
+
+                var table = "";
+                var status = "";
+
+                if (result.total_count) {
+                    table += "<thead>" +
+                            "<tr>" +
+                                "<th>Sipariş Numarası</th>" +
+                                "<th>Tarih</th>" +
+                                "<th>Tutar</th>" +
+                                "<th>Durum</th>" +
+                                "<th>Kargo Firması</th>" +
+                                "<th></th>" +
+                            "</tr>" +
+                        "</thead>" +
+                        "<tbody id='orders-table-body'>";
+
+                    $.each( result.orders, function(_, value) {
+
+                        status = '<span class="badge badge-warning badge-md m-2">Bekliyor</span>';
+
+                        if (value.is_approved) {
+                            status = '<span class="badge badge-success badge-md m-2">Onaylandı</span>';
+                        }
+
+                        if (value.is_shipped) {
+                            status += '<span class="badge badge-info badge-md m-2">Kargoya verildi. Kargo Gönderim Kodu <b>' + value.cargo_send_code + '</b></span>';
+                        }
+
+                        table += '<tr>' +
+                                    '<td width="60">' +
+                                        value.order_id +
+                                    '</td>' +
+                                    '<td>' +
+                                        formatDate(value.created_at) +
+                                    '</td>' +
+                                    '<td>' +
+                                        value.order_total_amount + ' ₺' +
+                                    '</td>' +
+                                    '<td>' +
+                                        status +
+                                    '</td>' +
+                                    '<td>' +
+                                        value.cargo_company +
+                                    '</td>' +
+                                    '<td>' +
+                                        '<button type="button" class="btn btn-primary mb-2 order-detail" data-order-id="' + value.order_id + '">Detay</button>' +
+                                    '</td>' +
+                                '</tr>';
+                    });
+
+                    table += "</tbody>";
+
+                    var pagination = "";
+
+                    pagination +=   '<div class="col-auto mb-3 mb-sm-0">'+
+                                        '<span>' + ((result.perPage*requestedPage) - result.perPage + 1) + '-<span class="total-span">' + (result.perPage*requestedPage <= result.total_count ? result.perPage*requestedPage : result.total_count) + '</span>/<span class="grand-total-span">'+ result.total_count +'</span> sonuç gösteriliyor </span>'+
+                                    '</div>';
+                    if (result.pageCount) {
+                        pagination +=   '<div class="col-auto">' +
+                                            '<nav aria-label="Page navigation example">' +
+                                                '<ul class="pagination mb-0">';
+
+                        for (i = 1; i <= result.pageCount; i++) {
+                            pagination += '<li' + ((i == requestedPage) ? " class=\'page-item active\' " : "") +'><a class="page-link my-orders-pagination" data-page="'+ i +'" href="#">'+ i +'</a></li>';
+                        }  
+
+                        pagination += '</ul></nav></div>';
+                    }                
+                                                
+                    $('#orders-table').html(table);
+                    $('#orders-pagination').html(pagination);
+
+                }else{
+                    $('#orders-table').html("Henüz hiç siparişiniz yok");
+                }
+
+            } else {
+                toastr.error(result.error.message);
+            }
+        }
+    });
+}
+
+$('body').on('click', '[href="#orders"]', function(e) {
+    updateOrdersInProfile();
+});
+
+$('body').on('click', '.my-orders-pagination', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var self = $(this);
+
+    if (self.closest('.page-item').hasClass('active')) {
+        return false;
+    }
+
+    var requestedPage = self.attr('data-page');
+
+    updateOrdersInProfile(requestedPage);
+});
+
