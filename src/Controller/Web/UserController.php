@@ -497,5 +497,38 @@ class UserController extends AbstractController
         }
     }
 
+    /**
+     * @Route("/get-user-account-orders", name="get_user_account_orders")
+     */
+    public function getUserAccountOrdersAction(Request $request, UserService $userService)
+    {
+        $user = $this->getUser();
 
+        $page = $request->query->get('page') ? $request->query->get('page') : 1;
+
+        $pageCount = 0;
+
+        try {
+            $orders = $userService->getUserOrderList($user, self::LIMIT_PER_PAGE, $page);
+
+            if (!empty($orders[0]['total_count']) && $orders[0]['total_count'] > self::LIMIT_PER_PAGE) {
+                $pageCount = ceil($orders[0]['total_count'] / self::LIMIT_PER_PAGE);
+            }
+
+            return new JsonResponse([
+                'success'   => true,
+                'orders' => $orders,
+                'total_count' => isset($orders[0]['total_count']) ? $orders[0]['total_count'] : 0 ,
+                'perPage' => self::LIMIT_PER_PAGE,
+                'pageCount' => $pageCount,
+            ]);
+        } catch (\Exception $exception) {
+            return new JsonResponse([
+                'success' => false,
+                'error' => [
+                    'message' => $exception->getMessage()
+                ]
+            ]);
+        }
+    }
 }
