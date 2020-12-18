@@ -128,7 +128,7 @@ class DefaultController extends AbstractController
     /**
      * @Route("/navigation/data", name="navigation_data")
      */
-    public function navigationData(SiteSettings $siteSettings, MenuService $menuService)
+    public function navigationData(MenuService $menuService)
     {
         $user = $this->getUser();
         $menus = $menuService->getAll();

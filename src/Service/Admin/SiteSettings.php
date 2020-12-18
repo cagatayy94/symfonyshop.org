@@ -23,7 +23,7 @@ class SiteSettings
             SELECT
                 *
             FROM
-                site_settings ss
+                settings ss
             WHERE
                 ss.is_deleted = false
                 ";
@@ -141,7 +141,7 @@ class SiteSettings
             try {
                 $statement = $connection->prepare('
                     UPDATE 
-                        site_settings
+                        settings
                     SET
                         name = :name,
                         title = :title,

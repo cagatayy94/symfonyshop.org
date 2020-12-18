@@ -20,7 +20,7 @@ class SiteSettings
             SELECT
                 *
             FROM
-                site_settings ss
+                settings ss
             WHERE
                 ss.is_deleted = false
                 ";
@@ -126,9 +126,9 @@ class SiteSettings
 
             return $banner['pic'];
 
-        }else{
-            return [];
         }
+
+        return [];
     }
 
     /**
@@ -151,8 +151,6 @@ class SiteSettings
             'activityId' => 0,
             'details' => $logDetails
         ];
-
-        $connection = $this->connection;
 
         $name = trim($name);
         $email = trim($email);
