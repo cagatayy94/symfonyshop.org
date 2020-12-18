@@ -67,7 +67,7 @@
 <!-- Theme Initialization Files -->
 <script src="/web/js/theme.init.js"></script>
 <!-- Examples -->
-<script src="/web/js/examples/examples.gallery.js"></script>
+<script src="/web/js/examples.gallery.js"></script>
 <!-- toastr js -->
 <script src="/toastr/toastr.min.js"></script>
 <script src="/web/js/jquery.mask.min.js"></script>
