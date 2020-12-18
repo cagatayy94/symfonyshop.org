@@ -36,10 +36,6 @@ class SettingsController extends AbstractController
      */
     public function generalSettingsUpdateAction(Request $request, SiteSettingsService $siteSettingsService)
     {
-        $admin = $this->getUser();
-        
-        $requestParameters = $request->request->all();
-
         $name = $request->request->get('name');
         $phone = $request->request->get('phone');
         $title = $request->request->get('title');
@@ -92,8 +88,6 @@ class SettingsController extends AbstractController
      */
     public function stringsSettingsUpdateAction(Request $request, SiteSettingsService $siteSettingsService)
     {
-        $admin = $this->getUser();
-
         $aboutUs = $request->request->get('about_us');
         $signUpAgreement = $request->request->get('sign_up_agreement');
         $termsofUse = $request->request->get('terms_of_use');
@@ -139,8 +133,6 @@ class SettingsController extends AbstractController
      */
     public function newBankAddAction(Request $request, SiteSettingsService $siteSettingsService)
     {
-        $admin = $this->getUser();
-
         $name = $request->request->get('name');
         $city = $request->request->get('city');
         $country = $request->request->get('country');
@@ -194,8 +186,6 @@ class SettingsController extends AbstractController
      */
     public function bankUpdateAction(Request $request, SiteSettingsService $siteSettingsService)
     {
-        $admin = $this->getUser();
-
         $name = $request->request->get('name');
         $city = $request->request->get('city');
         $country = $request->request->get('country');
@@ -206,10 +196,10 @@ class SettingsController extends AbstractController
         $accountNumber = $request->request->get('accountNumber');
         $iban = $request->request->get('iban');
         $logo = $request->files->get('logo');
-        $id = $request->request->get('id');
+        $bankId = $request->request->get('id');
 
         try {
-            $siteSettingsService->updateBank($id, $name, $city, $country, $branchName, $branchCode, $currency, $accountOwner, $accountNumber, $iban, $logo);
+            $siteSettingsService->updateBank($bankId, $name, $city, $country, $branchName, $branchCode, $currency, $accountOwner, $accountNumber, $iban, $logo);
 
             return new JsonResponse([
                 'success' => true,
@@ -244,8 +234,6 @@ class SettingsController extends AbstractController
      */
     public function faqCreateAction(Request $request, SiteSettingsService $siteSettingsService)
     {
-        $admin = $this->getUser();
-
         $question = $request->request->get('question');
         $answer = $request->request->get('answer');
 
@@ -291,14 +279,12 @@ class SettingsController extends AbstractController
      */
     public function faqUpdateAction(Request $request, SiteSettingsService $siteSettingsService)
     {
-        $admin = $this->getUser();
-
         $question = $request->request->get('question');
         $answer = $request->request->get('answer');
-        $id = $request->request->get('faq_id');
+        $faqId = $request->request->get('faq_id');
 
         try {
-            $siteSettingsService->updateFaq($id, $question, $answer);
+            $siteSettingsService->updateFaq($faqId, $question, $answer);
 
             return new JsonResponse([
                 'success' => true,
@@ -330,8 +316,6 @@ class SettingsController extends AbstractController
      */
     public function logoUpdateAction(Request $request, SiteSettingsService $siteSettingsService)
     {
-        $admin = $this->getUser();
-
         $darkLogo = $request->files->get('dark_logo');
         $lightLogo = $request->files->get('light_logo');
         $favicon = $request->files->get('favicon');
@@ -372,8 +356,6 @@ class SettingsController extends AbstractController
      */
     public function newBannerAddAction(Request $request, SiteSettingsService $siteSettingsService)
     {
-        $admin = $this->getUser();
-
         $name = $request->request->get('name');
         $img = $request->files->get('img');
 
@@ -419,14 +401,12 @@ class SettingsController extends AbstractController
      */
     public function bannerUpdateAction(Request $request, SiteSettingsService $siteSettingsService)
     {
-        $admin = $this->getUser();
-
         $name = $request->request->get('name');
         $img = $request->files->get('uploadImg');
-        $id = $request->request->get('id');
+        $bannerId = $request->request->get('id');
 
         try {
-            $siteSettingsService->updateBanner($id, $name, $img);
+            $siteSettingsService->updateBanner($bannerId, $name, $img);
 
             return new JsonResponse([
                 'success' => true,
@@ -461,7 +441,6 @@ class SettingsController extends AbstractController
      */
     public function newCargoAddAction(Request $request, SiteSettingsService $siteSettingsService)
     {
-        $admin = $this->getUser();
         $name = $request->request->get('name');
 
         try {
@@ -506,13 +485,11 @@ class SettingsController extends AbstractController
      */
     public function cargoUpdateAction(Request $request, SiteSettingsService $siteSettingsService)
     {
-        $admin = $this->getUser();
-
         $name = $request->request->get('name');
-        $id = $request->request->get('id');
+        $cargoCompanyId = $request->request->get('id');
 
         try {
-            $siteSettingsService->updateCargoCompany($id, $name);
+            $siteSettingsService->updateCargoCompany($cargoCompanyId, $name);
 
             return new JsonResponse([
                 'success' => true,
@@ -547,8 +524,6 @@ class SettingsController extends AbstractController
      */
     public function iyzicoUpdateAction(Request $request, SiteSettingsService $siteSettingsService)
     {
-        $admin = $this->getUser();
-
         $iyzicoApiKey = $request->request->get('iyzico_api_key');
         $iyzicoSecretKey = $request->request->get('iyzico_secret_key');
         $iyzicoBaseUrl = $request->request->get('iyzico_base_url');
