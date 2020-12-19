@@ -59,20 +59,21 @@ class AdminProvider implements UserProviderInterface, PasswordUpgraderInterface
             try {
                 $selectRolesStatement = $connection->prepare('
                     SELECT
-                        ap.slug,
-                        aap.id
+                        ap.slug
                     FROM
-                        admin_account_profile aap
+                        admin_account aa
                     LEFT JOIN
-                        admin_profile_permission aprp ON aprp.admin_profile_id = aap.id
+                        admin_account_profile aap ON aa.id = aap.admin_account_id
                     LEFT JOIN
-                        admin_permission ap ON aprp.admin_permission_id = ap.id
-                    WHERE 
-                        aap.admin_account_id = :admin_account_id
+                        admin_profile_permission aprp ON aprp.admin_profile_id =  aap.admin_profile_id
+                    LEFT JOIN
+                        admin_permission ap ON ap.id = aprp.admin_permission_id
+                    WHERE
+                        aa.id = :admin_account_id
                 ');
 
                 $selectRolesStatement->bindValue(':admin_account_id', $record['id']);
-                $selectRolesStatement->execute();
+                $selectRolesStatement->execute();      
 
                 while ($role = $selectRolesStatement->fetch()) {
                     $roles[] = $role['slug'];
@@ -83,9 +84,9 @@ class AdminProvider implements UserProviderInterface, PasswordUpgraderInterface
             $account->setRoles($roles);
 
             return $account;
-        } else {
-            throw new UsernameNotFoundException('Your username or password is invalid.');
         }
+        
+        throw new UsernameNotFoundException('Your username or password is invalid.');
     }
 
     /**

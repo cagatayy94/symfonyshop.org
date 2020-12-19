@@ -29,14 +29,9 @@
                     </div>
                 </div>
                 <br>
-                <h5 align="center" class="mb-4">Reklam</h5>
-                <div class="image-frame image-frame-style-5">
-                    <?php if (isset($banner)): ?>
-                        <div class="image-frame image-frame-style-5 mt-1">
-                            <img height="1800" width="1500" src="/web/img/banner/<?php echo $banner ?>" class="img-fluid" alt="">
-                        </div>
-                    <?php endif ?>
-                </div>
+                <!-- Banner Area -->
+                <?php echo $this->render('Web/banner.html.php',['banner' => isset($banner) ? $banner : null]); ?>
+                <!-- Banner Area End-->
             </aside>
             <div class="col-md-8 col-lg-9 order-1 mb-5 mb-md-0">
                 <div class="row mb-5">
@@ -44,7 +39,7 @@
                         <div class="owl-carousel owl-theme manual dots-style-2 nav-style-2 nav-color-dark mb-3" id="thumbGalleryDetail">
                             <?php foreach ($productDetail['photos'] as $key => $value): ?>
                                 <div>
-                                    <img src="/web/img/product/<?php echo $value ?>" class="img-fluid" alt="">
+                                    <img src="<?php echo $value ?>" class="img-fluid" alt="">
                                 </div>
                             <?php endforeach; ?>
                         </div>
@@ -52,7 +47,7 @@
                             <?php foreach ($productDetail['photos'] as $key => $value): ?>
                                 <div>
                                     <span class="d-block">
-                                        <img alt="Product Image" src="/web/img/product/<?php echo $value ?>" class="img-fluid">
+                                        <img alt="Product Image" src="<?php echo $value ?>" class="img-fluid">
                                     </span>
                                 </div>
                             <?php endforeach; ?>

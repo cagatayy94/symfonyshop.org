@@ -59,8 +59,8 @@
 						</th>
 						<th class="text-center">
 						  <?php if (!$excelExport): ?>
-							<button style="margin: 2px" type="submit" class="btn btn-sm btn-success submit-filter-excel"><i class="fa fa-fw fa-file-excel-o"></i> Excel</button>
 							<button style="margin: 2px" type="submit" class="btn btn-sm btn-primary submit-filter"><i class="fa fa-fw fa-filter"></i> Filtrele</button>                            
+							<button style="margin: 2px" type="submit" class="btn btn-sm btn-success submit-filter-excel"><i class="fa fa-fw fa-file-excel-o"></i> Excel</button>
 						  <?php endif ?>
 						</th>
 					</tr>
@@ -72,16 +72,20 @@
 						<td class="text-center"><?php echo $value['price'] ?></td>
 						<td class="text-center"><?php echo $value['cargo_price'] ?></td>
 						<td class="text-center"><?php echo $value['tax'] ?></td>
-						<td class="text-center"><?php echo $value['description'] ?></td>
+						<td class="text-center"><?php echo substr($value['description'], 0, 50); ?></td>
 						<td class="text-center"><?php echo $value['variant_title'] ?></td>
 						<td class="text-center"><?php echo $value['view'] ?></td>
 						<td class="text-center">
 						  <?php $created_at = new \DateTime($value['created_at']); echo $created_at->format('d.m.Y H:i:s'); ?> 
 						</td>
 						<td class="text-center">
-						  <?php if ($admin->hasRole('product_delete') && !$excelExport): ?>
-							<button data-delete-url="<?php echo $this->get('router')->path('admin_product_delete', ['productId' => $value['id']]) ?>" class="btn btn-sm btn-danger delete-product"><i class="fa fa-fw fa-eraser"></i> Sil</button>
-						  <?php endif ?>
+							<?php if ($admin->hasRole('product_detail') && !$excelExport): ?>
+								<a style="margin: 2px" class="btn btn-sm btn-success" href="<?php echo $this->get('router')->path('admin_product_detail', ['id' => $value['id']]) ?>"><i class="fa fa-fw fa-info"></i> Detay</a>
+						  	<?php endif ?>
+
+							<?php if ($admin->hasRole('product_delete') && !$excelExport): ?>
+								<button style="margin: 2px" data-delete-url="<?php echo $this->get('router')->path('admin_product_delete', ['productId' => $value['id']]) ?>" class="btn btn-sm btn-danger delete-product"><i class="fa fa-fw fa-eraser"></i> Sil</button>
+							<?php endif ?>
 						</td>
 					  </tr>
 					<?php endforeach ?>

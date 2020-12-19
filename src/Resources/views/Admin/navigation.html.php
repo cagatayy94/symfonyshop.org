@@ -35,40 +35,6 @@
             </li>
             <?php endif; ?>
 
-            <?php if($admin->hasRole('settings_general') || $admin->hasRole('settings_strings') || $admin->hasRole('settings_bank') || $admin->hasRole('faq_list') || $admin->hasRole('settings_logo') || $admin->hasRole('all_banners') || $admin->hasRole('cargo_list')): ?>
-            <li class="treeview">
-                <a href=""><i class="fa fa-cog" aria-hidden="true"></i><span>Site Ayarları</span>
-                    <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span>
-                </a>
-                <ul class="treeview-menu">
-                    <?php if($admin->hasRole('settings_general')): ?>
-                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_settings_general'); ?>">Genel Ayarlar</a></li>
-                    <?php endif; ?>
-                    <?php if($admin->hasRole('settings_strings')): ?>
-                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_settings_strings'); ?>">Metin Ayarları</a></li>
-                    <?php endif; ?>
-                    <?php if($admin->hasRole('settings_bank')): ?>
-                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_settings_bank'); ?>">Banka Ayarları</a></li>
-                    <?php endif; ?>
-                    <?php if($admin->hasRole('faq_list')): ?>
-                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_settings_faq'); ?>">Sık Sorulan Sorular</a></li>
-                    <?php endif; ?>
-                    <?php if($admin->hasRole('settings_logo')): ?>
-                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_settings_logo'); ?>">Logo ve Favicon</a></li>
-                    <?php endif; ?>
-                    <?php if($admin->hasRole('all_banners')): ?>
-                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_settings_banner'); ?>">Banner Ayarları</a></li>
-                    <?php endif; ?>
-                    <?php if($admin->hasRole('cargo_list')): ?>
-                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_settings_cargo_list'); ?>">Kargo Listesi</a></li>
-                    <?php endif; ?>
-                    <?php if($admin->hasRole('iyzico_settings_show')): ?>
-                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_settings_iyzico'); ?>">Izyico Ayarları</a></li>
-                    <?php endif; ?>
-                </ul>
-            </li>
-            <?php endif; ?>
-
             <?php if($admin->hasRole('account_list_show') && $admin->hasRole('profile_list_show')): ?>
             <li class="treeview">
                 <a href=""><i class="fa fa-user-circle-o" aria-hidden="true"></i><span>Yöneticiler</span>
@@ -123,6 +89,40 @@
                 <ul class="treeview-menu">
                     <?php if ($admin->hasRole('menu_list')):?>
                     <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_menu_list'); ?>">Menü Listesi</a></li>
+                    <?php endif; ?>
+                </ul>
+            </li>
+        <?php endif; ?>
+
+        <?php if($admin->hasRole('settings_general') || $admin->hasRole('settings_strings') || $admin->hasRole('settings_bank') || $admin->hasRole('faq_list') || $admin->hasRole('settings_logo') || $admin->hasRole('all_banners') || $admin->hasRole('cargo_list')): ?>
+            <li class="treeview">
+                <a href=""><i class="fa fa-cog" aria-hidden="true"></i><span>Site Ayarları</span>
+                    <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span>
+                </a>
+                <ul class="treeview-menu">
+                    <?php if($admin->hasRole('settings_general')): ?>
+                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_settings_general'); ?>">Genel Ayarlar</a></li>
+                    <?php endif; ?>
+                    <?php if($admin->hasRole('settings_strings')): ?>
+                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_settings_strings'); ?>">Metin Ayarları</a></li>
+                    <?php endif; ?>
+                    <?php if($admin->hasRole('settings_bank')): ?>
+                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_settings_bank'); ?>">Banka Ayarları</a></li>
+                    <?php endif; ?>
+                    <?php if($admin->hasRole('faq_list')): ?>
+                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_settings_faq'); ?>">Sık Sorulan Sorular</a></li>
+                    <?php endif; ?>
+                    <?php if($admin->hasRole('settings_logo')): ?>
+                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_settings_logo'); ?>">Logo ve Favicon</a></li>
+                    <?php endif; ?>
+                    <?php if($admin->hasRole('all_banners')): ?>
+                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_settings_banner'); ?>">Banner Ayarları</a></li>
+                    <?php endif; ?>
+                    <?php if($admin->hasRole('cargo_list')): ?>
+                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_settings_cargo_list'); ?>">Kargo Listesi</a></li>
+                    <?php endif; ?>
+                    <?php if($admin->hasRole('iyzico_settings_show')): ?>
+                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_settings_iyzico'); ?>">Izyico Ayarları</a></li>
                     <?php endif; ?>
                 </ul>
             </li>

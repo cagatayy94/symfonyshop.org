@@ -39,8 +39,6 @@ class AccountController extends AbstractController
      */
     public function adminCreateAction(Request $request, AccountService $accountService)
     {
-        $admin = $this->getUser();
-
         $name = $request->request->get('name');
         $surname = $request->request->get('surname');
         $email = $request->request->get('email');
@@ -206,8 +204,6 @@ class AccountController extends AbstractController
      */
     public function adminProfileUpdateAction(Request $request, AccountService $accountService)
     {
-        $admin = $this->getUser();
-
         $profileId = $request->request->get('profileId');
         $name = $request->request->get('name');
         $permissions = $request->request->get('permissions');
