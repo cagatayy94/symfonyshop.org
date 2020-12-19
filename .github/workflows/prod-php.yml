@@ -41,7 +41,7 @@ jobs:
 
 
     - name: Install dependencies
-      run: composer install --prefer-dist --no-progress --no-suggest
+      run: composer update --prefer-dist --no-progress --no-suggest
 
     - name: Copy file via scp
       uses: appleboy/scp-action@master
