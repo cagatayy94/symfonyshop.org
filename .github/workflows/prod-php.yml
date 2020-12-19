@@ -4,8 +4,6 @@ on:
   push:
     branches: [ prod ]
 
-    name: Laravel
-
 jobs:
   build:
     runs-on: ${{ matrix.operating-system }}
