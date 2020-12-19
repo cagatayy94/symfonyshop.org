@@ -7,7 +7,7 @@ on:
 jobs:
   run:
     runs-on: ubuntu-latest
-    name: Build And Deploy
+    name: Build And Deploy v2
     steps:
     - name: Checkout
       uses: actions/checkout@v2
