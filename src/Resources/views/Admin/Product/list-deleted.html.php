@@ -72,7 +72,7 @@
 						<td class="text-center"><?php echo $value['price'] ?></td>
 						<td class="text-center"><?php echo $value['cargo_price'] ?></td>
 						<td class="text-center"><?php echo $value['tax'] ?></td>
-						<td class="text-center"><?php echo $value['description'] ?></td>
+						<td class="text-center"><?php echo substr($value['description'], 0, 50); ?></td>
 						<td class="text-center"><?php echo $value['variant_title'] ?></td>
 						<td class="text-center"><?php echo $value['view'] ?></td>
 						<td class="text-center">
