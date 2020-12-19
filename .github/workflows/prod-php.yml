@@ -8,6 +8,10 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-version:
+          - "7.1"
 
     steps:
     - uses: actions/checkout@v2
@@ -23,8 +27,6 @@ jobs:
         key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
           ${{ runner.os }}-php-
-        php-version: '7.1'
-
     - name: Create .env
       run: 
         touch .env && 
