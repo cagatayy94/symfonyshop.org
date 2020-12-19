@@ -23,6 +23,7 @@ jobs:
         key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
           ${{ runner.os }}-php-
+        php-version: '7.1'
 
     - name: Create .env
       run: 
