@@ -6,12 +6,11 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-version:
-          - "7.1"
+        php-versions: ['7.1'] // you can add multiple versions
+    name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}
 
     steps:
     - uses: actions/checkout@v2
