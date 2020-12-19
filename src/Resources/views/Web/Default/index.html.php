@@ -71,7 +71,7 @@
                         </div>
                         <br>
                         <!-- Banner Area -->
-                        <?php echo $this->render('Web/banner.html.php'); ?>
+                        <?php echo $this->render('Web/banner.html.php',['banner' => isset($banner) ? $banner : null]); ?>
                         <!-- Banner Area End-->
                     </aside>
                     <div class="col-md-8 col-lg-9 order-1 mb-5 mb-md-0">

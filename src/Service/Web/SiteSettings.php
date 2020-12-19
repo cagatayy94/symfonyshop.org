@@ -128,7 +128,7 @@ class SiteSettings
 
         }
 
-        return [];
+        return NULL;
     }
 
     /**
