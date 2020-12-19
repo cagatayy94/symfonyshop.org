@@ -26,6 +26,10 @@ services:
             - [setConnection, ["@database_connection"]]
             - [setLogger, ["@logger"]]
 
+    App\Command\:
+        resource: '../src/Command/*'
+        calls:
+
     App\Service\Admin\:
         resource: '../src/Service/Admin'
         calls:
