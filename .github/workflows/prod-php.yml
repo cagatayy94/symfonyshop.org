@@ -39,9 +39,8 @@ jobs:
         echo IYZICO_SECRET_KEY=${{ secrets.IYZICO_SECRET_KEY }} >> .env &&
         echo IYZICO_BASE_URL=${{ secrets.IYZICO_BASE_URL }} >> .env
 
-
     - name: Install dependencies
-      run: composer update
+      run: composer install --prefer-dist --no-progress --no-suggest
 
     - name: Copy file via scp
       uses: appleboy/scp-action@master
