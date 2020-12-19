@@ -114,6 +114,9 @@
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
+    "maennchen/zipstream-php": {
+        "version": "2.1.0"
+    },
     "markbaker/complex": {
         "version": "1.4.8"
     },
@@ -122,6 +125,9 @@
     },
     "monolog/monolog": {
         "version": "1.25.2"
+    },
+    "myclabs/php-enum": {
+        "version": "1.7.7"
     },
     "nikic/php-parser": {
         "version": "v4.3.0"
@@ -152,6 +158,15 @@
     },
     "psr/container": {
         "version": "1.0.0"
+    },
+    "psr/http-client": {
+        "version": "1.0.1"
+    },
+    "psr/http-factory": {
+        "version": "1.0.1"
+    },
+    "psr/http-message": {
+        "version": "1.0.1"
     },
     "psr/link": {
         "version": "1.0.0"
@@ -228,6 +243,9 @@
     },
     "symfony/dependency-injection": {
         "version": "v4.4.0"
+    },
+    "symfony/deprecation-contracts": {
+        "version": "v2.2.0"
     },
     "symfony/doctrine-bridge": {
         "version": "v4.4.0"
