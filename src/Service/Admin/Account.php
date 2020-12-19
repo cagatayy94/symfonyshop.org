@@ -314,8 +314,6 @@ class Account
 
         $adminDetails = $statement->fetch();
 
-        $sql = '';
-
         $sql ="
             SELECT
                 ap.name AS name,
@@ -326,6 +324,8 @@ class Account
                 admin_profile_permission app on ap.id = app.admin_permission_id
             WHERE
                 app.admin_profile_id = :admin_profile_id
+            ORDER BY
+                ap.name
         ";
 
         $statement = $connection->prepare($sql);
@@ -643,8 +643,9 @@ class Account
             SELECT
                 *
             FROM
-                admin_permission ap"
-            );
+                admin_permission ap
+            ORDER BY
+                ap.name");
 
         $statement->execute();
         
