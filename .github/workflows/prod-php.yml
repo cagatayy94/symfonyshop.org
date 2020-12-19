@@ -11,7 +11,6 @@ jobs:
         matrix:
           operating-system: [ubuntu-latest] // you can add multiple operating systems
           php-versions: ['7.1'] // you can add multiple versions
-      name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}
 
     steps:
     - uses: actions/checkout@v2
