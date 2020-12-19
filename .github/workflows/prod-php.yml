@@ -4,18 +4,17 @@ on:
   push:
     branches: [ prod ]
 
+    name: Laravel
+
 jobs:
   build:
-
-    runs-on: ${{ matrix.operating-system }}
-        strategy:
-          matrix:
-            operating-system: [ubuntu-latest] // you can add multiple operating systems
-            php-versions: ['7.3'] // you can add multiple versions
-        name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
+      with:
+        php-version: '7.3'
+        tools: composer, phpunit'
 
     - name: Validate composer.json and composer.lock
       run: composer validate
