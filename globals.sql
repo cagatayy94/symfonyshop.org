@@ -1,11 +1,12 @@
 -- auto-generated definition
-CREATE TABLE iyzico
+CREATE TABLE public.iyzico
 (
     id SERIAL NOT NULL CONSTRAINT iyzico_pk PRIMARY KEY,
     iyzico_api_key TEXT DEFAULT 'IYZICO_API_KEY'::TEXT NOT NULL,
     iyzico_secret_key TEXT DEFAULT 'IYZICO_SECRET_KEY'::TEXT NOT NULL,
     iyzico_base_url   TEXT DEFAULT 'IYZICO_BASE_URL'::TEXT NOT NULL
 );
+
 
 CREATE UNIQUE INDEX iyzico_id_uindex ON iyzico (id);
 
