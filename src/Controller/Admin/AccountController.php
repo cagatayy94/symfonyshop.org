@@ -204,8 +204,6 @@ class AccountController extends AbstractController
      */
     public function adminProfileUpdateAction(Request $request, AccountService $accountService)
     {
-        $admin = $this->getUser();
-
         $profileId = $request->request->get('profileId');
         $name = $request->request->get('name');
         $permissions = $request->request->get('permissions');
