@@ -6,10 +6,8 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ matrix.operating-system }}
-      matrix:
-        operating-system: [ubuntu-latest] // you can add multiple operating systems
-        php-versions: ['7.1'] // you can add multiple versions
+
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
@@ -25,6 +23,7 @@ jobs:
         key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
           ${{ runner.os }}-php-
+
     - name: Create .env
       run: 
         touch .env && 
@@ -39,6 +38,7 @@ jobs:
         echo IYZICO_API_KEY=${{ secrets.IYZICO_API_KEY }} >> .env &&
         echo IYZICO_SECRET_KEY=${{ secrets.IYZICO_SECRET_KEY }} >> .env &&
         echo IYZICO_BASE_URL=${{ secrets.IYZICO_BASE_URL }} >> .env
+
 
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress --no-suggest
