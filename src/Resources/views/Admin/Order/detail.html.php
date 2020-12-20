@@ -123,7 +123,7 @@
                                     <tbody>
                                         <tr>
                                             <td class="text-center">
-                                                <img width="150" src="/web/img/product/<?php echo $value['product_pic']; ?>">
+                                                <img width="150" src="<?php echo $value['product_pic']; ?>">
                                             </td>
                                             <td class="text-center"><?php echo $value['product_id']; ?></td>
                                             <td class="text-center"><?php echo $value['product_name']; ?></td>

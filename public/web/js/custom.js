@@ -439,7 +439,7 @@ function generateCartItems(val){
                             '<a href="#"><i class="fas fa-times" aria-label="Remove"></i></a>' +
                         '</td>' +
                         '<td class="product-thumbnail">' +
-                            '<img src="/web/img/product/'+ value.path +'" class="img-fluid" width="67" alt="">'+
+                            '<img src="'+ value.path +'" class="img-fluid" width="67" alt="">'+
                         '</td>'+
                         '<td class="product-name">'+
                             '<a href="/product-detail/'+ value.product_id +'"> '+ value.product_name +' -- '+value.variant_title+' / ' + value.variant_name +'</a>'+
@@ -545,10 +545,10 @@ function generateCartItemsInCheckOut(val){
         cartItemsInCheckOut += 
             '<tr class="cart-item">'+
                 '<td class="product-thumbnail">'+
-                    '<img src="/web/img/product/'+ value.path +'" class="img-fluid" width="67" alt="">'+
+                    '<img src="'+ value.path +'" class="img-fluid" width="67" alt="">'+
                 '</td>'+
                 '<td class="product-name">'+
-                    '<a href="/product-detail/'+ value.product_id +'"> '+ value.product_name +' -- '+value.variant_title+' / ' + value.variant_name +'</a>'+
+                    '<a href="/product-detail/'+ value.product_id +'"> '+ value.product_name +' - '+value.variant_title+' / ' + value.variant_name +'</a>'+
                 '</td>'+
                 '<td class="product-price">'+
                     '<span class="unit-price">'+ value.product_price+' ₺</span>'+
