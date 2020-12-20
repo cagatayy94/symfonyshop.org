@@ -172,7 +172,8 @@ CREATE TABLE public.cart (
     cargo_company_id integer,
     payment_method character varying,
     installment character varying,
-    address_id integer
+    billing_address_id integer,
+    shipping_address_id integer
 );
 
 CREATE SEQUENCE public.cart_id_seq
@@ -182,6 +183,13 @@ CREATE SEQUENCE public.cart_id_seq
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
+
+ALTER TABLE cart
+	ADD CONSTRAINT cart_address_id_fk FOREIGN KEY (billing_address_id) REFERENCES address (id);
+
+ALTER TABLE cart
+	ADD CONSTRAINT cart_address_id_fk_2 FOREIGN KEY (shipping_address_id) REFERENCES address (id);
+
 
 CREATE TABLE public.category (
     id integer NOT NULL,
