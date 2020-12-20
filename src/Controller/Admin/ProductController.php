@@ -232,7 +232,7 @@ class ProductController extends AbstractController
      */
     public function productUpdateAction(Request $request, ProductService $productService)
     {
-        $id             = $request->request->get('id');
+        $productId      = $request->request->get('id');
         $productName    = $request->request->get('productName');
         $productPrice   = $request->request->get('productPrice');
         $cargoPrice     = $request->request->get('cargoPrice');
@@ -245,7 +245,7 @@ class ProductController extends AbstractController
         $files          = $request->files->get('img');
 
         try {
-            $productService->update($id, $productName, $productPrice, $cargoPrice, $description, $categoryId, $variantTitle, $variantName, $variantStock, $tax, $files);
+            $productService->update($productId, $productName, $productPrice, $cargoPrice, $description, $categoryId, $variantTitle, $variantName, $variantStock, $tax, $files);
 
             return new JsonResponse([
                 'success' => true,
