@@ -505,6 +505,12 @@ INSERT INTO public.admin_permission (id, name, slug) VALUES (47, 'Ürün Silmeyi
 INSERT INTO public.admin_permission (id, name, slug) VALUES (48, 'Ürün Detayı', 'product_detail');
 INSERT INTO public.admin_permission (id, name, slug) VALUES (49, 'Ürün Fotoğrafı Silme', 'product_img_delete');
 INSERT INTO public.admin_permission (id, name, slug) VALUES (50, 'Ürün Güncelle', 'product_update');
+INSERT INTO public.admin_permission (id, name, slug) VALUES (51, 'Iyzico Ayarları Görüntüleme', 'iyzico_settings_show');
+INSERT INTO public.admin_permission (id, name, slug) VALUES (52, 'Sipariş Listesi', 'order_list');
+INSERT INTO public.admin_permission (id, name, slug) VALUES (53, 'Iyzico Ayarları Güncelleme', 'iyzico_settings_update');
+INSERT INTO public.admin_permission (id, name, slug) VALUES (54, 'Sipariş Detayı', 'order_detail');
+INSERT INTO public.admin_permission (id, name, slug) VALUES (55, 'Siparişi Onayla', 'approve_the_order');
+INSERT INTO public.admin_permission (id, name, slug) VALUES (56, 'Siparişi Kargola', 'ship_the_order');
 
 
 --
@@ -724,7 +730,7 @@ SELECT pg_catalog.setval('public.admin_profile_id_seq', 1, true);
 -- Name: admin_profile_permission_id_seq; Type: SEQUENCE SET; Schema: public;
 --
 
-SELECT pg_catalog.setval('public.admin_profile_permission_id_seq', 50, true);
+SELECT pg_catalog.setval('public.admin_profile_permission_id_seq', 56, true);
 
 --
 -- Name: category_id_seq; Type: SEQUENCE SET; Schema: public;
