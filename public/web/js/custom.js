@@ -1011,7 +1011,7 @@ function updateCommentsInProfile(requestedPage = 1){
                         table += '<tr>' +
                                     '<td width="60">' +
                                         '<a href="/product-detail/' + value.product_id + '">' +
-                                            '<img alt="" width="60" height="60" src="/web/img/product/' + value.path + '">' +
+                                            '<img alt="" width="60" height="60" src="' + value.path + '">' +
                                         '</a>' +
                                     '</td>' +
                                     '<td>' +
