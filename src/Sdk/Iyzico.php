@@ -75,6 +75,10 @@ class Iyzico
         $errorMessage = $checkoutFormInitialize->getErrorMessage();
         $form = $checkoutFormInitialize->getCheckoutFormContent().'<div id="iyzipay-checkout-form" class="responsive"></div>';
 
+        if($errorMessage){
+            throw new \Exception("Form oluşturulurken bir sorun oluştu. Lütfen sayfayı yenileyip tekrar deneyin.");
+        }
+        
         return [
             'status' => $status,
             'errorMessage' => $errorMessage,
@@ -107,7 +111,7 @@ class Iyzico
         $buyerObj = new \Iyzipay\Model\Buyer();
         $buyerObj->setId($buyer['id']);
         $buyerObj->setName($buyer['name']);
-        $buyerObj->setSurname($buyer['surname']);
+        $buyerObj->setSurname($buyer['surname'] ? $buyer['surname'] : $buyer['name']);
         $buyerObj->setEmail($buyer['email']);
         $buyerObj->setIdentityNumber("74300864791");
         $buyerObj->setRegistrationAddress($buyer['address']);
