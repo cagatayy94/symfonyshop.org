@@ -878,12 +878,12 @@ function generateFavoritesInProfile(requestedPage = 1){
 
                         table += '<tr>' +
                                     '<td width="60">' +
-                                        '<a href="/product-detail/' + value.product_id + '">' +
+                                        '<a href="/product-detail/'+ value.product_name.replaceAll(' ', '-') + "/" + value.product_id + '">' +
                                             '<img alt="" width="60" height="60" src="' + value.path + '">' +
                                         '</a>' +
                                     '</td>' +
                                     '<td>' +
-                                        '<a href="/product-detail/' + value.product_id + '">' + value.product_name + '</a>' +
+                                        '<a href="/product-detail/' + value.product_name.replaceAll(' ', '-') + "/" + value.product_id + '">' + value.product_name + '</a>' +
                                     '</td>' +
                                     '<td>' +
                                         stars +
