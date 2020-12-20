@@ -1277,6 +1277,58 @@ ALTER TABLE ONLY public.user_account_favorite
     ADD CONSTRAINT user_account_favorite_user_account_id_fk FOREIGN KEY (user_account_id) REFERENCES public.user_account(id);
 
 
+
+
+
+
+-- auto-generated definition
+CREATE TABLE orders
+(
+    id SERIAL NOT NULL CONSTRAINT orders_pk PRIMARY KEY,
+    user_account_id INTEGER NOT NULL CONSTRAINT orders_user_account_id_fk REFERENCES user_account,
+    order_id INTEGER NOT NULL,
+    product_id INTEGER NOT NULL CONSTRAINT orders_product_id_fk REFERENCES product,
+    product_name VARCHAR NOT NULL,
+    product_price REAL NOT NULL,
+    product_quantity INTEGER NOT NULL,
+    order_total_amount REAL NOT NULL,
+    cargo_company VARCHAR NOT NULL,
+    cargo_price REAL NOT NULL,
+    product_pic VARCHAR NOT NULL,
+    variant_title VARCHAR,
+    variant_selection VARCHAR NOT NULL,
+    shipping_address_detail JSON NOT NULL,
+    billing_address_detail JSON NOT NULL,
+    payment_selection VARCHAR NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW() NOT NULL,
+    order_ip VARCHAR NOT NULL,
+    is_approved BOOLEAN DEFAULT FALSE NOT NULL,
+    is_shipped BOOLEAN DEFAULT FALSE NOT NULL,
+    cargo_send_code VARCHAR,
+    raw_result TEXT
+);
+
+create unique index orders_id_uindex
+    on orders (id);
+
+create index orders_is_approved_index
+    on orders (is_approved);
+
+create index orders_is_shipped_index
+    on orders (is_shipped);
+
+
+
+
+
+
+
+
+
+
+
+
+
 --
 -- PostgreSQL database dump complete
 --
