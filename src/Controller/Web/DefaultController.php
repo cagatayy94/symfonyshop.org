@@ -56,19 +56,6 @@ class DefaultController extends AbstractController
             $pageCount = ceil($products['total'] / $perPage);
         }
 
-        $slugGenerator = function($string){
-
-            $turkish = array("ı", "ğ", "ü", "ş", "ö", "ç");//turkish letters
-            $english   = array("i", "g", "u", "s", "o", "c");//english
-    
-            $lower              = mb_strtolower($string);
-            $removeTrChar       = str_replace($turkish, $english, $lower);
-            $removeSpecialChars = preg_replace('/[^A-Za-z0-9\-]/', ' ', $removeTrChar);
-            $transform          = str_replace(' ', '-', $removeSpecialChars);
-    
-            return $transform;
-        };
-
         return $this->render('Web/Default/index.html.php', [
             'banner'            => $banner,
             'slug'              => null,
@@ -84,7 +71,6 @@ class DefaultController extends AbstractController
             'search'            => $search,
             'priceLow'          => $priceLow,
             'priceHigh'         => $priceHigh,
-            'slugGenerator'     => $slugGenerator
         ]);
     }
 
@@ -366,19 +352,6 @@ class DefaultController extends AbstractController
 
         $maxPrice = $productService->getMaxPrice();
 
-        $slugGenerator = function($string){
-
-            $turkish = array("ı", "ğ", "ü", "ş", "ö", "ç");//turkish letters
-            $english   = array("i", "g", "u", "s", "o", "c");//english
-    
-            $lower              = mb_strtolower($string);
-            $removeTrChar       = str_replace($turkish, $english, $lower);
-            $removeSpecialChars = preg_replace('/[^A-Za-z0-9\-]/', ' ', $removeTrChar);
-            $transform          = str_replace(' ', '-', $removeSpecialChars);
-    
-            return $transform;
-        };
-
         return $this->render('Web/Default/index.html.php', [
             'slug'              => $slug,
             'banner'            => $banner,
@@ -395,7 +368,6 @@ class DefaultController extends AbstractController
             'search'            => $search,
             'priceLow'          => $priceLow,
             'priceHigh'         => $priceHigh,
-            'slugGenerator'     => $slugGenerator
         ]);
     }
 }
