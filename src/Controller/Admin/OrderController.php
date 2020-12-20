@@ -80,9 +80,6 @@ class OrderController extends AbstractController
 
         $orderDetail = $orderService->getOrderDetail($orderId);
 
-
-
-
         return $this->render('Admin/Order/detail.html.php', [
             'admin' => $admin,
             'orderDetail' => $orderDetail,
