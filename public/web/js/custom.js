@@ -1323,23 +1323,6 @@ $('body').on('submit', '#address_selection', function(e) {
     }
 });
 
-$('body').on('click', '[data-target="#paymentModal"]', function(e) {
-    var self = $(this);
-    var url = self.attr('data-url');
-
-    $.ajax({
-        type: 'GET',
-        url: url,
-        success: function (result) {
-            if (result.success) {
-                $('#paymentModal').find('.modal-content').html(result.data);
-            } else {
-                toastr.error(result.error.message);
-            }
-        }
-    });
-});
-
 $('body').on('submit', '#add_comment_form', function(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -1453,7 +1436,7 @@ function updateOrdersInProfile(requestedPage = 1){
                                     '<td>' +
                                         formatDate(value.created_at) +
                                     '</td>' +
-                                    '<td>' +
+                                    '<td nowrap>' +
                                         value.order_total_amount + ' ₺' +
                                     '</td>' +
                                     '<td>' +
@@ -1463,7 +1446,7 @@ function updateOrdersInProfile(requestedPage = 1){
                                         value.cargo_company +
                                     '</td>' +
                                     '<td>' +
-                                        '<button type="button" class="btn btn-primary mb-2 order-detail" data-order-id="' + value.order_id + '">Detay</button>' +
+                                        '<button data-toggle="modal" data-target="#order_detail_modal" type="button" class="btn btn-primary mb-2 order-detail" data-order-id="' + value.order_id + '">Detay</button>' +
                                     '</td>' +
                                 '</tr>';
                     });
@@ -1520,3 +1503,47 @@ $('body').on('click', '.my-orders-pagination', function(e) {
     updateOrdersInProfile(requestedPage);
 });
 
+$('body').on('click', '.order-detail', function(e) {
+    var orderId = $(this).attr('data-order-id');
+    $.ajax({
+        type: 'GET',
+        url: '/get-order-detail',
+        data:{orderId},
+        success: function (result) {
+            if (typeof(result) === 'object') {
+                toastr.error(result.error.message);
+                $('#order_detail_modal').find('[data-dismiss="modal"]').click();
+            } else {
+                $('#order_detail_modal').find('.modal-body').html(result);
+            }
+        }
+    });
+});
+
+$('#order_detail_modal').on('hidden.bs.modal', function (e) {
+    $(this).find('.modal-body').html('<div class="text-center"><div id="portfolioLoadMoreLoader" class="portfolio-load-more-loader" style="height: 67.5312px; display:block;"><div class="bounce-loader"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div></div></div>');
+});
+
+$('body').on('click', '[data-target="#paymentModal"]', function(e) {
+    var self = $(this);
+    var url = self.attr('data-url');
+
+    $.ajax({
+        type: 'GET',
+        url: url,
+        success: function (result) {
+            if (result.success) {
+                if(!($('#paymentModal').find('#iyzipay-checkout-form').length)){
+                    $('#paymentModal').find('.modal-content').html(result.data);
+                }
+            } else {
+                $('#paymentModal').find('[data-dismiss="modal"]').click();
+                toastr.error(result.error.message);
+            }
+        }
+    });
+});
+
+$('#paymentModal').on('hidden.bs.modal', function (e) {
+    $(this).find('.modal-body').html('<div class="text-center"><div id="portfolioLoadMoreLoader" class="portfolio-load-more-loader" style="height: 67.5312px; display:block;"><div class="bounce-loader"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div></div></div>');
+});
