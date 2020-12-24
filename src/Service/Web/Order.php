@@ -336,4 +336,39 @@ class Order
             
         return $result;
     }
+
+    public function getOrderDetail($user, $orderId)
+    {
+        $connection = $this->connection;
+
+        $orderDetail = $connection->executeQuery('
+            SELECT
+                product_name,
+                product_price,
+                product_quantity,
+                order_total_amount,
+                cargo_company,
+                product_pic,
+                variant_title,
+                variant_selection,
+                shipping_address_detail,
+                billing_address_detail,
+                payment_selection,
+                is_approved,
+                is_shipped,
+                cargo_send_code,
+                created_at
+            FROM
+                orders
+            WHERE
+                order_id = :order_id
+            AND
+                user_account_id = :user_account_id
+                ', [
+                    'user_account_id' => $user->getId(),
+                    'order_id' => $orderId
+                ]
+            )->fetchAll();
+        return $orderDetail;
+    }
 }
