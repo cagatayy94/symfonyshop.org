@@ -79,7 +79,7 @@
                                             <input id="mobile-number-on-profile" style="background-color: white" class="form-control mobile-mask" type="text" disabled="disabled" value="<?php echo $user->getMobile();?>">
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#change_mobile_modal">Telefon Değiştir</button>
+                                            <button type="button" class="btn btn-primary mb-2"data-toggle="modal" data-target="#change_mobile_modal">Telefon Değiştir</button>
                                         </td>
                                     </tr>
                                     <tr>
@@ -299,6 +299,32 @@
                     <button type="button" class="btn" data-dismiss="modal">Kapat</button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="order_detail_modal" tabindex="-1" role="dialog" aria-labelledby="order_detail_modal" aria-hidden="true">
+    <div class="modal-dialog text-left" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModal4Label">Sipariş Detayı</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <div id="portfolioLoadMoreLoader" class="portfolio-load-more-loader" style="height: 67.5312px; display:block;">
+                        <div class="bounce-loader">
+                            <div class="bounce1"></div>
+                            <div class="bounce2"></div>
+                            <div class="bounce3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal">Kapat</button>
+            </div>
         </div>
     </div>
 </div>
