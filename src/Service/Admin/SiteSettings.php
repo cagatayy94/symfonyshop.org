@@ -1595,18 +1595,18 @@ class SiteSettings
      *
      * @throws \Exception
      */
-    public function initTheProject($adminEmail, $adminPassword)
+    public function initTheProject($adminEmail, $adminPass)
     {
         $connection = $this->connection;
 
-        $sqlFile = fopen("globals.sql", "r") or die("Unable to open sql file!");
+        $sqlFile = fopen("globals.sql", "r") or die("Unable to open file!");
         $sql = fread($sqlFile,filesize("globals.sql")); 
         fclose($sqlFile);
 
-        $statement = $connection->prepare($sql);
+        $sql = str_replace(":admin_email", $adminEmail, $sql);
+        $sql = str_replace(":admin_password", $adminPass, $sql);
 
-        $statement->bindValue(':admin_email', $adminEmail);
-        $statement->bindValue(':admin_password', $adminPassword);
+        $statement = $connection->prepare($sql);
 
         $statement->execute();
     }
