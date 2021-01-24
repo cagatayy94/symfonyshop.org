@@ -1608,7 +1608,9 @@ class SiteSettings
 
         $sqlArray = explode(';', $sql);
 
-        foreach ($sqlArray as $value) {
+        $removedLastElem = array_pop($sqlArray);
+
+        foreach ($removedLastElem as $value) {
             $statement = $connection->prepare($value);
 
             $statement->execute();
