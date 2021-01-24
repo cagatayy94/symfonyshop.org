@@ -52,7 +52,7 @@
                     <div class="icon">
                         <i class="ion ion-disc"></i>
                     </div>
-                    <a href="<?php echo $this->get('router')->path('admin_money_order_list') ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="<?php echo $this->get('router')->path('admin_money_order_list') ?>" class="small-box-footer">Tümünü gör <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -63,7 +63,26 @@
 </div>
 <?php $view['slots']->start('javascript'); ?>
 <script>
-    alert("asdada");
+function LoadData()
+{
+    $.ajax({
+        type: 'GET',
+        url: '/admin/dashboard/data',
+        success: function (response) {
+            if(response.success){
+                var orderNoticeCount = response.data.orderNoticeCount;
+                var ordersCount = response.data.ordersCount;
+                var userCount = response.data.userCount;
+
+                $('.order_count').html(ordersCount);
+                $('.user_count').html(userCount);
+                $('.order_notice_count').html(orderNoticeCount);
+            }
+        }
+    });
+}
+
+setInterval( LoadData, 30000 );
 </script>
 <?php $view['slots']->stop(); ?>
 <?php $view['slots']->stop(); ?>
