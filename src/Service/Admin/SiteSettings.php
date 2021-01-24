@@ -1586,4 +1586,28 @@ class SiteSettings
             throw $exception;
         }
     }
+
+    /**
+     * Init the project
+     *
+     * @param string $adminEmail
+     * @param string $adminPass
+     *
+     * @throws \Exception
+     */
+    public function initTheProject($adminEmail, $adminPass)
+    {
+        $connection = $this->connection;
+
+        $sqlFile = fopen("globals.sql", "r") or die("Unable to open sql file!");
+        $sql = fread($sqlFile,filesize("globals.sql")); 
+        fclose($sqlFile);
+
+        $statement = $connection->prepare($sql);
+
+        $statement->bindValue(':admin_email', $adminEmail);
+        $statement->bindValue(':admin_password', $adminPass);
+
+        $statement->execute();
+    }
 }
