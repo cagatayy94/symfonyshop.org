@@ -452,10 +452,6 @@ ALTER TABLE ONLY public.user_account_favorite ALTER COLUMN id SET DEFAULT nextva
 INSERT INTO public.admin_account (id, name, surname, email, password, is_deleted, mobile) VALUES (1, 'Default', 'Admin', ':admin_email', ':admin_password', false, '5999999999');
 INSERT INTO public.admin_account_profile (id, admin_account_id, admin_profile_id) VALUES (1, 1, 1);
 
---
--- Data for Name: admin_permission; Type: TABLE DATA; Schema: public;
---
-
 INSERT INTO public.admin_permission (id, name, slug) VALUES (1, 'Dashboard Görüntüle', 'site_dashboard_show');
 INSERT INTO public.admin_permission (id, name, slug) VALUES (2, 'Havale Bildirimleri Listesi', 'bank_transfer_list');
 INSERT INTO public.admin_permission (id, name, slug) VALUES (3, 'Site Genel Ayarlar', 'settings_general');
@@ -514,15 +510,7 @@ INSERT INTO public.admin_permission (id, name, slug) VALUES (55, 'Siparişi Onay
 INSERT INTO public.admin_permission (id, name, slug) VALUES (56, 'Siparişi Kargola', 'ship_the_order');
 INSERT INTO public.admin_permission (id, name, slug) VALUES (56, 'Kullanıcı Listesi', 'user_list');
 
---
--- Data for Name: admin_profile; Type: TABLE DATA; Schema: public;
---
-
 INSERT INTO public.admin_profile (id, name, is_deleted) VALUES (1, 'GM', false);
-
---
--- Data for Name: admin_profile_permission; Type: TABLE DATA; Schema: public; Owner: cagatay
---
 
 INSERT INTO public.admin_profile_permission (id, admin_profile_id, admin_permission_id) VALUES (1, 1, 1);
 INSERT INTO public.admin_profile_permission (id, admin_profile_id, admin_permission_id) VALUES (2, 1, 2);
@@ -581,11 +569,6 @@ INSERT INTO public.admin_profile_permission (id, admin_profile_id, admin_permiss
 INSERT INTO public.admin_profile_permission (id, admin_profile_id, admin_permission_id) VALUES (55, 1, 55);
 INSERT INTO public.admin_profile_permission (id, admin_profile_id, admin_permission_id) VALUES (56, 1, 56);
 INSERT INTO public.admin_profile_permission (id, admin_profile_id, admin_permission_id) VALUES (57, 1, 57);
-
---
--- Data for Name: agreements_strings; Type: TABLE DATA; Schema: public; Owner: cagatay
---
-
 INSERT INTO public.agreements_strings (about_us, sign_up_agreement, terms_of_use, confidentiality_agreement, distant_sales_agreement, deliverables, cancel_refund_change) VALUES ('HAKKIMIZDA
 
 Until recently, the prevailing view assumed lorem ipsum was born as a nonsense text. “It''s not Latin, though it looks like it, and it actually says nothing,” Before & After magazine answered a curious reader, “Its ‘words’ loosely approximate the frequency with which letters occur in English, which is why at a glance it looks pretty real.”
@@ -658,21 +641,9 @@ Richard McClintock, a Latin scholar from Hampden-Sydney College, is credited wit
 
 In particular, the garbled words of lorem ipsum bear an unmistakable resemblance to sections 1.10.32–33 of Cicero''s work, with the most notable passage excerpted below:');
 
---
--- Data for Name: banner; Type: TABLE DATA; Schema: public;
---
-
 INSERT INTO public.banner (id, pic, number_of_show, name) VALUES (1, '17bc0e2a79581618c9596961898a8521.png', 0, 'Banner 1');
 
---
--- Data for Name: cargo_company; Type: TABLE DATA; Schema: public;
---
-
 INSERT INTO public.cargo_company (id, name) VALUES (1, 'Default Kargo');
-
---
--- Data for Name: category; Type: TABLE DATA; Schema: public;
---
 
 INSERT INTO public.category (id, slug, name, is_deleted) VALUES (1, 'giyim', 'Giyim', false);
 INSERT INTO public.category (id, slug, name, is_deleted) VALUES (2, 'ayakkabi', 'Ayakkabı', false);
@@ -688,597 +659,206 @@ INSERT INTO public.category (id, slug, name, is_deleted) VALUES (11, 'tablet', '
 INSERT INTO public.category (id, slug, name, is_deleted) VALUES (12, 'beyaz_esya', 'Beyaz Eşya', false);
 INSERT INTO public.category (id, slug, name, is_deleted) VALUES (13, 'diger', 'Diğer', false);
 
---
--- Data for Name: menu; Type: TABLE DATA; Schema: public;
---
 INSERT INTO public.menu (id, name, slug, is_deleted) VALUES (1, 'Kadın', 'kadin', false);
 INSERT INTO public.menu (id, name, slug, is_deleted) VALUES (2, 'Erkek', 'erkek', false);
 INSERT INTO public.menu (id, name, slug, is_deleted) VALUES (3, 'Çocuk', 'cocuk', false);
 INSERT INTO public.menu (id, name, slug, is_deleted) VALUES (4, 'Ev & Yaşam', 'ev_yasam', false);
 INSERT INTO public.menu (id, name, slug, is_deleted) VALUES (5, 'Elektronik', 'elektronik', false);
 
-
-
---
--- Data for Name: settings; Type: TABLE DATA; Schema: public;
---
-
 INSERT INTO public.settings (id, is_deleted, name, title, description, keywords, copyright, mail, link, address, phone, footer_text, facebook, instagram, linkedin, twitter, youtube, pinterest) VALUES (1, false, 'symfonyshop', 'Yeni nesil eticaret', 'giyim, elektronik, ev eşyaları, kozmetik binlerce ürün ', 'giyim, elektronik, ev eşyaları, kozmetik', '2020 All Rights Reserved', 'info@symfonyshop.tk', 'symfonyshop.tk', 'İstanbul - Kadıköy', '5999999999', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', NULL, NULL, NULL, NULL, NULL, NULL);
-
---
--- Name: admin_account_id_seq; Type: SEQUENCE SET; Schema: public;
---
 
 SELECT pg_catalog.setval('public.admin_account_id_seq', 1, true);
 
-
---
--- Name: admin_account_profile_id_seq; Type: SEQUENCE SET; Schema: public;
---
-
 SELECT pg_catalog.setval('public.admin_account_profile_id_seq', 1, true);
-
-
---
--- Name: admin_permission_id_seq; Type: SEQUENCE SET; Schema: public;
---
 
 SELECT pg_catalog.setval('public.admin_permission_id_seq', 57, true);
 
-
---
--- Name: admin_profile_id_seq; Type: SEQUENCE SET; Schema: public;
---
-
 SELECT pg_catalog.setval('public.admin_profile_id_seq', 1, true);
-
-
---
--- Name: admin_profile_permission_id_seq; Type: SEQUENCE SET; Schema: public;
---
 
 SELECT pg_catalog.setval('public.admin_profile_permission_id_seq', 57, true);
 
---
--- Name: category_id_seq; Type: SEQUENCE SET; Schema: public;
---
-
 SELECT pg_catalog.setval('public.category_id_seq', 13, true);
-
---
--- Name: menu_id_seq; Type: SEQUENCE SET; Schema: public;
---
 
 SELECT pg_catalog.setval('public.menu_id_seq', 5, true);
 
-
---
--- Name: settings_id_seq; Type: SEQUENCE SET; Schema: public; Owner: cagatay
---
-
 SELECT pg_catalog.setval('public.settings_id_seq', 1, true);
-
-
---
--- Name: address address_pk; Type: CONSTRAINT; Schema: public; Owner: cagatay
---
 
 ALTER TABLE ONLY public.address
     ADD CONSTRAINT address_pk PRIMARY KEY (id);
 
-
---
--- Name: admin_account admin_account_pk; Type: CONSTRAINT; Schema: public; Owner: cagatay
---
-
 ALTER TABLE ONLY public.admin_account
     ADD CONSTRAINT admin_account_pk PRIMARY KEY (id);
-
-
---
--- Name: admin_account_profile admin_account_profile_pk; Type: CONSTRAINT; Schema: public; Owner: cagatay
---
 
 ALTER TABLE ONLY public.admin_account_profile
     ADD CONSTRAINT admin_account_profile_pk PRIMARY KEY (id);
 
-
---
--- Name: admin_permission admin_permission_pk; Type: CONSTRAINT; Schema: public; Owner: cagatay
---
-
 ALTER TABLE ONLY public.admin_permission
     ADD CONSTRAINT admin_permission_pk PRIMARY KEY (id);
-
-
---
--- Name: admin_profile_permission admin_profile_permission_pk; Type: CONSTRAINT; Schema: public; Owner: cagatay
---
 
 ALTER TABLE ONLY public.admin_profile_permission
     ADD CONSTRAINT admin_profile_permission_pk PRIMARY KEY (id);
 
-
---
--- Name: admin_profile admin_profile_pk; Type: CONSTRAINT; Schema: public; Owner: cagatay
---
-
 ALTER TABLE ONLY public.admin_profile
     ADD CONSTRAINT admin_profile_pk PRIMARY KEY (id);
-
-
---
--- Name: bank_accounts bank_account_pk; Type: CONSTRAINT; Schema: public; Owner: cagatay
---
 
 ALTER TABLE ONLY public.bank_accounts
     ADD CONSTRAINT bank_account_pk PRIMARY KEY (id);
 
-
---
--- Name: banner banner_pk; Type: CONSTRAINT; Schema: public; Owner: cagatay
---
-
 ALTER TABLE ONLY public.banner
     ADD CONSTRAINT banner_pk PRIMARY KEY (id);
-
-
---
--- Name: cargo_company cargo_company_pk; Type: CONSTRAINT; Schema: public; Owner: cagatay
---
 
 ALTER TABLE ONLY public.cargo_company
     ADD CONSTRAINT cargo_company_pk PRIMARY KEY (id);
 
-
---
--- Name: cart cart_pk; Type: CONSTRAINT; Schema: public; Owner: cagatay
---
-
 ALTER TABLE ONLY public.cart
     ADD CONSTRAINT cart_pk PRIMARY KEY (id);
-
-
---
--- Name: category_menu category_menu_pk; Type: CONSTRAINT; Schema: public; Owner: cagatay
---
 
 ALTER TABLE ONLY public.category_menu
     ADD CONSTRAINT category_menu_pk PRIMARY KEY (id);
 
-
---
--- Name: category category_pk; Type: CONSTRAINT; Schema: public; Owner: cagatay
---
-
 ALTER TABLE ONLY public.category
     ADD CONSTRAINT category_pk PRIMARY KEY (id);
-
-
---
--- Name: faq faq_pk; Type: CONSTRAINT; Schema: public; Owner: cagatay
---
 
 ALTER TABLE ONLY public.faq
     ADD CONSTRAINT faq_pk PRIMARY KEY (id);
 
-
---
--- Name: menu menu_pk; Type: CONSTRAINT; Schema: public; Owner: cagatay
---
-
 ALTER TABLE ONLY public.menu
     ADD CONSTRAINT menu_pk PRIMARY KEY (id);
-
-
---
--- Name: order_notice order_notice_pk; Type: CONSTRAINT; Schema: public; Owner: cagatay
---
 
 ALTER TABLE ONLY public.order_notice
     ADD CONSTRAINT order_notice_pk PRIMARY KEY (id);
 
-
---
--- Name: product_category product_category_pk; Type: CONSTRAINT; Schema: public; Owner: cagatay
---
-
 ALTER TABLE ONLY public.product_category
     ADD CONSTRAINT product_category_pk PRIMARY KEY (id);
-
-
---
--- Name: product_comment product_comment_pk; Type: CONSTRAINT; Schema: public; Owner: cagatay
---
 
 ALTER TABLE ONLY public.product_comment
     ADD CONSTRAINT product_comment_pk PRIMARY KEY (id);
 
-
---
--- Name: product_photo product_photo_pk; Type: CONSTRAINT; Schema: public; Owner: cagatay
---
-
 ALTER TABLE ONLY public.product_photo
     ADD CONSTRAINT product_photo_pk PRIMARY KEY (id);
-
-
---
--- Name: product product_pk; Type: CONSTRAINT; Schema: public; Owner: cagatay
---
 
 ALTER TABLE ONLY public.product
     ADD CONSTRAINT product_pk PRIMARY KEY (id);
 
-
---
--- Name: product_variant product_variant_pk; Type: CONSTRAINT; Schema: public; Owner: cagatay
---
-
 ALTER TABLE ONLY public.product_variant
     ADD CONSTRAINT product_variant_pk PRIMARY KEY (id);
-
-
---
--- Name: settings settings_pk; Type: CONSTRAINT; Schema: public; Owner: cagatay
---
 
 ALTER TABLE ONLY public.settings
     ADD CONSTRAINT settings_pk PRIMARY KEY (id);
 
-
---
--- Name: user_account_address user_account_address_pk; Type: CONSTRAINT; Schema: public; Owner: cagatay
---
-
 ALTER TABLE ONLY public.user_account_address
     ADD CONSTRAINT user_account_address_pk PRIMARY KEY (id);
-
-
---
--- Name: user_account_favorite user_account_favorite_pk; Type: CONSTRAINT; Schema: public; Owner: cagatay
---
 
 ALTER TABLE ONLY public.user_account_favorite
     ADD CONSTRAINT user_account_favorite_pk PRIMARY KEY (id);
 
-
---
--- Name: user_account user_pk; Type: CONSTRAINT; Schema: public; Owner: cagatay
---
-
 ALTER TABLE ONLY public.user_account
     ADD CONSTRAINT user_pk PRIMARY KEY (id);
 
-
---
--- Name: address_id_uindex; Type: INDEX; Schema: public; Owner: cagatay
---
-
 CREATE UNIQUE INDEX address_id_uindex ON public.address USING btree (id);
-
-
---
--- Name: admin_account_email_uindex; Type: INDEX; Schema: public; Owner: cagatay
---
 
 CREATE UNIQUE INDEX admin_account_email_uindex ON public.admin_account USING btree (email);
 
-
---
--- Name: admin_account_id_uindex; Type: INDEX; Schema: public; Owner: cagatay
---
-
 CREATE UNIQUE INDEX admin_account_id_uindex ON public.admin_account USING btree (id);
-
-
---
--- Name: admin_account_mobile_uindex; Type: INDEX; Schema: public; Owner: cagatay
---
 
 CREATE UNIQUE INDEX admin_account_mobile_uindex ON public.admin_account USING btree (mobile);
 
-
---
--- Name: admin_account_profile_id_uindex; Type: INDEX; Schema: public; Owner: cagatay
---
-
 CREATE UNIQUE INDEX admin_account_profile_id_uindex ON public.admin_account_profile USING btree (id);
-
-
---
--- Name: admin_permission_id_uindex; Type: INDEX; Schema: public; Owner: cagatay
---
 
 CREATE UNIQUE INDEX admin_permission_id_uindex ON public.admin_permission USING btree (id);
 
-
---
--- Name: admin_profile_id_uindex; Type: INDEX; Schema: public; Owner: cagatay
---
-
 CREATE UNIQUE INDEX admin_profile_id_uindex ON public.admin_profile USING btree (id);
-
-
---
--- Name: admin_profile_permission_id_uindex; Type: INDEX; Schema: public; Owner: cagatay
---
 
 CREATE UNIQUE INDEX admin_profile_permission_id_uindex ON public.admin_profile_permission USING btree (id);
 
-
---
--- Name: bank_account_id_uindex; Type: INDEX; Schema: public; Owner: cagatay
---
-
 CREATE UNIQUE INDEX bank_account_id_uindex ON public.bank_accounts USING btree (id);
-
-
---
--- Name: banner_id_uindex; Type: INDEX; Schema: public; Owner: cagatay
---
 
 CREATE UNIQUE INDEX banner_id_uindex ON public.banner USING btree (id);
 
-
---
--- Name: cargo_company_id_uindex; Type: INDEX; Schema: public; Owner: cagatay
---
-
 CREATE UNIQUE INDEX cargo_company_id_uindex ON public.cargo_company USING btree (id);
-
-
---
--- Name: cart_id_uindex; Type: INDEX; Schema: public; Owner: cagatay
---
 
 CREATE UNIQUE INDEX cart_id_uindex ON public.cart USING btree (id);
 
-
---
--- Name: category_id_uindex; Type: INDEX; Schema: public; Owner: cagatay
---
-
 CREATE UNIQUE INDEX category_id_uindex ON public.category USING btree (id);
-
-
---
--- Name: category_menu_id_uindex; Type: INDEX; Schema: public; Owner: cagatay
---
 
 CREATE UNIQUE INDEX category_menu_id_uindex ON public.category_menu USING btree (id);
 
-
---
--- Name: faq_id_uindex; Type: INDEX; Schema: public; Owner: cagatay
---
-
 CREATE UNIQUE INDEX faq_id_uindex ON public.faq USING btree (id);
-
-
---
--- Name: menu_id_uindex; Type: INDEX; Schema: public; Owner: cagatay
---
 
 CREATE UNIQUE INDEX menu_id_uindex ON public.menu USING btree (id);
 
-
---
--- Name: order_notice_id_uindex; Type: INDEX; Schema: public; Owner: cagatay
---
-
 CREATE UNIQUE INDEX order_notice_id_uindex ON public.order_notice USING btree (id);
-
-
---
--- Name: product_category_id_uindex; Type: INDEX; Schema: public; Owner: cagatay
---
 
 CREATE UNIQUE INDEX product_category_id_uindex ON public.product_category USING btree (id);
 
-
---
--- Name: product_comment_id_uindex; Type: INDEX; Schema: public; Owner: cagatay
---
-
 CREATE UNIQUE INDEX product_comment_id_uindex ON public.product_comment USING btree (id);
-
-
---
--- Name: product_id_uindex; Type: INDEX; Schema: public; Owner: cagatay
---
 
 CREATE UNIQUE INDEX product_id_uindex ON public.product USING btree (id);
 
-
---
--- Name: product_photo_id_uindex; Type: INDEX; Schema: public; Owner: cagatay
---
-
 CREATE UNIQUE INDEX product_photo_id_uindex ON public.product_photo USING btree (id);
-
-
---
--- Name: product_variant_id_uindex; Type: INDEX; Schema: public; Owner: cagatay
---
 
 CREATE UNIQUE INDEX product_variant_id_uindex ON public.product_variant USING btree (id);
 
-
---
--- Name: settings_id_uindex; Type: INDEX; Schema: public; Owner: cagatay
---
-
 CREATE UNIQUE INDEX settings_id_uindex ON public.settings USING btree (id);
-
-
---
--- Name: user_account_address_id_uindex; Type: INDEX; Schema: public; Owner: cagatay
---
 
 CREATE UNIQUE INDEX user_account_address_id_uindex ON public.user_account_address USING btree (id);
 
-
---
--- Name: user_account_email_uindex; Type: INDEX; Schema: public; Owner: cagatay
---
-
 CREATE UNIQUE INDEX user_account_email_uindex ON public.user_account USING btree (email);
-
-
---
--- Name: user_account_favorite_id_uindex; Type: INDEX; Schema: public; Owner: cagatay
---
 
 CREATE UNIQUE INDEX user_account_favorite_id_uindex ON public.user_account_favorite USING btree (id);
 
-
---
--- Name: user_id_uindex; Type: INDEX; Schema: public; Owner: cagatay
---
-
 CREATE UNIQUE INDEX user_id_uindex ON public.user_account USING btree (id);
-
-
---
--- Name: admin_account_profile admin_account_profile_admin_account_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: cagatay
---
 
 ALTER TABLE ONLY public.admin_account_profile
     ADD CONSTRAINT admin_account_profile_admin_account_id_fk FOREIGN KEY (admin_account_id) REFERENCES public.admin_account(id);
 
-
---
--- Name: admin_account_profile admin_account_profile_admin_profile_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: cagatay
---
-
 ALTER TABLE ONLY public.admin_account_profile
     ADD CONSTRAINT admin_account_profile_admin_profile_id_fk FOREIGN KEY (admin_profile_id) REFERENCES public.admin_profile(id);
-
-
---
--- Name: admin_profile_permission admin_profile_permission_admin_permission_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: cagatay
---
 
 ALTER TABLE ONLY public.admin_profile_permission
     ADD CONSTRAINT admin_profile_permission_admin_permission_id_fk FOREIGN KEY (admin_permission_id) REFERENCES public.admin_permission(id);
 
-
---
--- Name: admin_profile_permission admin_profile_permission_admin_profile_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: cagatay
---
-
 ALTER TABLE ONLY public.admin_profile_permission
     ADD CONSTRAINT admin_profile_permission_admin_profile_id_fk FOREIGN KEY (admin_profile_id) REFERENCES public.admin_profile(id);
-
-
---
--- Name: cart cart_cargo_company_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: cagatay
---
 
 ALTER TABLE ONLY public.cart
     ADD CONSTRAINT cart_cargo_company_id_fk FOREIGN KEY (cargo_company_id) REFERENCES public.cargo_company(id);
 
-
---
--- Name: cart cart_product_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: cagatay
---
-
 ALTER TABLE ONLY public.cart
     ADD CONSTRAINT cart_product_id_fk FOREIGN KEY (product_id) REFERENCES public.product(id);
-
-
---
--- Name: cart cart_product_variant_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: cagatay
---
 
 ALTER TABLE ONLY public.cart
     ADD CONSTRAINT cart_product_variant_id_fk FOREIGN KEY (variant_id) REFERENCES public.product_variant(id);
 
-
---
--- Name: cart cart_user_account_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: cagatay
---
-
 ALTER TABLE ONLY public.cart
     ADD CONSTRAINT cart_user_account_id_fk FOREIGN KEY (user_account_id) REFERENCES public.user_account(id);
-
-
---
--- Name: category_menu category_menu_category_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: cagatay
---
 
 ALTER TABLE ONLY public.category_menu
     ADD CONSTRAINT category_menu_category_id_fk FOREIGN KEY (category_id) REFERENCES public.category(id);
 
-
---
--- Name: category_menu category_menu_menu_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: cagatay
---
-
 ALTER TABLE ONLY public.category_menu
     ADD CONSTRAINT category_menu_menu_id_fk FOREIGN KEY (menu_id) REFERENCES public.menu(id);
-
-
---
--- Name: order_notice order_notice_bank_accounts_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: cagatay
---
 
 ALTER TABLE ONLY public.order_notice
     ADD CONSTRAINT order_notice_bank_accounts_id_fk FOREIGN KEY (bank_id) REFERENCES public.bank_accounts(id);
 
-
---
--- Name: product_comment product_comment_product_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: cagatay
---
-
 ALTER TABLE ONLY public.product_comment
     ADD CONSTRAINT product_comment_product_id_fk FOREIGN KEY (product_id) REFERENCES public.product(id);
-
-
---
--- Name: product_comment product_comment_user_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: cagatay
---
 
 ALTER TABLE ONLY public.product_comment
     ADD CONSTRAINT product_comment_user_id_fk FOREIGN KEY (user_id) REFERENCES public.user_account(id);
 
-
---
--- Name: product_variant product_variant_product_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: cagatay
---
-
 ALTER TABLE ONLY public.product_variant
     ADD CONSTRAINT product_variant_product_id_fk FOREIGN KEY (product_id) REFERENCES public.product(id);
-
-
---
--- Name: user_account_address user_account_address_address_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: cagatay
---
 
 ALTER TABLE ONLY public.user_account_address
     ADD CONSTRAINT user_account_address_address_id_fk FOREIGN KEY (address_id) REFERENCES public.address(id);
 
-
---
--- Name: user_account_address user_account_address_user_account_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: cagatay
---
-
 ALTER TABLE ONLY public.user_account_address
     ADD CONSTRAINT user_account_address_user_account_id_fk FOREIGN KEY (user_account_id) REFERENCES public.user_account(id);
 
-
---
--- Name: user_account_favorite user_account_favorite_product_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: cagatay
---
-
 ALTER TABLE ONLY public.user_account_favorite
     ADD CONSTRAINT user_account_favorite_product_id_fk FOREIGN KEY (product_id) REFERENCES public.product(id);
-
-
---
--- Name: user_account_favorite user_account_favorite_user_account_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: cagatay
---
 
 ALTER TABLE ONLY public.user_account_favorite
     ADD CONSTRAINT user_account_favorite_user_account_id_fk FOREIGN KEY (user_account_id) REFERENCES public.user_account(id);
