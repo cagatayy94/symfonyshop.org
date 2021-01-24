@@ -1595,7 +1595,7 @@ class SiteSettings
      *
      * @throws \Exception
      */
-    public function initTheProject($adminEmail, $adminPass)
+    public function initTheProject($adminEmail, $adminPassword)
     {
         $connection = $this->connection;
 
@@ -1606,7 +1606,7 @@ class SiteSettings
         $statement = $connection->prepare($sql);
 
         $statement->bindValue(':admin_email', $adminEmail);
-        $statement->bindValue(':admin_password', $adminPass);
+        $statement->bindValue(':admin_password', $adminPassword);
 
         $statement->execute();
     }

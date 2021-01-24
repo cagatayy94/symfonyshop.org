@@ -41,18 +41,10 @@ class StartCommand extends Command
             '',
         ]);
 
-        $adminEmail = $input->getArgument('admin_email');
-        $adminPassword = $input->getArgument('admin_password');
-
-
-        // outputs a message followed by a "\n"
-        $output->writeln('admin Email');
-        $output->writeln($adminEmail);
-        $output->writeln('admin_password');
-        $output->writeln($adminPassword);
-
+        $args = $input->getArguments();
+        
         try {
-            $this->siteSettingsService->initTheProject($adminEmail, $adminPassword);
+            $this->siteSettingsService->initTheProject($args['admin_email'], $args['admin_password']);
         } catch (\Exception $e) {
             throw $e;
         }
