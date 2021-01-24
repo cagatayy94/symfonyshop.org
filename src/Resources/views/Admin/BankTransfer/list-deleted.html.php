@@ -84,7 +84,7 @@
 											</td>
 											<td class="text-center"><?php echo $value['message'] ?></td>
 											<td class="text-center">
-												<?php if ($admin->hasRole('bank_transfer_undelete')): ?>
+												<?php if (true): ?>
 													<button data-delete-url="<?php echo $this->get('router')->path('admin_money_order_undelete', ['moneyOrderId' => $value['id']]) ?>" class="btn btn-primary btn-sm undelete-bank-transfer"><i class="fa fa-fw fa-eraser"></i> Silmeyi Geri Al</button>
 												<?php endif ?>
 											</td>

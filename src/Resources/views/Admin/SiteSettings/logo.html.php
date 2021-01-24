@@ -70,7 +70,7 @@
 									</tbody>
 								<tr>
 									<td colspan="2">
-										<?php if ($admin->hasRole('update_logo')): ?>
+										<?php if (true): ?>
 											<button style="float: right;" type="submit" class="btn btn-primary">Güncelle</button>
 										<?php endif ?>
 									</td>

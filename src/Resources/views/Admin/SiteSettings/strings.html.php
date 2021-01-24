@@ -84,7 +84,7 @@
 									</div>
 								</div>
 								<div class="form-group">
-								<?php if ($admin->hasRole('settings_strings_update')): ?>
+								<?php if (true): ?>
 									<button class="btn btn-primary" type="submit">Kaydet</button>
 								<?php endif; ?>
 							</div>

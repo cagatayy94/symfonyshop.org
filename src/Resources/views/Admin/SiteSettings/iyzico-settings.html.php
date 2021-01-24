@@ -39,7 +39,7 @@
 										<input type="text" class="form-control required" name="iyzico_base_url" value="<?php echo $iyzicoSettings['iyzico_base_url'] ?>">
 									</div>
 									<div class="form-group">
-										<?php if($admin->hasRole('iyzico_settings_update')): ?>
+										<?php if(true): ?>
 											<button type="submit" class="btn btn-primary btn-block">Kaydet</button>
 										<?php endif; ?>
 									</div>

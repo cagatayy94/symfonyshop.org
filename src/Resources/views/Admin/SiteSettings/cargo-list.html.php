@@ -21,7 +21,7 @@
 						<div class="box-tools">
 							<div class="input-group input-group-sm hidden-xs" style="width: 150px;">
 								<div class="input-group-btn">
-									<?php if($admin->hasRole('cargo_create')): ?>
+									<?php if(true): ?>
 										<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-new-cargo-modal"><i class="fa fa-plus"></i> Yeni Ekle</button>
 									<?php endif; ?>
 								</div>
@@ -35,12 +35,12 @@
 								<?php foreach ($cargoList as $value): ?>
 									<tr id="<?php echo $value['id']; ?>">
 										<td><?php echo $value['name']; ?></td>
-										<?php if ($admin->hasRole('cargo_update')):?>
+										<?php if (true):?>
 										<td>
 											<button data-update-id="<?php echo $value['id'] ?>" class="btn btn-primary update-cargo"><i class="fa fa-edit"></i> Düzenle</button>
 										</td>
 										<?php endif;?>
-										<?php if ($admin->hasRole('cargo_delete')):?>
+										<?php if (true):?>
 										<td>
 											<button data-delete-url="<?php echo $this->get('router')->path('admin_settings_cargo_delete', ['cargoId' => $value['id']]); ?>" class="btn btn-danger delete-cargo"><i class="fa fa-remove"></i> Sil</button>
 										</td>
@@ -58,7 +58,7 @@
 	</section>
 	<!-- /.content -->
 </div>
-<?php if ($admin->hasRole('cargo_create')):?>
+<?php if (true):?>
 <div class="modal fade" id="add-new-cargo-modal" style="display: none;">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -86,7 +86,7 @@
 </div>
 <?php endif; ?>
 
-<?php if ($admin->hasRole('cargo_update')):?>
+<?php if (true):?>
 <div class="modal fade" id="update-cargo-modal" style="display: none;">
 	<div class="modal-dialog">
 		<div class="modal-content">

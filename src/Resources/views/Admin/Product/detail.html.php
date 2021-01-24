@@ -62,7 +62,7 @@
                                     <div class="box box-info">
                                         <div class="box-header with-border">
                                             <h3 class="box-title pull-left">Kategori Seçiniz</h3>
-                                            <?php if ($admin->hasRole('category_create')): ?>
+                                            <?php if (true): ?>
                                             <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#add_category_modal"><i class="fa fa-plus" aria-hidden="true"></i> Ekle</button>
                                             <?php endif ?>
                                         </div>
@@ -157,7 +157,7 @@
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
-                                <?php if ($admin->hasRole('product_update')): ?>
+                                <?php if (true): ?>
                                     <button type="submit" class="btn btn-primary">Kaydet</button>
                                 <?php endif ?>
                             </div>
@@ -171,7 +171,7 @@
     </section>
     <!-- /.content -->
 </div>
-<?php if ($admin->hasRole('category_create')): ?>
+<?php if (true): ?>
 <div class="modal fade" id="add_category_modal" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">

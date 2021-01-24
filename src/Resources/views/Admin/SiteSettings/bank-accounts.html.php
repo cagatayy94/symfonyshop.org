@@ -22,7 +22,7 @@
 						<div class="box-tools">
 							<div class="input-group input-group-sm hidden-xs" style="width: 150px;">
 								<div class="input-group-btn">
-									<?php if($admin->hasRole('settings_bank_create')): ?>
+									<?php if(true): ?>
 										<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-new-bank-modal"><i class="fa fa-plus"></i> Yeni Ekle</button>
 									<?php endif; ?>
 								</div>
@@ -44,10 +44,10 @@
 									<th>Hesap Sahibi</th>
 									<th>Hesap No</th>
 									<th>Iban</th>
-									<?php if ($admin->hasRole('settings_bank_update')):?>
+									<?php if (true):?>
 									<th></th>
 									<?php endif; ?>
-									<?php if ($admin->hasRole('settings_bank_delete')):?>
+									<?php if (true):?>
 									<th></th>
 									<?php endif; ?>
 								</tr>
@@ -65,12 +65,12 @@
 										<td><?php echo $value['account_owner']; ?></td>
 										<td><?php echo $value['account_number']; ?></td>
 										<td><?php echo $value['iban']; ?></td>
-										<?php if ($admin->hasRole('settings_bank_update')):?>
+										<?php if (true):?>
 										<td>
 											<button data-update-id="<?php echo $value['id'] ?>" class="btn btn-primary update-bank"><i class="fa fa-edit"></i> Düzenle</button>
 										</td>
 										<?php endif;?>
-										<?php if ($admin->hasRole('settings_bank_delete')):?>
+										<?php if (true):?>
 										<td>
 											<button data-delete-url="<?php echo $this->get('router')->path('admin_settings_bank_delete', ['bankId' => $value['id']]); ?>" class="btn btn-danger delete-bank"><i class="fa fa-remove"></i> Sil</button>
 										</td>
@@ -88,7 +88,7 @@
 	</section>
 		<!-- /.content -->
 </div>
-<?php if ($admin->hasRole('settings_bank_create')):?>
+<?php if (true):?>
 <div class="modal fade" id="add-new-bank-modal" style="display: none;">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -152,7 +152,7 @@
 </div>
 <?php endif; ?>
 
-<?php if ($admin->hasRole('settings_bank_update')):?>
+<?php if (true):?>
 <div class="modal fade" id="update-bank-modal" style="display: none;">
 	<div class="modal-dialog">
 		<div class="modal-content">

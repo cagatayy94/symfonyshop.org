@@ -56,10 +56,10 @@
                                             </div>
                                         </div>
                                         <div class="box-footer">
-                                            <?php if ($admin->hasRole('profile_update')):?>
+                                            <?php if (true):?>
                                                 <button type="submit" class="btn btn-primary">Kaydet</button>
                                             <?php endif; ?>
-                                            <?php if ($admin->hasRole('profile_delete')):?>
+                                            <?php if (true):?>
                                                 <button type="button" id="admin_profile_delete" data-href="<?php echo $this->get('router')->path('admin_profile_delete', ['profileId' => $profileDetail['id']]) ?>" data-profile-id="<?php echo $profileDetail['id'] ?>" class="btn btn-danger">Sil</button>
                                             <?php endif; ?>
                                         </div>

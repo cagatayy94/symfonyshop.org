@@ -79,7 +79,7 @@
 						  <?php $created_at = new \DateTime($value['created_at']); echo $created_at->format('d.m.Y H:i:s'); ?> 
 						</td>
 						<td class="text-center">
-						  <?php if ($admin->hasRole('product_undelete') && !$excelExport): ?>
+						  <?php if (!$excelExport): ?>
 							<button data-delete-url="<?php echo $this->get('router')->path('admin_product_undelete', ['productId' => $value['id']]) ?>" class="btn btn-sm btn-primary undelete-product"><i class="fa fa-fw fa-eraser"></i> Silmeyi Geri Al</button>
 						  <?php endif ?>
 						</td>

@@ -82,12 +82,12 @@
                             </div>
                             <div class="form-group col-md-12">
                                 <span>
-                                <?php if (!$orderDetail['order'][0]['is_approved'] && $admin->hasRole('approve_the_order')): ?>
+                                <?php if (!$orderDetail['order'][0]['is_approved']): ?>
                                     <button type="button" data-toggle="modal" data-target="#approve_the_order_modal" class="btn btn-primary pull-left">Siparişi Onayla</button>
                                 <?php endif; ?>
                                 </span>
                                 <span>
-                                <?php if (!$orderDetail['order'][0]['is_shipped'] && $admin->hasRole('ship_the_order')): ?>
+                                <?php if (!$orderDetail['order'][0]['is_shipped']): ?>
                                     <button type="button" data-toggle="modal" data-target="#ship_the_order_modal" class="btn btn-primary pull-right">Kargo Gönderildi İşaretle</button>
                                 <?php endif; ?>
                                 </span>

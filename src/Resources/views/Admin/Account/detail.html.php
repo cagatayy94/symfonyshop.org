@@ -68,10 +68,10 @@
                                                 <input type="password" class="form-control" id="passwordRepeat" name="password_repeat" autocomplete="off">
                                             </div>
                                             <div class="form-group">
-                                                <?php if ($admin->hasRole('account_update')):?>
+                                                <?php if (true):?>
                                                     <button type="submit" class="btn btn-primary">Kaydet</button>
                                                 <?php endif; ?>
-                                                <?php if ($admin->hasRole('account_delete')):?>
+                                                <?php if (true):?>
                                                     <button type="button" id="admin_account_delete" data-href="<?php echo $this->get('router')->path('admin_account_delete', [ 'adminId' => $adminDetails['details']['id']]); ?>" class="btn btn-danger">Sil</button>
                                                 <?php endif; ?>
                                             </div>

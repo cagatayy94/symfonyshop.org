@@ -21,7 +21,7 @@
 						<div class="row">
 							<div class="col-md-10"><h3 class="box-title">Yönetici Profil Listesi</h3></div>
 							<div class="col-md-2">
-								<?php if ($admin->hasRole('profile_create')):?>
+								<?php if (true):?>
 									<button type="button" data-toggle="modal" data-target="#add-new-admin-modal" class="btn btn-block btn-info btn-flat"><i class="fa fa-fw fa-plus"></i> Yeni Ekle </button>
 								<?php endif; ?>
 							</div>
@@ -48,7 +48,7 @@
 											<?php endif; ?>
 										</td>
 										<td>
-											<?php if ($admin->hasRole('profile_detail_show')): ?>
+											<?php if (true): ?>
 												<a style="padding: 0;" href="<?php echo $this->get('router')->path('admin_profile_detail', ['profileId' => $profileKey]) ?>" class="btn"><i class="fa fa-edit"></i> Detay </a>
 											<?php endif ?>
 										</td>
@@ -63,7 +63,7 @@
 			</div>
 		</div>
 		<!-- /.row -->
-		<?php if ($admin->hasRole('profile_create')): ?>
+		<?php if (true): ?>
 		<div class="modal fade" id="add-new-admin-modal">
 				<div class="modal-dialog">
 					<div class="modal-content">

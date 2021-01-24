@@ -89,7 +89,7 @@
 											</td>
 											<td class="text-center"><?php echo $value['message'] ?></td>
 											<td class="text-center">
-												<?php if ($admin->hasRole('bank_transfer_delete')): ?>
+												<?php if (true): ?>
 													<button data-delete-url="<?php echo $this->get('router')->path('admin_money_order_delete', ['moneyOrderId' => $value['id']]) ?>" class="btn btn-sm btn-danger delete-bank-transfer"><i class="fa fa-fw fa-eraser"></i> Sil</button>
 												<?php endif ?>
 											</td>

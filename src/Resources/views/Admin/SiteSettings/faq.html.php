@@ -21,7 +21,7 @@
 						<div class="box-tools">
 							<div class="input-group input-group-sm hidden-xs" style="width: 150px;">
 								<div class="input-group-btn">
-									<?php if($admin->hasRole('faq_create')): ?>
+									<?php if(true): ?>
 										<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-new-faq-modal"><i class="fa fa-plus"></i> Yeni Ekle</button>
 									<?php endif; ?>
 								</div>
@@ -35,10 +35,10 @@
 								<tr>
 									<th>Soru</th>
 									<th>Cevap</th>
-									<?php if ($admin->hasRole('faq_update')):?>
+									<?php if (true):?>
 									<th></th>
 									<?php endif; ?>
-									<?php if ($admin->hasRole('faq_delete')):?>
+									<?php if (true):?>
 									<th></th>
 									<?php endif; ?>
 								</tr>
@@ -46,12 +46,12 @@
 									<tr id="<?php echo $value['id']; ?>">
 										<td><?php echo $value['question']; ?></td>
 										<td><?php echo $value['answer']; ?></td>
-										<?php if ($admin->hasRole('faq_update')):?>
+										<?php if (true):?>
 										<td>
 											<button data-update-id="<?php echo $value['id'] ?>" class="btn btn-primary update-faq"><i class="fa fa-edit"></i> Düzenle</button>
 										</td>
 										<?php endif;?>
-										<?php if ($admin->hasRole('faq_delete')):?>
+										<?php if (true):?>
 										<td>
 											<button data-delete-url="<?php echo $this->get('router')->path('admin_settings_faq_delete', ['faqId' => $value['id']]); ?>" class="btn btn-danger delete-faq"><i class="fa fa-remove"></i> Sil</button>
 										</td>
@@ -69,7 +69,7 @@
 	</section>
 	<!-- /.content -->
 </div>
-<?php if ($admin->hasRole('faq_create')):?>
+<?php if (true):?>
 <div class="modal fade" id="add-new-faq-modal" style="display: none;">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -101,7 +101,7 @@
 </div>
 <?php endif; ?>
 
-<?php if ($admin->hasRole('faq_update')):?>
+<?php if (true):?>
 <div class="modal fade" id="update-faq-modal" style="display: none;">
 	<div class="modal-dialog">
 		<div class="modal-content">

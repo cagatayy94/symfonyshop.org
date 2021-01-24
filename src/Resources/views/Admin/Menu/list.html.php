@@ -21,7 +21,7 @@
 						<div class="row">
 							<div class="col-md-10"><h3 class="box-title">Menü Listesi</h3></div>
 							<div class="col-md-2">
-								<?php if ($admin->hasRole('menu_create')):?>
+								<?php if (true):?>
 									<button type="button" data-toggle="modal" data-target="#add-new-menu-modal" class="btn btn-block btn-info btn-flat"><i class="fa fa-fw fa-plus"></i> Yeni Ekle </button>
 								<?php endif; ?>
 							</div>
@@ -49,7 +49,7 @@
 										?>	
 									</td>
 									<td>
-										<?php if ($admin->hasRole('menu_detail')): ?>
+										<?php if (true): ?>
 											<a style="padding: 0;" href="<?php echo $this->get('router')->path('admin_menu_detail', ['menuId' => $menu['id']]) ?>" class="btn"><i class="fa fa-edit"></i> Detay </a>
 										<?php endif ?>
 									</td>
@@ -64,7 +64,7 @@
 			</div>
 		</div>
 		<!-- /.row -->
-		<?php if ($admin->hasRole('menu_create')): ?>
+		<?php if (true): ?>
 		<div class="modal fade" id="add-new-menu-modal">
 			<div class="modal-dialog">
 				<div class="modal-content">

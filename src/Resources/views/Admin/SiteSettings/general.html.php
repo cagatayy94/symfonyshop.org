@@ -107,7 +107,7 @@
 								</div>
 							</div>
 							<div class="box-footer">
-								<?php if($admin->hasRole('settings_general_update')): ?>
+								<?php if(true): ?>
 									<button type="submit" class="btn btn-primary btn-block">Kaydet</button>
 								<?php endif; ?>
 							</div>

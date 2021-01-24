@@ -50,10 +50,10 @@
                                             </div>
                                         </div>
                                         <div class="box-footer">
-                                            <?php if ($admin->hasRole('menu_update')):?>
+                                            <?php if (true):?>
                                                 <button type="submit" class="btn btn-primary">Kaydet</button>
                                             <?php endif; ?>
-                                            <?php if ($admin->hasRole('menu_delete')):?>
+                                            <?php if (true):?>
                                                 <button type="button" id="menu_delete" data-href="<?php echo $this->get('router')->path('admin_menu_delete', ['menuId' => $menuId]) ?>" data-menu-id="<?php echo $menuId ?>" class="btn btn-danger">Sil</button>
                                             <?php endif; ?>
                                         </div>
