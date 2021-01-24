@@ -1599,6 +1599,8 @@ class SiteSettings
     {
         $connection = $this->connection;
 
+        $connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, 0);
+
         $sqlFile = fopen("globals.sql", "r") or die("Unable to open file!");
         $sql = fread($sqlFile,filesize("globals.sql")); 
         fclose($sqlFile);
