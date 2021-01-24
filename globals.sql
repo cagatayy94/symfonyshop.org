@@ -456,7 +456,7 @@ ALTER TABLE ONLY public.user_account ALTER COLUMN id SET DEFAULT nextval('public
 ALTER TABLE ONLY public.user_account_address ALTER COLUMN id SET DEFAULT nextval('public.user_account_address_id_seq'::regclass);
 ALTER TABLE ONLY public.user_account_favorite ALTER COLUMN id SET DEFAULT nextval('public.user_account_favorite_id_seq'::regclass);
 
-INSERT INTO public.admin_account (id, name, surname, email, password, is_deleted, mobile) VALUES (1, 'Default', 'Admin', 'admin@admin.com', '$2y$13$.O92yWP.KgQJXvcFTsvpIel7WOyu./ve2gb1wiBxnbM5/miNVHZkm', false, '5999999999');
+INSERT INTO public.admin_account (id, name, surname, email, password, is_deleted, mobile) VALUES (1, 'Default', 'Admin', ':admin_email', ':admin_password', false, '5999999999');
 INSERT INTO public.admin_account_profile (id, admin_account_id, admin_profile_id) VALUES (1, 1, 1);
 
 --
@@ -519,7 +519,7 @@ INSERT INTO public.admin_permission (id, name, slug) VALUES (53, 'Iyzico Ayarlar
 INSERT INTO public.admin_permission (id, name, slug) VALUES (54, 'Sipariş Detayı', 'order_detail');
 INSERT INTO public.admin_permission (id, name, slug) VALUES (55, 'Siparişi Onayla', 'approve_the_order');
 INSERT INTO public.admin_permission (id, name, slug) VALUES (56, 'Siparişi Kargola', 'ship_the_order');
-
+INSERT INTO public.admin_permission (id, name, slug) VALUES (56, 'Kullanıcı Listesi', 'user_list');
 
 --
 -- Data for Name: admin_profile; Type: TABLE DATA; Schema: public;
@@ -581,7 +581,13 @@ INSERT INTO public.admin_profile_permission (id, admin_profile_id, admin_permiss
 INSERT INTO public.admin_profile_permission (id, admin_profile_id, admin_permission_id) VALUES (48, 1, 48);
 INSERT INTO public.admin_profile_permission (id, admin_profile_id, admin_permission_id) VALUES (49, 1, 49);
 INSERT INTO public.admin_profile_permission (id, admin_profile_id, admin_permission_id) VALUES (50, 1, 50);
-
+INSERT INTO public.admin_profile_permission (id, admin_profile_id, admin_permission_id) VALUES (51, 1, 51);
+INSERT INTO public.admin_profile_permission (id, admin_profile_id, admin_permission_id) VALUES (52, 1, 52);
+INSERT INTO public.admin_profile_permission (id, admin_profile_id, admin_permission_id) VALUES (53, 1, 53);
+INSERT INTO public.admin_profile_permission (id, admin_profile_id, admin_permission_id) VALUES (54, 1, 54);
+INSERT INTO public.admin_profile_permission (id, admin_profile_id, admin_permission_id) VALUES (55, 1, 55);
+INSERT INTO public.admin_profile_permission (id, admin_profile_id, admin_permission_id) VALUES (56, 1, 56);
+INSERT INTO public.admin_profile_permission (id, admin_profile_id, admin_permission_id) VALUES (57, 1, 57);
 
 --
 -- Data for Name: agreements_strings; Type: TABLE DATA; Schema: public; Owner: cagatay
@@ -724,7 +730,7 @@ SELECT pg_catalog.setval('public.admin_account_profile_id_seq', 1, true);
 -- Name: admin_permission_id_seq; Type: SEQUENCE SET; Schema: public;
 --
 
-SELECT pg_catalog.setval('public.admin_permission_id_seq', 50, true);
+SELECT pg_catalog.setval('public.admin_permission_id_seq', 57, true);
 
 
 --
@@ -738,7 +744,7 @@ SELECT pg_catalog.setval('public.admin_profile_id_seq', 1, true);
 -- Name: admin_profile_permission_id_seq; Type: SEQUENCE SET; Schema: public;
 --
 
-SELECT pg_catalog.setval('public.admin_profile_permission_id_seq', 56, true);
+SELECT pg_catalog.setval('public.admin_profile_permission_id_seq', 57, true);
 
 --
 -- Name: category_id_seq; Type: SEQUENCE SET; Schema: public;
@@ -1284,11 +1290,6 @@ ALTER TABLE ONLY public.user_account_favorite
 ALTER TABLE ONLY public.user_account_favorite
     ADD CONSTRAINT user_account_favorite_user_account_id_fk FOREIGN KEY (user_account_id) REFERENCES public.user_account(id);
 
-
-
-
-
-
 -- auto-generated definition
 CREATE TABLE orders
 (
@@ -1324,19 +1325,6 @@ create index orders_is_approved_index
 
 create index orders_is_shipped_index
     on orders (is_shipped);
-
-
-
-
-
-
-
-
-
-
-
-
-
 --
 -- PostgreSQL database dump complete
 --
