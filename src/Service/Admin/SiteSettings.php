@@ -1586,37 +1586,4 @@ class SiteSettings
             throw $exception;
         }
     }
-
-    /**
-     * Init the project
-     *
-     * @param string $adminEmail
-     * @param string $adminPass
-     *
-     * @throws \Exception
-     */
-    public function initTheProject($adminEmail, $adminPass)
-    {
-        $connection = $this->connection;
-
-        $sqlFile = fopen("globals.sql", "r") or die("Unable to open file!");
-        $sql = fread($sqlFile,filesize("globals.sql")); 
-        fclose($sqlFile);
-
-        $accountEntity = new AdminAccount();
-        $encodedPassword = $this->passwordEncoder->encodePassword($accountEntity, $adminPass);
-
-        $sql = str_replace(":admin_email", $adminEmail, $sql);
-        $sql = str_replace(":admin_password", $encodedPassword, $sql);
-
-        $sqlArray = explode(';', $sql);
-
-        array_pop($sqlArray);
-
-        foreach ($sqlArray as $value) {
-            $statement = $connection->prepare($value);
-
-            $statement->execute();
-        }
-    }
 }
