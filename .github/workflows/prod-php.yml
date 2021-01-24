@@ -39,7 +39,7 @@ jobs:
         echo MAIL_FROM_ADDRESS=symfonyshop.tk@yandex.com >> .env  && 
         echo DATABASE_URL=${{ secrets.PROD_DATABASE_URL }} >> .env  && 
         echo APP_NAME=SymfonyShopDev >> .env  && 
-        echo MAIN_MAIL_ADDRESS=mustafa.cagatay.yilmaz@gmail.com >> .env &&
+        echo MAIN_MAIL_ADDRESS=mustafa.cagatay.yilmaz@gmail.com >> .env
 
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress --no-suggest
@@ -60,4 +60,3 @@ jobs:
       with:
         source: "."
         target: "/var/www/symfonyshop"
-
