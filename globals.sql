@@ -898,6 +898,3 @@ create index orders_is_approved_index
 
 create index orders_is_shipped_index
     on orders (is_shipped);
---
--- PostgreSQL database dump complete
---
