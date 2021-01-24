@@ -12,25 +12,62 @@ class Dashboard
     use ServiceTrait;
     use AdminServiceTrait;
 
-    public function getAll()
+    public function getData()
     {
-        $this->authorize('settings_general');
+        $this->authorize('site_dashboard_show');
 
         $connection = $this->connection;
 
-        $sql = "
+        $orderNoticeCountSql = "
             SELECT
-                *
+                count(id)
             FROM
-                settings ss
+                order_notice
             WHERE
-                ss.is_deleted = false
+                is_deleted = false
+            AND
+                is_approved = false
                 ";
 
-        $statement = $connection->prepare($sql);
+        $statement = $connection->prepare($orderNoticeCountSql);
 
         $statement->execute();
 
-        return $statement->fetch();
+        $result['orderNoticeCount'] = $statement->fetchColumn();
+
+        $ordersCountSql = "
+            SELECT
+                count(id)
+            FROM
+                orders
+            WHERE
+                is_approved = false
+                ";
+
+        $statement = $connection->prepare($ordersCountSql);
+
+        $statement->execute();
+
+        $result['ordersCount'] = $statement->fetchColumn();
+
+        $userCountSql = "
+            SELECT
+                count(id)
+            FROM
+                user_account
+            WHERE
+                is_deleted = false
+            AND
+                is_email_approved = false
+    
+                ";
+
+        $statement = $connection->prepare($userCountSql);
+
+        $statement->execute();
+
+        $result['userCount'] = $statement->fetchColumn();
+
+        return $result;
     }
 }
