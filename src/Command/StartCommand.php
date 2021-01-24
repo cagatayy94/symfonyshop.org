@@ -5,20 +5,20 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
-use App\Service\Admin\SiteSettings as siteSettingsService;
+use App\Service\Admin\Account as AdminAccountService;
 
 class StartCommand extends Command
 {
     protected static $defaultName = 'app:init-project';
 
     /**
-     * @var SiteSettingsService
+     * @var AdminAccountService
      */
-    private $siteSettingsService;
+    private $adminAccountService;
 
-    public function __construct(SiteSettingsService $siteSettingsService)
+    public function __construct(AdminAccountService $adminAccountService)
     {
-        $this->siteSettingsService = $siteSettingsService;
+        $this->adminAccountService = $adminAccountService;
 
         parent::__construct(); 
     }
@@ -44,7 +44,7 @@ class StartCommand extends Command
         $args = $input->getArguments();
         
         try {
-            $this->siteSettingsService->initTheProject($args['admin_email'], $args['admin_password']);
+            $this->adminAccountService->initTheProject($args['admin_email'], $args['admin_password']);
         } catch (\Exception $e) {
             throw $e;
         }
