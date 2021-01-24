@@ -18,6 +18,7 @@ class SiteSettings
     {
         $this->authorize('settings_general');
         $connection = $this->connection;
+        
 
         $sql = "
             SELECT
@@ -1599,7 +1600,9 @@ class SiteSettings
     {
         $connection = $this->connection;
 
-        $connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, 0);
+        $params = $connection->getParams();
+
+        $connection = pg_connect("host=". $params['host'] ." port=". $params['port'] ." dbname=". $params['dbname'] ." user=". $params['user'] ." password=".$params['password']);
 
         $sqlFile = fopen("globals.sql", "r") or die("Unable to open file!");
         $sql = fread($sqlFile,filesize("globals.sql")); 
@@ -1608,8 +1611,6 @@ class SiteSettings
         $sql = str_replace(":admin_email", $adminEmail, $sql);
         $sql = str_replace(":admin_password", $adminPass, $sql);
 
-        $statement = $connection->prepare($sql);
-
-        $statement->execute();
+        pg_query($connection, $sql);
     }
 }
