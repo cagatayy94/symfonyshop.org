@@ -1603,8 +1603,11 @@ class SiteSettings
         $sql = fread($sqlFile,filesize("globals.sql")); 
         fclose($sqlFile);
 
+        $accountEntity = new AdminAccount();
+        $encodedPassword = $this->passwordEncoder->encodePassword($accountEntity, $adminPass);
+
         $sql = str_replace(":admin_email", $adminEmail, $sql);
-        $sql = str_replace(":admin_password", $adminPass, $sql);
+        $sql = str_replace(":admin_password", $encodedPassword, $sql);
 
         $sqlArray = explode(';', $sql);
 
