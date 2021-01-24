@@ -59,4 +59,4 @@ jobs:
         KEY: ${{ secrets.SSH_KEY }}
       with:
         source: "."
-        target: "/var/www/symfonyshop"
+        target: "/var/www/symfonyshop.tk"
