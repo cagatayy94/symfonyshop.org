@@ -508,7 +508,7 @@ INSERT INTO public.admin_permission (id, name, slug) VALUES (53, 'Iyzico Ayarlar
 INSERT INTO public.admin_permission (id, name, slug) VALUES (54, 'Sipariş Detayı', 'order_detail');
 INSERT INTO public.admin_permission (id, name, slug) VALUES (55, 'Siparişi Onayla', 'approve_the_order');
 INSERT INTO public.admin_permission (id, name, slug) VALUES (56, 'Siparişi Kargola', 'ship_the_order');
-INSERT INTO public.admin_permission (id, name, slug) VALUES (56, 'Kullanıcı Listesi', 'user_list');
+INSERT INTO public.admin_permission (id, name, slug) VALUES (57, 'Kullanıcı Listesi', 'user_list');
 
 INSERT INTO public.admin_profile (id, name, is_deleted) VALUES (1, 'GM', false);
 
