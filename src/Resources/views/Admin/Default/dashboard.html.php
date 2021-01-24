@@ -83,6 +83,7 @@ function LoadData()
 }
 
 setInterval( LoadData, 30000 );
+LoadData();
 </script>
 <?php $view['slots']->stop(); ?>
 <?php $view['slots']->stop(); ?>
