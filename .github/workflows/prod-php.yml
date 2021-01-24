@@ -2,7 +2,7 @@ name: PHP Composer
 
 on:
   push:
-    branches: [ prod ]
+    branches: [ live-demo ]
 
 jobs:
   run:
@@ -40,10 +40,6 @@ jobs:
         echo DATABASE_URL=${{ secrets.PROD_DATABASE_URL }} >> .env  && 
         echo APP_NAME=SymfonyShopDev >> .env  && 
         echo MAIN_MAIL_ADDRESS=mustafa.cagatay.yilmaz@gmail.com >> .env &&
-        echo IYZICO_API_KEY=${{ secrets.IYZICO_API_KEY }} >> .env &&
-        echo IYZICO_SECRET_KEY=${{ secrets.IYZICO_SECRET_KEY }} >> .env &&
-        echo IYZICO_BASE_URL=${{ secrets.IYZICO_BASE_URL }} >> .env
-
 
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress --no-suggest
