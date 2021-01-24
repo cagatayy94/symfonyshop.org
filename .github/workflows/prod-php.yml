@@ -60,3 +60,4 @@ jobs:
       with:
         source: "."
         target: "/var/www/symfonyshop"
+
