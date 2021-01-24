@@ -41,14 +41,14 @@ class ProductController extends AbstractController
      */
     public function productDetailCommentsAction(ProductService $productService, Request $request)
     {
-        $id = $request->query->get('productId');
+        $productId = $request->query->get('productId');
         $offset = $request->query->get('offset');
 
-        $comments = $productService->getProductComments($id, $offset);
+        $comments = $productService->getProductComments($productId, $offset);
 
         return $this->render('Web/Product/product_detail_comments.html.php', [
             'comments' => $comments,
-            'productId' => $id,
+            'productId' => $productId,
         ]);
     }
 

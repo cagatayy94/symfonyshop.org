@@ -51,6 +51,9 @@ jobs:
     - name: Folder permissions
       run: sudo chmod 777 -R var
 
+    - name: Folder permissions
+      run: sudo chmod 777 -R public
+
     - name: Copy file via scp
       uses: appleboy/scp-action@master
       env:

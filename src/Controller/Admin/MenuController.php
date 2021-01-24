@@ -19,7 +19,7 @@ class MenuController extends AbstractController
     /**
      * @Route("/menu-list", name="menu_list")
      */
-    public function listAction(Request $request, MenuService $menuService)
+    public function listAction(MenuService $menuService)
     {
         $admin = $this->getUser();
 
@@ -36,8 +36,6 @@ class MenuController extends AbstractController
      */
     public function createAction(Request $request, MenuService $menuService)
     {
-        $admin = $this->getUser();
-
         $name = $request->request->get('menuName');
         
         try {
@@ -108,8 +106,6 @@ class MenuController extends AbstractController
      */
     public function updateAction(Request $request, MenuService $menuService)
     {
-        $admin = $this->getUser();
-
         $menuId = $request->request->get('menuId');
         $name = $request->request->get('name');
         $category = $request->request->get('category');

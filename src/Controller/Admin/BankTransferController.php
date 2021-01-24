@@ -164,10 +164,10 @@ class BankTransferController extends AbstractController
     public function updateMoneyOrderAction(Request $request, BankTransferService $bankTransferService)
     {
         $type = $request->query->get('type');
-        $id = $request->query->get('id');
+        $moneyOrderId = $request->query->get('id');
 
         try {
-            $bankTransferService->updateMoneyOrder($id, $type);
+            $bankTransferService->updateMoneyOrder($moneyOrderId, $type);
 
             return new JsonResponse([
                 'success' => true,

@@ -85,9 +85,7 @@ class AccountController extends AbstractController
      */
     public function adminUpdateAction(Request $request, AccountService $accountService)
     {
-        $admin = $this->getUser();
-
-        $id = $request->request->get('adminId');
+        $adminId = $request->request->get('adminId');
         $name = $request->request->get('name');
         $surname = $request->request->get('surname');
         $email = $request->request->get('email');
@@ -105,7 +103,7 @@ class AccountController extends AbstractController
         }
 
         try {
-            $accountService->update($id, $name, $surname, $email, $password, $passwordRepeat, $mobile, $profileId);
+            $accountService->update($adminId, $name, $surname, $email, $password, $passwordRepeat, $mobile, $profileId);
 
             return new JsonResponse([
                 'success' => true,
@@ -161,8 +159,6 @@ class AccountController extends AbstractController
      */
     public function adminProfileAction(Request $request, AccountService $accountService)
     {
-        $admin = $this->getUser();
-
         $name = $request->request->get('profileName');
         
         try {

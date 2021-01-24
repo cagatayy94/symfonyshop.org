@@ -172,7 +172,8 @@ CREATE TABLE public.cart (
     cargo_company_id integer,
     payment_method character varying,
     installment character varying,
-    address_id integer
+    billing_address_id integer,
+    shipping_address_id integer
 );
 
 CREATE SEQUENCE public.cart_id_seq
@@ -182,6 +183,13 @@ CREATE SEQUENCE public.cart_id_seq
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
+
+ALTER TABLE cart
+	ADD CONSTRAINT cart_address_id_fk FOREIGN KEY (billing_address_id) REFERENCES address (id);
+
+ALTER TABLE cart
+	ADD CONSTRAINT cart_address_id_fk_2 FOREIGN KEY (shipping_address_id) REFERENCES address (id);
+
 
 CREATE TABLE public.category (
     id integer NOT NULL,
@@ -505,6 +513,12 @@ INSERT INTO public.admin_permission (id, name, slug) VALUES (47, 'Ürün Silmeyi
 INSERT INTO public.admin_permission (id, name, slug) VALUES (48, 'Ürün Detayı', 'product_detail');
 INSERT INTO public.admin_permission (id, name, slug) VALUES (49, 'Ürün Fotoğrafı Silme', 'product_img_delete');
 INSERT INTO public.admin_permission (id, name, slug) VALUES (50, 'Ürün Güncelle', 'product_update');
+INSERT INTO public.admin_permission (id, name, slug) VALUES (51, 'Iyzico Ayarları Görüntüleme', 'iyzico_settings_show');
+INSERT INTO public.admin_permission (id, name, slug) VALUES (52, 'Sipariş Listesi', 'order_list');
+INSERT INTO public.admin_permission (id, name, slug) VALUES (53, 'Iyzico Ayarları Güncelleme', 'iyzico_settings_update');
+INSERT INTO public.admin_permission (id, name, slug) VALUES (54, 'Sipariş Detayı', 'order_detail');
+INSERT INTO public.admin_permission (id, name, slug) VALUES (55, 'Siparişi Onayla', 'approve_the_order');
+INSERT INTO public.admin_permission (id, name, slug) VALUES (56, 'Siparişi Kargola', 'ship_the_order');
 
 
 --
@@ -724,7 +738,7 @@ SELECT pg_catalog.setval('public.admin_profile_id_seq', 1, true);
 -- Name: admin_profile_permission_id_seq; Type: SEQUENCE SET; Schema: public;
 --
 
-SELECT pg_catalog.setval('public.admin_profile_permission_id_seq', 50, true);
+SELECT pg_catalog.setval('public.admin_profile_permission_id_seq', 56, true);
 
 --
 -- Name: category_id_seq; Type: SEQUENCE SET; Schema: public;
@@ -1269,6 +1283,58 @@ ALTER TABLE ONLY public.user_account_favorite
 
 ALTER TABLE ONLY public.user_account_favorite
     ADD CONSTRAINT user_account_favorite_user_account_id_fk FOREIGN KEY (user_account_id) REFERENCES public.user_account(id);
+
+
+
+
+
+
+-- auto-generated definition
+CREATE TABLE orders
+(
+    id SERIAL NOT NULL CONSTRAINT orders_pk PRIMARY KEY,
+    user_account_id INTEGER NOT NULL CONSTRAINT orders_user_account_id_fk REFERENCES user_account,
+    order_id INTEGER NOT NULL,
+    product_id INTEGER NOT NULL CONSTRAINT orders_product_id_fk REFERENCES product,
+    product_name VARCHAR NOT NULL,
+    product_price REAL NOT NULL,
+    product_quantity INTEGER NOT NULL,
+    order_total_amount REAL NOT NULL,
+    cargo_company VARCHAR NOT NULL,
+    cargo_price REAL NOT NULL,
+    product_pic VARCHAR NOT NULL,
+    variant_title VARCHAR,
+    variant_selection VARCHAR NOT NULL,
+    shipping_address_detail JSON NOT NULL,
+    billing_address_detail JSON NOT NULL,
+    payment_selection VARCHAR NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW() NOT NULL,
+    order_ip VARCHAR NOT NULL,
+    is_approved BOOLEAN DEFAULT FALSE NOT NULL,
+    is_shipped BOOLEAN DEFAULT FALSE NOT NULL,
+    cargo_send_code VARCHAR,
+    raw_result TEXT
+);
+
+create unique index orders_id_uindex
+    on orders (id);
+
+create index orders_is_approved_index
+    on orders (is_approved);
+
+create index orders_is_shipped_index
+    on orders (is_shipped);
+
+
+
+
+
+
+
+
+
+
+
 
 
 --

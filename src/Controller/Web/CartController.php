@@ -41,7 +41,7 @@ class CartController extends AbstractController
     /**
      * @Route("/cart/get-total-and-quantity", name="cart_get_total_and_quantity")
      */
-    public function getCartTotalAndQuantityAction(Request $request, CartService $cartService)
+    public function getCartTotalAndQuantityAction(CartService $cartService)
     {
         $user = $this->getUser();
 
@@ -76,7 +76,7 @@ class CartController extends AbstractController
     /**
      * @Route("/cart/detail", name="cart_detail")
      */
-    public function cartDetailAction(Request $request, CartService $cartService)
+    public function cartDetailAction(CartService $cartService)
     {
         $user = $this->getUser();
 
@@ -90,7 +90,7 @@ class CartController extends AbstractController
     /**
      * @Route("/cart/get-data", name="cart_get_data")
      */
-    public function getCartData(Request $request, CartService $cartService)
+    public function getCartData(CartService $cartService)
     {
         $user = $this->getUser();
 
@@ -147,7 +147,7 @@ class CartController extends AbstractController
 
         try {
 
-            $res = $cartService->updateQuantity($user->getId(), $cartId, $type);
+            $cartService->updateQuantity($user->getId(), $cartId, $type);
 
             return new JsonResponse([
                 'success' => true,
@@ -165,7 +165,7 @@ class CartController extends AbstractController
     /**
      * @Route("/cart/cargo-select", name="cart_cargo_select")
      */
-    public function cartCargoSelectAction(Request $request, CartService $cartService)
+    public function cartCargoSelectAction(CartService $cartService)
     {
         $user = $this->getUser();
         $cargoCompany = $cartService->getCargoCompanyForCart();
@@ -181,7 +181,7 @@ class CartController extends AbstractController
     /**
      * @Route("/cart/check-out", name="cart_check_out")
      */
-    public function cartCheckOutAction(Request $request, CartService $cartService)
+    public function cartCheckOutAction(CartService $cartService)
     {
         $user = $this->getUser();
         $cargoCompany = $cartService->getCargoCompanyForCart();

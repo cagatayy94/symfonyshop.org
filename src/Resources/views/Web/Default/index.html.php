@@ -98,11 +98,11 @@
                                         <div class="product portfolio-item portfolio-item-style-2">
                                             <div class="image-frame image-frame-style-1 image-frame-effect-2 mb-3">
                                                 <span class="image-frame-wrapper image-frame-wrapper-overlay-bottom image-frame-wrapper-overlay-light image-frame-wrapper-align-end">
-                                                    <a href="/product-detail/<?php echo $slugGenerator($value['name']).'/'.$value['id'] ?>">
+                                                    <a href="/product-detail/<?php echo str_replace(" ", "-", $value['name']).'/'.$value['id'] ?>">
                                                         <img src="<?php echo json_decode($value['photo'], true)[0] ?>" class="img-fluid" alt="">
                                                     </a>
                                                     <span class="image-frame-action">
-                                                        <a href="/product-detail/<?php echo $slugGenerator($value['name']).'/'.$value['id'] ?>/" class="btn btn-primary btn-rounded font-weight-semibold btn-v-3 btn-fs-2">SEPETE EKLE</a>
+                                                        <a href="/product-detail/<?php echo str_replace(" ", "-", $value['name']).'/'.$value['id'] ?>/" class="btn btn-primary btn-rounded font-weight-semibold btn-v-3 btn-fs-2">SEPETE EKLE</a>
                                                     </span>
                                                 </span>
                                             </div>

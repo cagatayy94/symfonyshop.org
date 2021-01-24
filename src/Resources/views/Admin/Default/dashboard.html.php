@@ -19,41 +19,26 @@
                 <!-- small box -->
                 <div class="small-box bg-aqua">
                     <div class="inner">
-                        <h3>150</h3>
-                        <p>Yeni Siparişler</p>
+                        <h3 class="order_count">0</h3>
+                        <p>Siparişler</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-bag"></i>
                     </div>
-                    <a href="#" class="small-box-footer">Tümünü gör <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="<?php echo $this->get('router')->path('admin_order_list') ?>" class="small-box-footer">Tümünü gör <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-green">
-                    <div class="inner">
-                        <h3>53<sup style="font-size: 20px">%</sup></h3>
-                        <p>Bounce Rate</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-stats-bars"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-            <!-- ./col -->
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-yellow">
                     <div class="inner">
-                        <h3>44</h3>
-                        <p>User Registrations</p>
+                        <h3 class="user_count">0</h3>
+                        <p>Kullanıcılar</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-person-add"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="<?php echo $this->get('router')->path('admin_user_list') ?>" class="small-box-footer">Tümünü gör <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -61,13 +46,13 @@
                 <!-- small box -->
                 <div class="small-box bg-red">
                     <div class="inner">
-                        <h3>65</h3>
-                        <p>Unique Visitors</p>
+                        <h3 class="order_notice_count">0</h3>
+                        <p>Havale Bildirimleri</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-pie-graph"></i>
+                        <i class="ion ion-disc"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="<?php echo $this->get('router')->path('admin_money_order_list') ?>" class="small-box-footer">Tümünü gör <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -76,4 +61,28 @@
     </section>
     <!-- /.content -->
 </div>
+<?php $view['slots']->start('javascript'); ?>
+<script>
+function LoadData()
+{
+    $.ajax({
+        type: 'GET',
+        url: '/admin/dashboard/data',
+        success: function (response) {
+            if(response.success){
+                var orderNoticeCount = response.data.orderNoticeCount;
+                var ordersCount = response.data.ordersCount;
+                var userCount = response.data.userCount;
+
+                $('.order_count').html(ordersCount);
+                $('.user_count').html(userCount);
+                $('.order_notice_count').html(orderNoticeCount);
+            }
+        }
+    });
+}
+
+setInterval( LoadData, 30000 );
+</script>
+<?php $view['slots']->stop(); ?>
 <?php $view['slots']->stop(); ?>

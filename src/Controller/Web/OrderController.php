@@ -42,10 +42,8 @@ class OrderController extends AbstractController
         $ipAddress = $request->getClientIp();
 
         try {
-
             $details = $orderService->getCartDetailForIyzico($user, $ipAddress);
             $data = $iyzicoSdk->renderForm($details);
-
 
             if (!$data['status']) {
                 throw new \Exception("Form oluşturulurken bir sorun oluştu banka havalesi ile ödemeyi deneyebilirsiniz");
@@ -102,6 +100,37 @@ class OrderController extends AbstractController
                     'user' => $user,
                 ]
             );
+        }
+    }
+
+    /**
+     * @Route("/get-order-detail", name="get_order_detail")
+     */
+    public function getOrderDetail(Request $request, OrderService $orderService)
+    {
+        $orderId = $request->query->get('orderId');
+
+        $user = $this->getUser();
+
+        try {
+            $orderDetail = $orderService->getOrderDetail($user, $orderId);
+
+            if(!count($orderDetail)){
+                throw new \Exception("Sipariş detayı bulunamadı");
+            }
+            
+            return $this->render('Web/Order/order_detail.html.php', 
+                [
+                    'orderDetail' => $orderDetail,
+                ]
+            );
+        } catch (\Exception $exception) {
+            return new JsonResponse([
+                'success' => false,
+                'error' => [
+                    'message' => $exception->getMessage()
+                ]
+            ]);
         }
     }
 }

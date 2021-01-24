@@ -1,5 +1,8 @@
 <?php foreach ($comments as $value): 
-    $nameString = explode(" ", $value['name']); ?>
+    $nameArray = explode(" ", $value['name']); 
+    $name = isset($nameArray[0]) ? $nameArray[0] : 'sample';
+    $surname = isset($nameArray[1]) ? $nameArray[1] : 'sample';
+?>
     <li style="padding: 0">
         <div class="comment">
             <div class="comment-block">
@@ -9,7 +12,7 @@
                             <i class="fas fa-star text-color-dark mr-1"></i>
                         <?php endfor; ?>
                     </span>
-                    <strong class="comment-author text-color-dark"><?php echo $nameString[0][0]."***** ".$nameString[1][0]."*****"; ?> 
+                    <strong class="comment-author text-color-dark"><?php echo $name[0]."***** " .$surname[0]." *****" ?> 
                     <?php if ($value['buyed']): ?>
                         <span class="badge badge-primary badge-xs mb-2">Ürünü Satın Aldı</span>
                     <?php endif; ?>

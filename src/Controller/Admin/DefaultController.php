@@ -39,19 +39,4 @@ class DefaultController extends AbstractController
     {
         throw new \Exception('This method can be blank - it will be intercepted by the logout key on your firewall');
     }
-
-
-    /**
-     * @Route("/", name="dashboard")
-     */
-    public function dashboardAction()
-    {
-        $admin = $this->getUser();
-        
-        if (!$admin->hasRole('site_dashboard_show')) {
-            throw new \Exception('Yetkisiz erişim');
-        }
-
-        return $this->render('Admin/Default/dashboard.html.php', ['admin' => $admin]);
-    }
 }

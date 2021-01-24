@@ -25,7 +25,6 @@ class UserController extends AbstractController
         $name = $request->request->get('username');
         $email = $request->request->get('email');
         $password = $request->request->get('password');
-        $phone = $request->request->get('phone');
         $agreement = $request->request->get('agreement');
         $mobile = $request->request->get('mobile');
         $ipAddress = $request->getClientIp();
@@ -80,10 +79,9 @@ class UserController extends AbstractController
     {
         $email = $request->request->get('email');
 
+        $result = null;
         if ($request->isMethod('post')) {
             $result = true;
-        }else{
-            $result = null;
         }
 
         $userService->sendNewCode($email);
@@ -100,10 +98,9 @@ class UserController extends AbstractController
     {
         $email = $request->request->get('email');
 
+        $result = null;
         if ($request->isMethod('post')) {
             $result = true;
-        }else{
-            $result = null;
         }
 
         $userService->sendForgotPassword($email);
@@ -202,7 +199,7 @@ class UserController extends AbstractController
     /**
      * @Route("/profilim", name="profile")
      */
-    public function profileAction(Request $request, UserService $userService)
+    public function profileAction(UserService $userService)
     {
         $user = $this->getUser();
 
@@ -328,10 +325,10 @@ class UserController extends AbstractController
     {
         $user = $this->getUser();
 
-        $id = $request->request->get('id');
+        $addressId = $request->request->get('id');
 
         try {
-            $userService->removeUserAddress($user, $id);
+            $userService->removeUserAddress($user, $addressId);
 
             return new JsonResponse([
                 'success' => true,
@@ -362,7 +359,7 @@ class UserController extends AbstractController
         $addressId = $request->request->get('address_id');
 
         try {
-            $addresses = $userService->updateUserAddresses($user, $addressId, $addressName, $fullName, $address, $county, $city, $mobile);
+            $userService->updateUserAddresses($user, $addressId, $addressName, $fullName, $address, $county, $city, $mobile);
 
             return new JsonResponse([
                 'success' => true,
@@ -419,10 +416,10 @@ class UserController extends AbstractController
     {
         $user = $this->getUser();
 
-        $id = $request->request->get('id');
+        $favoriteId = $request->request->get('id');
 
         try {
-            $userService->removeUserFavorite($user, $id);
+            $userService->removeUserFavorite($user, $favoriteId);
 
             return new JsonResponse([
                 'success' => true,
@@ -479,10 +476,10 @@ class UserController extends AbstractController
     {
         $user = $this->getUser();
 
-        $id = $request->request->get('id');
+        $commentId = $request->request->get('id');
 
         try {
-            $userService->removeUserComment($user, $id);
+            $userService->removeUserComment($user, $commentId);
 
             return new JsonResponse([
                 'success' => true,

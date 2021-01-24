@@ -49,7 +49,7 @@
                     <?php endif; ?>
                 </ul>
             </li>
-        <?php endif; ?>
+            <?php endif; ?>
 
         <?php if($admin->hasRole('product_create') || $admin->hasRole('product_list')): ?>
             <li class="treeview">
@@ -127,6 +127,18 @@
                 </ul>
             </li>
         <?php endif; ?>
+        <?php if($admin->hasRole('user_list')): ?>
+            <li class="treeview">
+                <a href=""><i class="fa fa-user" aria-hidden="true"></i><span>Kullanıcılar</span>
+                    <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span>
+                </a>
+                <ul class="treeview-menu">
+                    <?php if ($admin->hasRole('user_list')):?>
+                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_user_list'); ?>">Kullanıcı Listesi</a></li>
+                    <?php endif; ?>
+                </ul>
+            </li>
+            <?php endif; ?>
         </ul>
         <!-- /.sidebar-menu -->
     </section>

@@ -80,9 +80,6 @@ class OrderController extends AbstractController
 
         $orderDetail = $orderService->getOrderDetail($orderId);
 
-
-
-
         return $this->render('Admin/Order/detail.html.php', [
             'admin' => $admin,
             'orderDetail' => $orderDetail,
@@ -95,8 +92,6 @@ class OrderController extends AbstractController
      */
     public function approveOrderAction(Request $request, OrderService $orderService)
     {
-        $admin = $this->getUser();
-
         $orderId = $request->request->get('orderId');
 
         try {
@@ -120,8 +115,6 @@ class OrderController extends AbstractController
      */
     public function shipTheOrderAction(Request $request, OrderService $orderService)
     {
-        $admin = $this->getUser();
-
         $orderId = $request->request->get('orderId');
         $cargoSendCode = $request->request->get('cargo_send_code');
 
