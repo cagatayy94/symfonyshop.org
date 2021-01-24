@@ -640,8 +640,6 @@ Richard McClintock, a Latin scholar from Hampden-Sydney College, is credited wit
 
 In particular, the garbled words of lorem ipsum bear an unmistakable resemblance to sections 1.10.32–33 of Cicero''s work, with the most notable passage excerpted below:');
 
-INSERT INTO public.banner (id, pic, number_of_show, name) VALUES (1, '17bc0e2a79581618c9596961898a8521.png', 0, 'Banner 1');
-
 INSERT INTO public.cargo_company (id, name) VALUES (1, 'Default Kargo');
 
 INSERT INTO public.category (id, slug, name, is_deleted) VALUES (1, 'giyim', 'Giyim', false);
