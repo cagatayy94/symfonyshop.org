@@ -184,13 +184,6 @@ CREATE SEQUENCE public.cart_id_seq
     NO MAXVALUE
     CACHE 1;
 
-ALTER TABLE public.cart
-	ADD CONSTRAINT cart_address_id_fk FOREIGN KEY (billing_address_id) REFERENCES public.address (id);
-
-ALTER TABLE public.cart
-	ADD CONSTRAINT cart_address_id_fk_2 FOREIGN KEY (shipping_address_id) REFERENCES public.address (id);
-
-
 CREATE TABLE public.category (
     id integer NOT NULL,
     slug character varying NOT NULL,
