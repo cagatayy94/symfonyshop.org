@@ -57,7 +57,7 @@ class CreateProductsCommand extends Command
     {
         $this
         ->addArgument('quantity', InputArgument::REQUIRED, 'How many dummy product do you want to create?')
-        ->setHelp('This command allows you to set default values for necessary project will run correctly.');
+        ->setHelp('This command allows you to create dummy products.');
     }
 
     protected function getProductImgFileNameArray()
