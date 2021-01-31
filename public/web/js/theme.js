@@ -2673,7 +2673,6 @@ Theme Version:	1.1.0
 				hiddenPriceLowStart = hiddenPriceLow.attr('data-start-value'),
 				hiddenPriceHighStart = hiddenPriceHigh.attr('data-start-value'),
 				hiddenPriceHighMax = hiddenPriceHigh.attr('data-max-value');
-				
 			// Create Slider
 			noUiSlider.create($el[0], {
 				start: [ hiddenPriceLowStart, hiddenPriceHighStart ],
@@ -2681,7 +2680,7 @@ Theme Version:	1.1.0
 				step: 1,
 				range: {
 					'min': 0,
-					'max': typeof hiddenPriceHighMax != 'number' ? 1 : parseInt(hiddenPriceHighMax)
+					'max': parseInt(hiddenPriceHighMax)
 				}
 			});
 
