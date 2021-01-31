@@ -6,7 +6,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 use Doctrine\DBAL\Driver\Connection;
-use App\Service\Admin\Product as ProductService;
 use Faker\Factory as FakerFactory;
 
 class CreateProductsCommand extends Command
@@ -18,11 +17,6 @@ class CreateProductsCommand extends Command
      * @var Connection
      */
     protected $connection;
-
-    /**
-     * @var ProductService
-     */
-    private $productService;
 
     protected $variants = [
         "Renk" => [
@@ -52,9 +46,8 @@ class CreateProductsCommand extends Command
         ]
     ];
 
-    public function __construct(ProductService $productService, Connection $connection)
+    public function __construct(Connection $connection)
     {
-        $this->productService = $productService;
         $this->connection = $connection;
 
         parent::__construct(); 
