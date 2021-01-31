@@ -92,7 +92,6 @@ GitHub.sublime-settings
 ### Symfony Patch ###
 /web/css/
 /web/js/
-/public/web/img/*
 
 *.DS_Store
 .DS_Store
