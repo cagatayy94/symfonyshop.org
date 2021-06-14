@@ -349,7 +349,6 @@ class User
                     SELECT
                         ua.id,
                         ua.name,
-                        ua.activation_code_created_at,
                         ua.is_email_approved
                     FROM
                         user_account ua
@@ -383,8 +382,7 @@ class User
                 UPDATE
                     user_account 
                 SET
-                    activation_code = :activation_code,
-                    activation_code_created_at = NOW()
+                    activation_code = :activation_code
                 WHERE
                     id = :id
             ');
