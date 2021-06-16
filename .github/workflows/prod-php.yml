@@ -37,7 +37,7 @@ jobs:
         echo MAILER_URL=${{ secrets.MAILER_URL   }} >> .env  && 
         echo MAIL_FROM_ADDRESS=symfonyshop.tk@yandex.com >> .env  && 
         echo DATABASE_URL=${{ secrets.PROD_DATABASE_URL }} >> .env  && 
-        echo APP_NAME=SymfonyShopDev >> .env  && 
+        echo APP_NAME=SymfonyShop >> .env  &&
         echo MAIN_MAIL_ADDRESS=mustafa.cagatay.yilmaz@gmail.com >> .env
 
     - name: Install dependencies
@@ -58,4 +58,4 @@ jobs:
         KEY: ${{ secrets.SSH_KEY }}
       with:
         source: "."
-        target: "/var/www/symfonyshop.tk"
+        target: "/var/www/symfonyshop.org"
