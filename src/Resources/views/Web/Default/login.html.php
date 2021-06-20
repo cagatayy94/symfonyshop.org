@@ -12,7 +12,7 @@
                             <input type="hidden" name="_csrf_token" value="<?php echo $token; ?>">
                             <div class="form-row">
                                 <div class="form-group col mb-2">
-                                    <label class="text-color-light-2" for="email">EMAIL ADRESİNİZ:<i>Try: </i></label>
+                                    <label class="text-color-light-2" for="email">EMAIL ADRESİNİZ:</label>
                                     <input type="email" class="form-control bg-light border-0 rounded text-1" name="email" id="login-email" value="<?php echo $last_username ?>" required>
                                 </div>
                             </div>
