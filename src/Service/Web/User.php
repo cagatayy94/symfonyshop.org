@@ -250,7 +250,6 @@ class User
                     SELECT
                         ua.id,
                         ua.name,
-                        ua.activation_code_created_at,
                         ua.is_email_approved
                     FROM
                         user_account ua
@@ -271,23 +270,11 @@ class User
                 return;
             }
 
-            if ($user['activation_code_created_at']) {
-                $dateDiff = date_diff(new \DateTime(), new \DateTime($user['activation_code_created_at']));
-                $minutes = $dateDiff->days * 24 * 60;
-                $minutes += $dateDiff->h * 60;
-                $minutes += $dateDiff->i;
-
-                if ($minutes < 15) {
-                    return;
-                }
-            }
-
             $activationCode = $this->uId();
 
             $statement = $connection->prepare('
                 UPDATE user_account 
                 SET
-                    activation_code_created_at = NOW(),
                     activation_code = :activation_code
                 WHERE
                     id = :id
@@ -363,17 +350,6 @@ class User
 
             if (!$user) {
                 return;
-            }
-
-            if ($user['activation_code_created_at']) {
-                $dateDiff = date_diff(new \DateTime(), new \DateTime($user['activation_code_created_at']));
-                $minutes = $dateDiff->days * 24 * 60;
-                $minutes += $dateDiff->h * 60;
-                $minutes += $dateDiff->i;
-
-                if ($minutes < 15) {
-                    return;
-                }
             }
 
             $activationCode = $this->uId();
