@@ -13,12 +13,14 @@
                             <div class="form-row">
                                 <div class="form-group col mb-2">
                                     <label class="text-color-light-2" for="email">EMAIL ADRESİNİZ:</label>
+                                    <i>user@yopmail.com</i>
                                     <input type="email" class="form-control bg-light border-0 rounded text-1" name="email" id="login-email" value="<?php echo $last_username ?>" required>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col">
                                     <label class="text-color-light-2" for="password">PAROLA:</label>
+                                    <i>123123aa</i>
                                     <input type="password" class="form-control bg-light border-0 rounded text-1" name="password" id="login-password" required>
                                 </div>
                             </div>

@@ -40,10 +40,12 @@
 						<div class="alert alert-danger">Giriş Başarısız</div>
 				<?php endif ?>
 			<div class="form-group has-feedback">
-				<input type="email" name="email" class="form-control" id="inputEmail" value="<?php echo $last_username ?>" placeholder="Email" required autofocus>
+                <label for="inputEmail">admin@admin.com</label>
+                <input type="email" name="email" class="form-control" id="inputEmail" value="<?php echo $last_username ?>" placeholder="Email" required autofocus>
 				<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 			</div>
 			<div class="form-group has-feedback">
+                <label for="inputPassword">123123aa</label>
 				<input name="password" id="inputPassword" type="password" class="form-control" placeholder="Parola" required>  
 				<span class="glyphicon glyphicon-lock form-control-feedback"></span>
 			</div>
