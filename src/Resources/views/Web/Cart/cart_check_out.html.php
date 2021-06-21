@@ -112,6 +112,7 @@
                         <div class="tab-content" id="tabMinimalContent">
                             <div class="tab-pane fade pt-4 pb-4 active show" id="minimal-portfolio" role="tabpanel" aria-labelledby="minimal-portfolio-tab">
                                 <p class="mb-0">Kredi Kartı ile <strong>Güvenli</strong> ödeme yapmak için aşağıdaki butonu kullanabilirsiniz.</p>
+                                <p><i>5890040000000016</i></p>
                                 <form class="shipping-calculator" action="#" method="post">
                                     <div class="form-row">
                                         <div class="col">
