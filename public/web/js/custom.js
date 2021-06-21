@@ -1336,8 +1336,7 @@ $('body').on('submit', '#add_comment_form', function(e) {
     var review = self.find('[name="comment"]').val();
 
     if (!rating) {
-        toastr.warning("Puan seçiniz");
-        return false;
+        rating = 0;
     }
 
     button.attr('disabled', 'disabled');

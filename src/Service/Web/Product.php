@@ -479,7 +479,7 @@ class Product
             }
 
             if (!$rate) {
-                throw new \InvalidArgumentException('Puan bulunamadı');
+                $rate = 0;
             }
 
             $sql = "
