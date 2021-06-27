@@ -1,5 +1,4 @@
 name: PHP Composer
-
 on:
   push:
     branches: [ master ]
@@ -9,54 +8,54 @@ jobs:
     runs-on: ubuntu-latest
     name: Build And Deploy v2
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: 7.3
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.3
 
-    - name: Validate composer.json and composer.lock
-      run: composer validate
+      - name: Validate composer.json and composer.lock
+        run: composer validate
 
-    - name: Cache Composer packages
-      id: composer-cache
-      uses: actions/cache@v2
-      with:
-        path: vendor
-        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-php-
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v2
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
 
-    - name: Create .env
-      run: 
-        touch .env && 
-        echo APP_ENV=prod >> .env  && 
-        echo APP_DEBUG=0 >> .env  && 
-        echo APP_SECRET=${{ secrets.APP_SECRET }} >> .env  && 
-        echo MAILER_URL=${{ secrets.MAILER_URL   }} >> .env  && 
-        echo MAIL_FROM_ADDRESS=symfonyshop.tk@yandex.com >> .env  && 
-        echo DATABASE_URL=${{ secrets.PROD_DATABASE_URL }} >> .env  && 
-        echo APP_NAME=SymfonyShopDev >> .env  && 
-        echo MAIN_MAIL_ADDRESS=mustafa.cagatay.yilmaz@gmail.com >> .env &&
+      - name: Create .env
+        run:
+          touch .env &&
+          echo APP_ENV=prod >> .env  &&
+          echo APP_DEBUG=0 >> .env  &&
+          echo APP_SECRET=${{ secrets.APP_SECRET }} >> .env  &&
+          echo MAILER_URL=${{ secrets.MAILER_URL   }} >> .env  &&
+          echo MAIL_FROM_ADDRESS=${{ secrets.MAIL_FROM_ADDRESS   }} >> .env  &&
+          echo DATABASE_URL=${{ secrets.PROD_DATABASE_URL }} >> .env  &&
+          echo APP_NAME=SymfonyShop >> .env  &&
+          echo MAIN_MAIL_ADDRESS=mustafa.cagatay.yilmaz@gmail.com >> .env
 
-    - name: Install dependencies
-      run: composer install --prefer-dist --no-progress --no-suggest
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest
 
-    - name: Folder permissions
-      run: sudo chmod 777 -R var
+      - name: Folder permissions
+        run: sudo chmod 777 -R var
 
-    - name: Folder permissions
-      run: sudo chmod 777 -R public
+      - name: Folder permissions
+        run: sudo chmod 777 -R public
 
-    - name: Copy file via scp
-      uses: appleboy/scp-action@master
-      env:
-        HOST: ${{ secrets.SSH_HOST }}
-        USERNAME: ${{ secrets.SSH_USER }}
-        PORT: ${{ secrets.SSH_PORT }}
-        KEY: ${{ secrets.SSH_KEY }}
-      with:
-        source: "."
-        target: "/var/www/symfonyshop"
+      - name: Copy file via scp
+        uses: appleboy/scp-action@master
+        env:
+          HOST: ${{ secrets.SSH_HOST }}
+          USERNAME: ${{ secrets.SSH_USER }}
+          PORT: ${{ secrets.SSH_PORT }}
+          KEY: ${{ secrets.SSH_KEY }}
+        with:
+          source: "."
+          target: "/var/www/symfonyshop.org"
