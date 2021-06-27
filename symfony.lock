@@ -108,6 +108,9 @@
     "egulias/email-validator": {
         "version": "2.1.11"
     },
+    "fzaninotto/faker": {
+        "version": "v1.9.2"
+    },
     "iyzico/iyzipay-php": {
         "version": "v2.0.48"
     },
