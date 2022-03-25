@@ -40,14 +40,7 @@
 </head>
 <body>
 <div class="body">
-    <div class="row">
-        <div style="margin: 2px" class="col-12">
-            <?php echo $this->render('Web/navigation2.html.php',['user' => isset($user) ? $user : null]); ?>
-        </div>
-        <div style="margin: 2px" class="col-12">
-            <?php echo $this->render('Web/navigation.html.php',['user' => isset($user) ? $user : null]); ?>
-        </div>
-    </div>
+    <?php echo $this->render('Web/navigation.html.php',['user' => isset($user) ? $user : null]); ?>
     <?php $view['slots']->output('body'); ?>
     <?php echo $view['actions']->render('Web:DefaultController:/footer/data'); ?>
 </div>
