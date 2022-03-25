@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html lang="zxx" class="shop">
+<html lang="zxx">
 <head>
     <!-- Basic -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title><?php $view['slots']->output('title', 'Shop Anasayfa'); ?></title>
+
+    <title>
+        <?php $view['slots']->output('title', 'Shop Anasayfa'); ?>
+    </title>
+
     <meta name="keywords" content="HTML5 Template" />
     <meta name="description" content="EZY - Responsive HTML5 Template">
     <meta name="author" content="okler.net">

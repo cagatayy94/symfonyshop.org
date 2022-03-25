@@ -1,166 +1,758 @@
 <?php $view->extend('Web/default.html.php'); ?>
 <?php $view['slots']->start('body'); ?>
-    <div role="main" class="main">
-        <section class="page-header">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h1 class="font-weight-bold">Ürünler - <?php echo isset($menu) ? $menu['name'] : 'Tümü'; ?></h1>
+<div role="main" class="main" style="margin-top: 5%;">
+    <section
+            class="section section-background section-height-5 overlay overlay-color-primary overlay-op-8 mt-2 mb-2"
+            data-plugin-image-background data-plugin-options="{'imageUrl': '/web/img/placeholders/Banner-04.jpg'}">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="font-weight-semibold mb-0">Section Height 5</h2>
+                    <p class="font-weight-light mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Vestibulum eros ipsum, facilisis eget scelerisque non, fermentum at tellus.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="container mt-5">
+
+            <div class="col-md-12">
+
+                <div class="lightbox"
+                     data-plugin-options="{'delegate': 'a', 'type': 'image', 'gallery': {'enabled': true}, 'mainClass': 'mfp-with-zoom', 'zoom': {'enabled': true, 'duration': 300}}">
+                    <div class="owl-carousel owl-theme nav-style-4"
+                         data-plugin-options="{'responsive': {'0': {'items': 1}, '479': {'items': 1}, '768': {'items': 2}, '979': {'items': 3}, '1199': {'items': 4}}, 'dots': false, 'nav': true, 'loop': false, 'animateIn': 'fadeIn', 'animateOut': 'fadeOut', 'margin': 30}">
+                        <div>
+                            <a href="images/015-3 (2).jpg">
+										<span class="image-frame image-frame-style-1 image-frame-effect-1">
+											<span class="image-frame-wrapper">
+												<img src="/web/img/placeholders/015-3.jpg" class="img-fluid" alt="">
+												<span class="image-frame-inner-border"></span>
+												<span class="image-frame-action">
+													<span class="image-frame-action-icon">
+														<i class="lnr lnr-magnifier text-color-light"></i>
+													</span>
+												</span>
+											</span>
+										</span>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="images/040-3 (2).jpg">
+										<span class="image-frame image-frame-style-1 image-frame-effect-1">
+											<span class="image-frame-wrapper">
+												<img src="/web/img/placeholders/040-3.jpg" class="img-fluid" alt="">
+												<span class="image-frame-inner-border"></span>
+												<span class="image-frame-action">
+													<span class="image-frame-action-icon">
+														<i class="lnr lnr-magnifier text-color-light"></i>
+													</span>
+												</span>
+											</span>
+										</span>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="images/103 (2).jpg">
+										<span class="image-frame image-frame-style-1 image-frame-effect-1">
+											<span class="image-frame-wrapper">
+												<img src="/web/img/placeholders/103.jpg" class="img-fluid" alt="">
+												<span class="image-frame-inner-border"></span>
+												<span class="image-frame-action">
+													<span class="image-frame-action-icon">
+														<i class="lnr lnr-magnifier text-color-light"></i>
+													</span>
+												</span>
+											</span>
+										</span>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="images/122 (2).jpg">
+										<span class="image-frame image-frame-style-1 image-frame-effect-1">
+											<span class="image-frame-wrapper">
+												<img src="/web/img/placeholders/122.jpg" class="img-fluid" alt="">
+												<span class="image-frame-inner-border"></span>
+												<span class="image-frame-action">
+													<span class="image-frame-action-icon">
+														<i class="lnr lnr-magnifier text-color-light"></i>
+													</span>
+												</span>
+											</span>
+										</span>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="images/192 (2).jpg">
+										<span class="image-frame image-frame-style-1 image-frame-effect-1">
+											<span class="image-frame-wrapper">
+												<img src="/web/img/placeholders/192.jpg" class="img-fluid" alt="">
+												<span class="image-frame-inner-border"></span>
+												<span class="image-frame-action">
+													<span class="image-frame-action-icon">
+														<i class="lnr lnr-magnifier text-color-light"></i>
+													</span>
+												</span>
+											</span>
+										</span>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="images/204 (2).jpg">
+										<span class="image-frame image-frame-style-1 image-frame-effect-1">
+											<span class="image-frame-wrapper">
+												<img src="/web/img/placeholders/204.jpg" class="img-fluid" alt="">
+												<span class="image-frame-inner-border"></span>
+												<span class="image-frame-action">
+													<span class="image-frame-action-icon">
+														<i class="lnr lnr-magnifier text-color-light"></i>
+													</span>
+												</span>
+											</span>
+										</span>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="images/238 (2).jpg">
+										<span class="image-frame image-frame-style-1 image-frame-effect-1">
+											<span class="image-frame-wrapper">
+												<img src="/web/img/placeholders/238.jpg" class="img-fluid" alt="">
+												<span class="image-frame-inner-border"></span>
+												<span class="image-frame-action">
+													<span class="image-frame-action-icon">
+														<i class="lnr lnr-magnifier text-color-light"></i>
+													</span>
+												</span>
+											</span>
+										</span>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="images/040-3 (2).jpg">
+										<span class="image-frame image-frame-style-1 image-frame-effect-1">
+											<span class="image-frame-wrapper">
+												<img src="/web/img/placeholders/040-3.jpg" class="img-fluid" alt="">
+												<span class="image-frame-inner-border"></span>
+												<span class="image-frame-action">
+													<span class="image-frame-action-icon">
+														<i class="lnr lnr-magnifier text-color-light"></i>
+													</span>
+												</span>
+											</span>
+										</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <section class="section bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col p-0">
+                    <section class="parallax section h-100" data-plugin-parallax
+                             data-plugin-options="{'speed': 1.5}" data-image-src="/web/img/placeholders/wall-mural-in-corporate-office_211a1082-f60d-40ae-9673-2702c55a55b4_1728x.jpg">
+                    </section>
+                </div>
+                <div class="col p-0">
+                    <section class="section bg-light-5">
+                        <div class="row m-2">
+                            <div class="col-half-section pl-5">
+                                <h2 class="font-weight-bold">Half Parallax Left</h2>
+                                <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                    Phasellus blandit massa enim. Nullam id varius nunc. Lorem ipsum dolor sit
+                                    amet, consectetur adipiscing elit.</p>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <section class="appear-animation" data-appear-animation="fadeIn" data-appear-animation-duration="1s">
+        <div class="container">
+            <div class="row stylerow" style="justify-content: center;">
+                <div class="col-md-8 style justify-content-center">
+                    <div class="steps steps-primary steps-style-2">
+                        <div></div>
+                        <div style="padding: 0px; margin: 0px;" class="item appear-animation"
+                             data-appear-animation="stepsFadeInUp" data-plugin-options="{'accY': -200}">
+                            <h2 class="item-title"><span>1.</span>STRATEGY</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elitasellus blandit massa
+                                enim.</p>
+                            <a class="learn-more" href="#">Learn More <i class="fas fa-angle-right"></i></a>
+                        </div>
+                        <div style="padding: 0px; margin: 0px;" class="item appear-animation"
+                             data-appear-animation="stepsFadeInUp" data-appear-animation-delay="300"
+                             data-plugin-options="{'accY': -200}">
+                            <h2 class="item-title"><span>2.</span>Build</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elitasellus blandit massa
+                                enim.</p>
+                            <a class="learn-more" href="#">Learn More <i class="fas fa-angle-right"></i></a>
+                        </div>
+                        <div class="item appear-animation" data-appear-animation="stepsFadeInUp"
+                             data-appear-animation-delay="600" data-plugin-options="{'accY': -200}">
+                            <h2 class="item-title"><span>3.</span>PLANNING</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elitasellus blandit massa
+                                enim.</p>
+                            <a class="learn-more" href="#">Learn More <i class="fas fa-angle-right"></i></a>
+                        </div>
+                        <div class="item appear-animation custom" data-appear-animation="stepsFadeInUp"
+                             data-appear-animation-delay="900" data-plugin-options="{'accY': -200}">
+                            <h2 class="item-title"><span>4.</span>SELL</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elitasellus blandit massa
+                                enim.</p>
+                            <a class="learn-more" href="#">Learn More <i class="fas fa-angle-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-md-3">
+                            <div class="steps steps-primary steps-style-2" style="margin-left: 69%;">
+                                <div class="item appear-animation" data-appear-animation="stepsFadeInUp" data-appear-animation-delay="900" data-plugin-options="{'accY': -200}">
+                                    <h2 class="item-title"><span>4.</span>SELL</h2>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elitasellus blandit massa enim.</p>
+                                    <a class="learn-more" href="#">Learn More <i class="fas fa-angle-right"></i></a>
+                                </div>
+                            </div>
+                        </div> -->
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-3"></div>
+                <div class="col-md-3"></div>
+                <div class="col-md-3"></div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <section class="section pb-5">
+        <div class="container">
+
+            <div class="col-md-12">
+                <h4 class="mb-4">Best Sellers</h4>
+
+                <div class="lightbox"
+                     data-plugin-options="{'delegate': 'a', 'type': 'image', 'gallery': {'enabled': true}, 'mainClass': 'mfp-with-zoom', 'zoom': {'enabled': true, 'duration': 300}}">
+                    <div class="owl-carousel owl-theme nav-style-4"
+                         data-plugin-options="{'responsive': {'0': {'items': 1}, '479': {'items': 1}, '768': {'items': 2}, '979': {'items': 3}, '1199': {'items': 4}}, 'dots': false, 'nav': true, 'loop': false, 'animateIn': 'fadeIn', 'animateOut': 'fadeOut', 'margin': 30}">
+                        <div>
+                            <a href="images/009-1 (2).jpg">
+										<span class="image-frame image-frame-style-1 image-frame-effect-1">
+											<span class="image-frame-wrapper">
+												<img src="/web/img/placeholders/009-1.jpg" class="img-fluid" alt="">
+												<span class="image-frame-inner-border"></span>
+												<span class="image-frame-action">
+													<span class="image-frame-action-icon">
+														<i class="lnr lnr-magnifier text-color-light"></i>
+													</span>
+												</span>
+											</span>
+										</span>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="images/038 (2).jpg">
+										<span class="image-frame image-frame-style-1 image-frame-effect-1">
+											<span class="image-frame-wrapper">
+												<img src="/web/img/placeholders/038.jpg" class="img-fluid" alt="">
+												<span class="image-frame-inner-border"></span>
+												<span class="image-frame-action">
+													<span class="image-frame-action-icon">
+														<i class="lnr lnr-magnifier text-color-light"></i>
+													</span>
+												</span>
+											</span>
+										</span>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="images/118 (2).jpg">
+										<span class="image-frame image-frame-style-1 image-frame-effect-1">
+											<span class="image-frame-wrapper">
+												<img src="/web/img/placeholders/118.jpg" class="img-fluid" alt="">
+												<span class="image-frame-inner-border"></span>
+												<span class="image-frame-action">
+													<span class="image-frame-action-icon">
+														<i class="lnr lnr-magnifier text-color-light"></i>
+													</span>
+												</span>
+											</span>
+										</span>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="images/065-5 (2).jpg">
+										<span class="image-frame image-frame-style-1 image-frame-effect-1">
+											<span class="image-frame-wrapper">
+												<img src="/web/img/placeholders/065-5.jpg" class="img-fluid" alt="">
+												<span class="image-frame-inner-border"></span>
+												<span class="image-frame-action">
+													<span class="image-frame-action-icon">
+														<i class="lnr lnr-magnifier text-color-light"></i>
+													</span>
+												</span>
+											</span>
+										</span>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="images/032-4 (2).jpg">
+										<span class="image-frame image-frame-style-1 image-frame-effect-1">
+											<span class="image-frame-wrapper">
+												<img src="/web/img/placeholders/032-4.jpg" class="img-fluid" alt="">
+												<span class="image-frame-inner-border"></span>
+												<span class="image-frame-action">
+													<span class="image-frame-action-icon">
+														<i class="lnr lnr-magnifier text-color-light"></i>
+													</span>
+												</span>
+											</span>
+										</span>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="images/074-5 (2).jpg">
+										<span class="image-frame image-frame-style-1 image-frame-effect-1">
+											<span class="image-frame-wrapper">
+												<img src="/web/img/placeholders/074-5.jpg" class="img-fluid" alt="">
+												<span class="image-frame-inner-border"></span>
+												<span class="image-frame-action">
+													<span class="image-frame-action-icon">
+														<i class="lnr lnr-magnifier text-color-light"></i>
+													</span>
+												</span>
+											</span>
+										</span>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="images/117-1 (2).jpg">
+										<span class="image-frame image-frame-style-1 image-frame-effect-1">
+											<span class="image-frame-wrapper">
+												<img src="/web/img/placeholders/117-1.jpg" class="img-fluid" alt="">
+												<span class="image-frame-inner-border"></span>
+												<span class="image-frame-action">
+													<span class="image-frame-action-icon">
+														<i class="lnr lnr-magnifier text-color-light"></i>
+													</span>
+												</span>
+											</span>
+										</span>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="images/054-2 (2).jpg">
+										<span class="image-frame image-frame-style-1 image-frame-effect-1">
+											<span class="image-frame-wrapper">
+												<img src="/web/img/placeholders/054-2.jpg" class="img-fluid" alt="">
+												<span class="image-frame-inner-border"></span>
+												<span class="image-frame-action">
+													<span class="image-frame-action-icon">
+														<i class="lnr lnr-magnifier text-color-light"></i>
+													</span>
+												</span>
+											</span>
+										</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <div class="container fluid" style="padding: 0px;">
+        <h4 class="mb-4">Featured Categories</h4>
+        <div class="row text-center justify-content-center">
+
+            <div class="col-md-5 colstyle justify-content-center">
+                <img src="/web/img/placeholders/238.jpg" class="img img-2" width="100%"
+                     style="height: 100%;" alt="">
+            </div>
+
+            <div class="col-md-7 colstyle-1">
+                <img src="/web/img/placeholders/Banner-01.jpg" class="img img-1" width="100%"
+                     style="max-height: 50%; padding-bottom: 7.5px;" alt="">
+                <img src="/web/img/placeholders/Banner-05.jpg" class="img img-1" width="100%"
+                     style="max-height: 50%; padding-top: 7.5px;" alt="">
+            </div>
+
+        </div>
+    </div>
+
+    <section class="section">
+
+        <div class="container sytlingcontainer">
+            <h4 class="mb-4">New Designs</h4>
+            <div class="row appear-animation" data-appear-animation="fadeInUpShorter"
+                 data-appear-aniamtion-delay="600">
+                <div class="col">
+                    <div class="owl-carousel owl-theme dots-style-1 nav-style-3"
+                         data-plugin-options="{'responsive': {'0': {'items': 1}, '576': {'items': 1}, '768': {'items': 3}, '979': {'items': 4}, '1199': {'items': 4}}, 'dots': true, 'nav': false, 'loop': false, 'navtext': [], 'margin': 30}">
+                        <div>
+                            <div class="text-center mb-4">
+                                <div class="image-frame image-frame-style-1 image-frame-effect-1 mb-4">
+											<span class="image-frame-wrapper">
+												<img src="/web/img/placeholders/1.jpg" class="img-fluid" alt="">
+												<span class="image-frame-inner-border"></span>
+												<span
+                                                        class="image-frame-action image-frame-action-effect-1 image-frame-action-sm">
+													<a href="#">
+														<div class="image-frame-action-icon">
+															<i class="lnr lnr-link text-color-light"></i>
+														</div>
+													</a>
+												</span>
+											</span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div>
+                            <div class="text-center mb-4">
+                                <div class="image-frame image-frame-style-1 image-frame-effect-1 mb-4">
+											<span class="image-frame-wrapper">
+												<img src="/web/img/placeholders/2.jpg" class="img-fluid" alt="">
+												<span class="image-frame-inner-border"></span>
+												<span
+                                                        class="image-frame-action image-frame-action-effect-1 image-frame-action-sm">
+													<a href="#">
+														<div class="image-frame-action-icon">
+															<i class="lnr lnr-link text-color-light"></i>
+														</div>
+													</a>
+												</span>
+											</span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div>
+                            <div class="text-center mb-4">
+                                <div class="image-frame image-frame-style-1 image-frame-effect-1 mb-4">
+											<span class="image-frame-wrapper">
+												<img src="/web/img/placeholders/3.jpg" class="img-fluid" alt="">
+												<span class="image-frame-inner-border"></span>
+												<span
+                                                        class="image-frame-action image-frame-action-effect-1 image-frame-action-sm">
+													<a href="#">
+														<div class="image-frame-action-icon">
+															<i class="lnr lnr-link text-color-light"></i>
+														</div>
+													</a>
+												</span>
+											</span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div>
+                            <div class="text-center mb-4">
+                                <div class="image-frame image-frame-style-1 image-frame-effect-1 mb-4">
+											<span class="image-frame-wrapper">
+												<img src="/web/img/placeholders/4.jpg" class="img-fluid" alt="">
+												<span class="image-frame-inner-border"></span>
+												<span
+                                                        class="image-frame-action image-frame-action-effect-1 image-frame-action-sm">
+													<a href="#">
+														<div class="image-frame-action-icon">
+															<i class="lnr lnr-link text-color-light"></i>
+														</div>
+													</a>
+												</span>
+											</span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div>
+                            <div class="text-center mb-4">
+                                <div class="image-frame image-frame-style-1 image-frame-effect-1 mb-4">
+											<span class="image-frame-wrapper">
+												<img src="/web/img/placeholders/5.jpg" class="img-fluid" alt="">
+												<span class="image-frame-inner-border"></span>
+												<span
+                                                        class="image-frame-action image-frame-action-effect-1 image-frame-action-sm">
+													<a href="#">
+														<div class="image-frame-action-icon">
+															<i class="lnr lnr-link text-color-light"></i>
+														</div>
+													</a>
+												</span>
+											</span>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
-        <form id="product_filter_form" method="POST">
-            <input type="hidden" name="currentPage">
-            <input type="hidden" name="categoryId" value="<?php echo $categoryId ?>">
-            <div class="container">
-                <div class="row">
-                    <aside class="sidebar col-md-4 col-lg-3 order-2">
-                        <div class="accordion accordion-default accordion-toggle accordion-style-1" role="tablist">
-                            <div class="card">
-                                <div id="toggleSidebarSearch" class="accordion-body accordion-body-show-border-top collapse show" role="tabpanel" aria-labelledby="sidebarSearchForm">
-                                    <div class="card-body pt-4">
-                                        <div class="input-group bg-light-5">
-                                            <input type="text" class="form-control line-height-1 bg-light-5" name="search" placeholder="Ara..." value="<?php echo $search ?>">
-                                            <span class="input-group-btn">
-                                                <button style="margin-top: 10px; border: none;" class="btn btn-light bg-light-5" type="submit"><i class="fas fa-search text-color-primary"></i></button>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-header accordion-header" role="tab" id="categories">
-                                    <h5 class="mb-0">
-                                        <a href="#" data-toggle="collapse" data-target="#toggleCategories" aria-expanded="false" aria-controls="toggleCategories">KATEGORİLER</a>
-                                    </h5>
-                                </div>
-                                <div id="toggleCategories" class="accordion-body collapse show" role="tabpanel" aria-labelledby="categories">
-                                    <div class="card-body">
-                                        <ul class="list list-unstyled mb-0">
-                                            <li><a data-category-id="" class="category-filter <?php echo !$categoryId ? ' custom-class-active ' : '' ?> " href="#">Tümü</a></li>
-                                            <?php foreach ($menuCategories as $key => $value): ?>
-                                                <li><a class="category-filter <?php echo $categoryId == $value['id'] ? ' custom-class-active ' : ''  ?>" data-category-id="<?php echo $value['id'] ?>" href="#"><?php echo $value['name']; ?></a></li>
-                                            <?php endforeach ?>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-header accordion-header" role="tab" id="price">
-                                    <h5 class="mb-0">
-                                        <a href="#" data-toggle="collapse" data-target="#togglePrice" aria-expanded="false" aria-controls="togglePrice">FİYAT</a>
-                                    </h5>
-                                </div>
-                                <div id="togglePrice" class="accordion-body collapse show" role="tabpanel" aria-labelledby="price">
-                                    <div class="card-body">
-                                        <div class="slider-range-wrapper">
-                                            <div class="slider-range mb-3" data-plugin-slider-range></div>
-                                            <form class="d-flex align-items-center justify-content-between" method="get">
-                                                <span>
-                                                    Price $<span class="price-range-low">0</span> - $<span class="price-range-high">0</span>
-                                                </span>
-                                                <input type="hidden" data-start-value="<?php echo isset($priceLow) ? $priceLow : 0 ?>" class="hidden-price-range-low" name="priceLow" value="10" />
-                                                <input type="hidden" data-max-value="<?php echo $maxPrice ?>" data-start-value="<?php echo isset($priceHigh) ? $priceHigh : $maxPrice ?>" class="hidden-price-range-high" name="priceHigh" value="1000" />
-                                                <button type="submit" class="btn btn-primary btn-h-1 font-weight-bold rounded-0 price-filter-submit">FİLTRELE</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-                        <!-- Banner Area -->
-                        <?php echo $this->render('Web/banner.html.php',['banner' => isset($banner) ? $banner : null]); ?>
-                        <!-- Banner Area End-->
-                    </aside>
-                    <div class="col-md-8 col-lg-9 order-1 mb-5 mb-md-0">
-                        <div class="row align-items-center justify-content-between mb-4">
-                            <div class="col-auto mb-3 mb-sm-0">
-                                <div class="custom-select-1">
-                                    <select name="order" class="form-control border order-filter-submit">
-                                        <option <?php echo $order == 'date' ? 'selected' : '' ?> value="date" selected="selected">Sırala: En Yeni</option>
-                                        <option <?php echo $order == 'price' ? 'selected' : '' ?> value="price">Sırala: En Düşük Fiyat</option>
-                                        <option <?php echo $order == 'price-desc' ? 'selected' : '' ?> value="price-desc">Sırala: En Yüksek Fiyat</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-auto">
-                                <div class="d-flex align-items-center">
-                                    <span><?php echo ($perPage*$currentPage)-$perPage+1; ?>-<?php echo $perPage*$currentPage <= $products['total'] ? $perPage*$currentPage : $products['total'] ; ?> / <?php echo $products['total']; ?> sonuç gösteriliyor</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <?php if ($products): ?>
-                                <?php foreach ($products['records'] as $key => $value): ?>
-                                    <div class="col-sm-6 col-md-3 mb-4">
-                                        <div class="product portfolio-item portfolio-item-style-2">
-                                            <div class="image-frame image-frame-style-1 image-frame-effect-2 mb-3">
-                                                <span class="image-frame-wrapper image-frame-wrapper-overlay-bottom image-frame-wrapper-overlay-light image-frame-wrapper-align-end">
-                                                    <a href="/product-detail/<?php echo str_replace(" ", "-", $value['name']).'/'.$value['id'] ?>">
-                                                        <img src="<?php echo json_decode($value['photo'], true)[0] ?>" class="img-fluid" alt="">
-                                                    </a>
-                                                    <span class="image-frame-action">
-                                                        <a href="/product-detail/<?php echo str_replace(" ", "-", $value['name']).'/'.$value['id'] ?>/" class="btn btn-primary btn-rounded font-weight-semibold btn-v-3 btn-fs-2">SEPETE EKLE</a>
-                                                    </span>
-                                                </span>
-                                            </div>
-                                            <div class="product-info d-flex flex-column flex-lg-row justify-content-between">
-                                                <div class="product-info-title">
-                                                    <h3 class="text-color-default text-2 line-height-1 mb-1"><a href="<?php echo '/product-detail/'.strtolower(preg_replace('~-+~', '-', trim(preg_replace('~[^-\w]+~', '', iconv('utf-8', 'us-ascii//TRANSLIT', preg_replace('~[^\pL\d]+~u', '-', $value['name']))), '-'))).'/'.$value['id'] ?>"><?php echo $value['name'] ?></a></h3>
-                                                    <span class="price font-primary text-4"><strong class="text-color-dark"><?php echo $value['price'] ?> TL</strong></span>
-                                                    <span class="old-price font-primary text-line-trough text-1"><strong class="text-color-default"><?php echo $value['price']+10 ?> TL</strong></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php endforeach ?>
-                            <?php endif ?>
-                        </div>
-                        <!-- start pagination -->
-                        <?php if ($pageCount): ?>
-                        <?php
-                            $startPage = $currentPage - 2;
-                            $endPage = $currentPage + 2;
+        </div>
+    </section>
 
-                            if ($startPage <= 0) {
-                                $endPage -= ($startPage - 1);
-                                $startPage = 1;
-                            }
 
-                            if ($endPage > $pageCount) {
-                                $endPage = $pageCount;
-                            }
-                        ?>
-                        <hr class="mt-5 mb-4">
-                        <div class="row align-items-center justify-content-between">
-                            <div class="col-auto mb-3 mb-sm-0">
-                                <span><?php echo ($perPage*$currentPage)-$perPage+1; ?>-<?php echo $perPage*$currentPage <= $products['total'] ? $perPage*$currentPage : $products['total'] ; ?> / <?php echo $products['total']; ?> sonuç gösteriliyor</span>
-                            </div>
-                            <div class="col-auto">
-                                <nav aria-label="Page navigation example">
-                                    <ul class="pagination mb-0">
-                                        <?php if ($startPage > 1): ?>
-                                            <li  <?php echo 1 == $currentPage ? ' class="page-item active" ' : ' class="page-item" '; ?>><a class="page-link pagination-action" data-page="1" href="#">1</a></li>
-                                            <li><a>...</a></li>
-                                        <?php endif; ?>
-                                        <?php for ($i = $startPage; $i <= $endPage; $i++): ?>
-                                            <li <?php echo $i == $currentPage ? ' class="page-item active" ' : ' class="page-item" '; ?>><a class="page-link pagination-action" data-page="<?php echo $i ?>" href="#"><?php echo $i; ?></a></li>
-                                        <?php endfor; ?>
-                                        <?php if ($endPage < $pageCount): ?>
-                                            <li><a>...</a></li>
-                                            <li <?php echo $pageCount == $currentPage ? ' class="page-item active" ' : ' class="page-item" '; ?>><a class="page-link pagination-action" data-page="<?php echo $pageCount ?>" href="#"><?php echo $pageCount; ?></a></li>
-                                        <?php endif; ?>
-                                    </ul>
-                                </nav>
+
+    <section class="section">
+
+        <div class="container">
+            <h4 class="mb-4">Children Wallpaper</h4>
+            <div class="row appear-animation" data-appear-animation="fadeInUpShorter"
+                 data-appear-aniamtion-delay="600">
+                <div class="col">
+                    <div class="owl-carousel owl-theme dots-style-1 nav-style-3"
+                         data-plugin-options="{'responsive': {'0': {'items': 1}, '576': {'items': 1}, '768': {'items': 3}, '979': {'items': 4}, '1199': {'items': 4}}, 'dots': true, 'nav': false, 'loop': false, 'navtext': [], 'margin': 30}">
+                        <div>
+                            <div class="text-center mb-4">
+                                <div class="image-frame image-frame-style-1 image-frame-effect-1 mb-4">
+											<span class="image-frame-wrapper">
+												<img src="/web/img/placeholders/6.jpg" class="img-fluid" alt="">
+												<span class="image-frame-inner-border"></span>
+												<span
+                                                        class="image-frame-action image-frame-action-effect-1 image-frame-action-sm">
+													<a href="#">
+														<div class="image-frame-action-icon">
+															<i class="lnr lnr-link text-color-light"></i>
+														</div>
+													</a>
+												</span>
+											</span>
+                                </div>
+
                             </div>
                         </div>
-                        <?php endif; ?>
-                        <!-- end pagination -->
+                        <div>
+                            <div class="text-center mb-4">
+                                <div class="image-frame image-frame-style-1 image-frame-effect-1 mb-4">
+											<span class="image-frame-wrapper">
+												<img src="/web/img/placeholders/7.jpg" class="img-fluid" alt="">
+												<span class="image-frame-inner-border"></span>
+												<span
+                                                        class="image-frame-action image-frame-action-effect-1 image-frame-action-sm">
+													<a href="#">
+														<div class="image-frame-action-icon">
+															<i class="lnr lnr-link text-color-light"></i>
+														</div>
+													</a>
+												</span>
+											</span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div>
+                            <div class="text-center mb-4">
+                                <div class="image-frame image-frame-style-1 image-frame-effect-1 mb-4">
+											<span class="image-frame-wrapper">
+												<img src="/web/img/placeholders/8.jpg" class="img-fluid" alt="">
+												<span class="image-frame-inner-border"></span>
+												<span
+                                                        class="image-frame-action image-frame-action-effect-1 image-frame-action-sm">
+													<a href="#">
+														<div class="image-frame-action-icon">
+															<i class="lnr lnr-link text-color-light"></i>
+														</div>
+													</a>
+												</span>
+											</span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div>
+                            <div class="text-center mb-4">
+                                <div class="image-frame image-frame-style-1 image-frame-effect-1 mb-4">
+											<span class="image-frame-wrapper">
+												<img src="/web/img/placeholders/9.jpg" class="img-fluid" alt="">
+												<span class="image-frame-inner-border"></span>
+												<span
+                                                        class="image-frame-action image-frame-action-effect-1 image-frame-action-sm">
+													<a href="#">
+														<div class="image-frame-action-icon">
+															<i class="lnr lnr-link text-color-light"></i>
+														</div>
+													</a>
+												</span>
+											</span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div>
+                            <div class="text-center mb-4">
+                                <div class="image-frame image-frame-style-1 image-frame-effect-1 mb-4">
+											<span class="image-frame-wrapper">
+												<img src="/web/img/placeholders/10.jpg" class="img-fluid" alt="">
+												<span class="image-frame-inner-border"></span>
+												<span
+                                                        class="image-frame-action image-frame-action-effect-1 image-frame-action-sm">
+													<a href="#">
+														<div class="image-frame-action-icon">
+															<i class="lnr lnr-link text-color-light"></i>
+														</div>
+													</a>
+												</span>
+											</span>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>  
-        </form>
-    </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+
+            <div class="col-md-12">
+                <div class="text-center">
+                    <h4 class="mb-4">Customer Photos</h4>
+                </div>
+
+                <div class="lightbox"
+                     data-plugin-options="{'delegate': 'a', 'type': 'image', 'gallery': {'enabled': true}, 'mainClass': 'mfp-with-zoom', 'zoom': {'enabled': true, 'duration': 300}}">
+                    <div class="owl-carousel owl-theme nav-style-4"
+                         data-plugin-options="{'responsive': {'0': {'items': 1}, '479': {'items': 1}, '768': {'items': 2}, '979': {'items': 3}, '1199': {'items': 4}}, 'dots': false, 'nav': true, 'loop': false, 'animateIn': 'fadeIn', 'animateOut': 'fadeOut', 'margin': 30}">
+                        <div>
+                            <a href="images/040-3 (2).jpg">
+										<span class="image-frame image-frame-style-1 image-frame-effect-1">
+											<span class="image-frame-wrapper">
+												<img src="/web/img/placeholders/040-3.jpg" class="img-fluid" alt="">
+												<span class="image-frame-inner-border"></span>
+												<span class="image-frame-action">
+													<span class="image-frame-action-icon">
+														<i class="lnr lnr-magnifier text-color-light"></i>
+													</span>
+												</span>
+											</span>
+										</span>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="images/238 (2).jpg">
+										<span class="image-frame image-frame-style-1 image-frame-effect-1">
+											<span class="image-frame-wrapper">
+												<img src="/web/img/placeholders/238.jpg" class="img-fluid" alt="">
+												<span class="image-frame-inner-border"></span>
+												<span class="image-frame-action">
+													<span class="image-frame-action-icon">
+														<i class="lnr lnr-magnifier text-color-light"></i>
+													</span>
+												</span>
+											</span>
+										</span>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="images/204 (2).jpg">
+										<span class="image-frame image-frame-style-1 image-frame-effect-1">
+											<span class="image-frame-wrapper">
+												<img src="/web/img/placeholders/204.jpg" class="img-fluid" alt="">
+												<span class="image-frame-inner-border"></span>
+												<span class="image-frame-action">
+													<span class="image-frame-action-icon">
+														<i class="lnr lnr-magnifier text-color-light"></i>
+													</span>
+												</span>
+											</span>
+										</span>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="images/192 (2).jpg">
+										<span class="image-frame image-frame-style-1 image-frame-effect-1">
+											<span class="image-frame-wrapper">
+												<img src="/web/img/placeholders/192.jpg" class="img-fluid" alt="">
+												<span class="image-frame-inner-border"></span>
+												<span class="image-frame-action">
+													<span class="image-frame-action-icon">
+														<i class="lnr lnr-magnifier text-color-light"></i>
+													</span>
+												</span>
+											</span>
+										</span>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="images/122 (2).jpg">
+										<span class="image-frame image-frame-style-1 image-frame-effect-1">
+											<span class="image-frame-wrapper">
+												<img src="/web/img/placeholders/122.jpg" class="img-fluid" alt="">
+												<span class="image-frame-inner-border"></span>
+												<span class="image-frame-action">
+													<span class="image-frame-action-icon">
+														<i class="lnr lnr-magnifier text-color-light"></i>
+													</span>
+												</span>
+											</span>
+										</span>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="images/103 (2).jpg">
+										<span class="image-frame image-frame-style-1 image-frame-effect-1">
+											<span class="image-frame-wrapper">
+												<img src="/web/img/placeholders/103.jpg" class="img-fluid" alt="">
+												<span class="image-frame-inner-border"></span>
+												<span class="image-frame-action">
+													<span class="image-frame-action-icon">
+														<i class="lnr lnr-magnifier text-color-light"></i>
+													</span>
+												</span>
+											</span>
+										</span>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="images/040-3 (2).jpg">
+										<span class="image-frame image-frame-style-1 image-frame-effect-1">
+											<span class="image-frame-wrapper">
+												<img src="/web/img/placeholders/040-3.jpg" class="img-fluid" alt="">
+												<span class="image-frame-inner-border"></span>
+												<span class="image-frame-action">
+													<span class="image-frame-action-icon">
+														<i class="lnr lnr-magnifier text-color-light"></i>
+													</span>
+												</span>
+											</span>
+										</span>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="images/015-3 (2).jpg">
+										<span class="image-frame image-frame-style-1 image-frame-effect-1">
+											<span class="image-frame-wrapper">
+												<img src="/web/img/placeholders/015-3.jpg" class="img-fluid" alt="">
+												<span class="image-frame-inner-border"></span>
+												<span class="image-frame-action">
+													<span class="image-frame-action-icon">
+														<i class="lnr lnr-magnifier text-color-light"></i>
+													</span>
+												</span>
+											</span>
+										</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</div>
 <?php $view['slots']->stop(); ?>
