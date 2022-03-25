@@ -5,11 +5,11 @@
 	<!-- Content Header (Page header) -->
 	<section class="content-header">
 			<h1>
-					Silinmiş Havale Bildirimleri Listesi
+                Deleted Order Notice List
 			</h1>
 			<ol class="breadcrumb">
 					<li><a href="<?php echo $this->get('router')->path('admin_dashboard'); ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-					<li class="active">Silinmiş Havale Bildirimleri Listesi</li>
+					<li class="active">Deleted Order Notice List</li>
 			</ol>
 	</section>
 	<section class="content">
@@ -17,7 +17,7 @@
 			<div class="col-md-12">
 				<div class="box">
 				<div class="box-header with-border">
-					<h3 class="box-title">Silinmiş Havale Bildirimleri Listesi <span class="label label-warning"><?php echo "Toplam :".$bankTrasferList['total']; ?></span></h3>
+					<h3 class="box-title">Deleted Order Notice List <span class="label label-warning"><?php echo "Toplam :".$bankTrasferList['total']; ?></span></h3>
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body">
@@ -26,15 +26,15 @@
 							<input type="hidden" name="currentPage" value="<?php echo $currentPage ?>">
 							<table class="table table-striped table-bordered">
 								<tbody>
-									<tr>
-											<th class="text-center">İsim</th>
-											<th class="text-center">Mail</th>
-											<th class="text-center">Telefon</th>
-											<th class="text-center">Banka</th>
-											<th class="text-center">Onaylı</th>
-											<th style="min-width: 180px" class="text-center">Tarih Aralığı</th>
-											<th style="width: 150px" class="text-center">Mesaj</th>
-											<th></th>
+                                    <tr>
+                                        <th class="text-center">Name</th>
+                                        <th class="text-center">Mail</th>
+                                        <th class="text-center">Phone</th>
+                                        <th class="text-center">Banks</th>
+                                        <th style="width: 100px" class="text-center">Status</th>
+                                        <th style="min-width: 180px" class="text-center">Date</th>
+                                        <th style="width: 150px" class="text-center">Message</th>
+                                        <th></th>
 									</tr>
 									<tr>
 											<td class="text-center">
@@ -48,7 +48,7 @@
 											</td>
 											<td class="text-center">
 												<select name="bankId" class="form-control change-submit">
-													<option value="">Tümü</option>
+													<option value="">All</option>
 													<?php foreach ($allBanks as $value): ?>
 														<option <?php echo $bankId == $value['id'] ? 'selected="selected"' : '' ?> value="<?php echo $value['id'] ?>"><?php echo $value['name'] ?></option>
 													<?php endforeach ?>
@@ -56,9 +56,9 @@
 											</td>
 											<td class="text-center">
 												<select name="isApproved" class="form-control change-submit">
-													<option <?php echo is_null($isApproved) ? 'selected="selected"' : '' ?> value="">Tümü</option>
-													<option <?php echo !is_null($isApproved) && $isApproved == "0" ? 'selected="selected"' : '' ?> value="0">Onaylanmamış</option>
-													<option <?php echo !is_null($isApproved) && $isApproved == "1" ? 'selected="selected"' : '' ?> value="1">Onaylanmış</option>
+													<option <?php echo is_null($isApproved) ? 'selected="selected"' : '' ?> value="">All</option>
+													<option <?php echo !is_null($isApproved) && $isApproved == "0" ? 'selected="selected"' : '' ?> value="0">Non Approved</option>
+													<option <?php echo !is_null($isApproved) && $isApproved == "1" ? 'selected="selected"' : '' ?> value="1">Approved</option>
 												</select>
 											</td>
 											<td class="text-center">
@@ -77,7 +77,7 @@
 											<td class="text-center"><?php echo $value['mobile'] ?></td>
 											<td class="text-center"><?php echo $value['bank_name'] ?></td>
 											<td class="text-center">
-												<?php echo $value['is_approved'] ? '<span class="label label-success">Onaylanmış</span>' : '<span class="label label-danger">Onaylanmamış</span>'; ?>
+												<?php echo $value['is_approved'] ? '<span class="label label-success">Approved</span>' : '<span class="label label-danger">Non Approved</span>'; ?>
 											</td>
 											<td class="text-center">
 												<?php $created_at = new \DateTime($value['created_at']); echo $created_at->format('d.m.Y H:i:s'); ?> 
@@ -85,7 +85,7 @@
 											<td class="text-center"><?php echo $value['message'] ?></td>
 											<td class="text-center">
 												<?php if ($admin->hasRole('bank_transfer_undelete')): ?>
-													<button data-delete-url="<?php echo $this->get('router')->path('admin_money_order_undelete', ['moneyOrderId' => $value['id']]) ?>" class="btn btn-primary btn-sm undelete-bank-transfer"><i class="fa fa-fw fa-eraser"></i> Silmeyi Geri Al</button>
+													<button data-delete-url="<?php echo $this->get('router')->path('admin_money_order_undelete', ['moneyOrderId' => $value['id']]) ?>" class="btn btn-primary btn-sm undelete-bank-transfer"><i class="fa fa-fw fa-eraser"></i> Revert Delete</button>
 												<?php endif ?>
 											</td>
 										</tr>

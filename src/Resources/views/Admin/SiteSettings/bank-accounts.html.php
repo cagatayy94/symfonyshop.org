@@ -5,10 +5,10 @@
 	<!-- Content Header (Page header) -->
 	<section class="content-header">
 		<h1>
-			Banka Ayarları
+			Bank Settings
 		</h1>
 		<ol class="breadcrumb">
-			<li class="active">Site Ayarları</li>
+			<li class="active">Site Settings</li>
 		</ol>
 	</section>
 	<!-- Main content -->
@@ -18,12 +18,12 @@
 			<div class="col-xs-12">
 				<div class="box">
 					<div class="box-header">
-						<h3 class="box-title">Banka Hesapları</h3>
+						<h3 class="box-title">Bank Accounts</h3>
 						<div class="box-tools">
 							<div class="input-group input-group-sm hidden-xs" style="width: 150px;">
 								<div class="input-group-btn">
 									<?php if($admin->hasRole('settings_bank_create')): ?>
-										<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-new-bank-modal"><i class="fa fa-plus"></i> Yeni Ekle</button>
+										<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-new-bank-modal"><i class="fa fa-plus"></i> Add New</button>
 									<?php endif; ?>
 								</div>
 							</div>
@@ -35,14 +35,14 @@
 							<tbody>
 								<tr>
 									<th>Logo</th>
-									<th>Banka İsmi</th>
-									<th>Şehir</th>
-									<th>Ülke</th>
-									<th>Şube</th>
-									<th>Şube Kodu</th>
-									<th>Para Birimi</th>
-									<th>Hesap Sahibi</th>
-									<th>Hesap No</th>
+									<th>Bank Name</th>
+									<th>City</th>
+									<th>Country</th>
+									<th>Branch</th>
+									<th>Branch Code</th>
+									<th>Currency</th>
+									<th>Account Holder</th>
+									<th>Account No</th>
 									<th>Iban</th>
 									<?php if ($admin->hasRole('settings_bank_update')):?>
 									<th></th>
@@ -67,12 +67,12 @@
 										<td><?php echo $value['iban']; ?></td>
 										<?php if ($admin->hasRole('settings_bank_update')):?>
 										<td>
-											<button data-update-id="<?php echo $value['id'] ?>" class="btn btn-primary update-bank"><i class="fa fa-edit"></i> Düzenle</button>
+											<button data-update-id="<?php echo $value['id'] ?>" class="btn btn-primary update-bank"><i class="fa fa-edit"></i> Update</button>
 										</td>
 										<?php endif;?>
 										<?php if ($admin->hasRole('settings_bank_delete')):?>
 										<td>
-											<button data-delete-url="<?php echo $this->get('router')->path('admin_settings_bank_delete', ['bankId' => $value['id']]); ?>" class="btn btn-danger delete-bank"><i class="fa fa-remove"></i> Sil</button>
+											<button data-delete-url="<?php echo $this->get('router')->path('admin_settings_bank_delete', ['bankId' => $value['id']]); ?>" class="btn btn-danger delete-bank"><i class="fa fa-remove"></i> Delete</button>
 										</td>
 										<?php endif;?>
 									</tr>
@@ -96,39 +96,39 @@
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">×</span></button>
-					<h4 class="modal-title">Yeni Banka Hesabı Ekle</h4>
+					<h4 class="modal-title">Add New Bank Account</h4>
 				</div>
 				<div class="modal-body">                  
 					<div class="form-group">
-							<label for="name">Banka İsmi</label>
+							<label for="name">Bank Name</label>
 							<input type="text" class="form-control required" name="name" value="">
 					</div>
 					<div class="form-group">
-							<label for="city">Şehir</label>
+							<label for="city">City</label>
 							<input type="text" class="form-control required" name="city" value="">
 					</div>
 					<div class="form-group">
-							<label for="country">Ülke</label>
+							<label for="country">Country</label>
 							<input type="text" class="form-control required" name="country" value="">
 					</div>
 					<div class="form-group">
-							<label for="branchName">Şube</label>
+							<label for="branchName">Branch</label>
 							<input type="text" class="form-control required" name="branchName" value="">
 					</div>
 					<div class="form-group">
-							<label for="branchCode">Şube Kodu</label>
+							<label for="branchCode">Branch Code</label>
 							<input type="text" class="form-control required" name="branchCode" value="">
 					</div>
 					<div class="form-group">
-							<label for="currency">Para Birimi</label>
+							<label for="currency">Currency</label>
 							<input type="text" class="form-control required" name="currency" value="">
 					</div>
 					<div class="form-group">
-							<label for="accountOwner">Hesap Sahibi</label>
+							<label for="accountOwner">Account Holder</label>
 							<input type="text" class="form-control required" name="accountOwner" value="">
 					</div>
 					<div class="form-group">
-							<label for="accountNumber">Hesap No</label>
+							<label for="accountNumber">Account No</label>
 							<input type="text" class="form-control required" name="accountNumber" value="">
 					</div>
 					<div class="form-group">
@@ -141,8 +141,8 @@
 					</div>                    
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Vazgeç</button>
-					<button type="submit" class="btn btn-primary">Kaydet</button>
+					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Dismiss</button>
+					<button type="submit" class="btn btn-primary">Save</button>
 				</div>
 			</form>
 		</div>
@@ -160,40 +160,40 @@
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">×</span></button>
-					<h4 class="modal-title">Banka Hesabı Güncelle</h4>
+					<h4 class="modal-title">Update Account</h4>
 				</div>
 				<div class="modal-body">  
 				<input type="hidden" name="id" id="id" value="">                
 					<div class="form-group">
-							<label for="name">Banka İsmi</label>
+							<label for="name">Bank Name</label>
 							<input type="text" class="form-control required" id="name" name="name" value="">
 					</div>
 					<div class="form-group">
-							<label for="city">Şehir</label>
+							<label for="city">City</label>
 							<input type="text" class="form-control required" id="city" name="city" value="">
 					</div>
 					<div class="form-group">
-							<label for="country">Ülke</label>
+							<label for="country">Country</label>
 							<input type="text" class="form-control required" id="country" name="country" value="">
 					</div>
 					<div class="form-group">
-							<label for="branchName">Şube</label>
+							<label for="branchName">Branch</label>
 							<input type="text" class="form-control required" id="branchName" name="branchName" value="">
 					</div>
 					<div class="form-group">
-							<label for="branchCode">Şube Kodu</label>
+							<label for="branchCode">Branch Code</label>
 							<input type="text" class="form-control required" id="branchCode" name="branchCode" value="">
 					</div>
 					<div class="form-group">
-							<label for="currency">Para Birimi</label>
+							<label for="currency">Currency</label>
 							<input type="text" class="form-control required" id="currency" name="currency" value="">
 					</div>
 					<div class="form-group">
-							<label for="accountOwner">Hesap Sahibi</label>
+							<label for="accountOwner">Account Holder</label>
 							<input type="text" class="form-control required" id="accountOwner" name="accountOwner" value="">
 					</div>
 					<div class="form-group">
-							<label for="accountNumber">Hesap No</label>
+							<label for="accountNumber">Account No</label>
 							<input type="text" class="form-control required" id="accountNumber" name="accountNumber" value="">
 					</div>
 					<div class="form-group">
@@ -209,8 +209,8 @@
 					</div>                    
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Vazgeç</button>
-					<button type="submit" class="btn btn-primary">Kaydet</button>
+					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Dismiss</button>
+					<button type="submit" class="btn btn-primary">Save</button>
 				</div>
 			</form>
 		</div>

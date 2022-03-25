@@ -5,21 +5,21 @@
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-        <h1>Sipariş Detayı
+        <h1>Order Detail
             <?php if (!$orderDetail['order'][0]['is_approved']):?>
-                <small class="label bg-red">Sipariş Onaylanmamış</small>
+                <small class="label bg-red">Non Approved </small>
             <?php else: ?>
-                <small class="label bg-green">Sipariş Onaylanmış</small>
+                <small class="label bg-green">Approved</small>
             <?php endif;?>
             <?php if (!$orderDetail['order'][0]['is_shipped']):?>
-                <small class="label bg-red">Kargoya Verilmemiş</small>
+                <small class="label bg-red">Non Shipped</small>
             <?php else: ?>
-                <small class="label bg-green">Kargoya Verilmiş</small>
+                <small class="label bg-green">Shipped</small>
             <?php endif;?>
         </h1>
         <ol class="breadcrumb">
             <li><a href="<?php echo $this->get('router')->path('admin_dashboard'); ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active">Sipariş Detayı</li>
+            <li class="active">Order Detail</li>
         </ol>
     </section>
     <section class="content">
@@ -28,13 +28,13 @@
                 <div class="box-body no-padding">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Alıcı Detayları</h3>
+                            <h3 class="box-title">Customer Details</h3>
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
                         <div class="box-body ">
                             <div class="form-group col-md-4">
-                                <label for="name">İsmi</label>
+                                <label for="name">Name</label>
                                 <input disabled="disabled" type="text" class="form-control" name="name" value="<?php echo $orderDetail['userAccount']['name'] ?>">
                             </div>
                             <div class="form-group col-md-4">
@@ -42,11 +42,11 @@
                                 <input disabled="disabled" type="text" class="form-control" name="email" value="<?php echo $orderDetail['userAccount']['email'] ?>">
                             </div>
                             <div class="form-group col-md-4">
-                                <label class="pull-left" for="mobile">Cep Telefonu &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <?php echo $orderDetail['userAccount']['is_mobile_approved'] ? '<small class="label pull-right bg-green">Onaylı</small>' : ' <small class="label pull-right bg-red">Onaysız</small>' ?></label>
+                                <label class="pull-left" for="mobile">Mobile &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <?php echo $orderDetail['userAccount']['is_mobile_approved'] ? '<small class="label pull-right bg-green">Approved</small>' : ' <small class="label pull-right bg-red">Unapproved</small>' ?></label>
                                 <input disabled="disabled" type="text" class="form-control" name="mobile" value="<?php echo $orderDetail['userAccount']['mobile'] ?>">
                             </div>
                             <div class="form-group col-md-4">
-                                <label for="mobile">Kargo Gönderim Kodu</label>
+                                <label for="mobile">Cargo Sent Code</label>
                                 <input disabled="disabled" type="text" class="form-control" name="cargo_send_code" value="<?php echo $orderDetail['order'][0]['cargo_send_code'] ?>">
                             </div>
                         </div>
@@ -59,36 +59,36 @@
                 <div class="box-body no-padding">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Sipariş Genel Detay</h3>
+                            <h3 class="box-title">Order General Details</h3>
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
                         <div class="box-body ">
                             <div class="form-group col-md-3">
-                                <label for="name">Toplam Tutar</label>
+                                <label for="name">Total Amount</label>
                                 <input disabled="disabled" type="text" class="form-control" name="name" value="<?php echo $orderDetail['order'][0]['order_total_amount']; ?> ₺">
                             </div>
                             <div class="form-group col-md-3">
-                                <label for="email">Sipariş Tarihi</label>
+                                <label for="email">Date</label>
                                 <input disabled="disabled" type="text" class="form-control" name="email" value="<?php echo (new \DateTime($orderDetail['order'][0]['created_at']))->format('d.m.Y H:i:s'); ?>">
                             </div>
                             <div class="form-group col-md-3">
-                                <label for="mobile">Ödeme Seçimi</label>
+                                <label for="mobile">Payment Method</label>
                                 <input disabled="disabled" type="text" class="form-control" name="mobile" value="<?php echo $orderDetail['order'][0]['payment_selection'] == 'bank_transfer' ? 'Banka Havalesi' : 'Kredi Kartı'; ?>">
                             </div>
                             <div class="form-group col-md-3">
-                                <label for="mobile">Sipariş IP Adresi</label>
+                                <label for="mobile">IP Address</label>
                                 <input disabled="disabled" type="text" class="form-control" name="mobile" value="<?php echo $orderDetail['order'][0]['order_ip']; ?>">
                             </div>
                             <div class="form-group col-md-12">
                                 <span>
                                 <?php if (!$orderDetail['order'][0]['is_approved'] && $admin->hasRole('approve_the_order')): ?>
-                                    <button type="button" data-toggle="modal" data-target="#approve_the_order_modal" class="btn btn-primary pull-left">Siparişi Onayla</button>
+                                    <button type="button" data-toggle="modal" data-target="#approve_the_order_modal" class="btn btn-primary pull-left">Approve</button>
                                 <?php endif; ?>
                                 </span>
                                 <span>
                                 <?php if (!$orderDetail['order'][0]['is_shipped'] && $admin->hasRole('ship_the_order')): ?>
-                                    <button type="button" data-toggle="modal" data-target="#ship_the_order_modal" class="btn btn-primary pull-right">Kargo Gönderildi İşaretle</button>
+                                    <button type="button" data-toggle="modal" data-target="#ship_the_order_modal" class="btn btn-primary pull-right">Mark as Shipped</button>
                                 <?php endif; ?>
                                 </span>
                             </div>
@@ -102,7 +102,7 @@
                 <div class="box-body no-padding">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Sipariş Ürün Detayları</h3>
+                            <h3 class="box-title">Order Product Details</h3>
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
@@ -110,13 +110,13 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th width="150" class="text-center">Ürün Fotoğrafı</th>
-                                        <th class="text-center">Ürün Id</th>
-                                        <th class="text-center">Ürün İsmi</th>
-                                        <th class="text-center">Tekil Ürün Ücreti</th>
-                                        <th class="text-center">Ürün Adedi</th>
-                                        <th class="text-center">Kargo Ücreti</th>
-                                        <th class="text-center">Varyant İsmi / Seçimi</th>
+                                        <th width="150" class="text-center">Pic </th>
+                                        <th class="text-center">Id</th>
+                                        <th class="text-center">Name</th>
+                                        <th class="text-center">Unit Price</th>
+                                        <th class="text-center">Quantity</th>
+                                        <th class="text-center">Shipping Price</th>
+                                        <th class="text-center">Variants</th>
                                     </tr>
                                 </thead>
                                 <?php foreach ($orderDetail['order'] as $key => $value): ?>
@@ -145,34 +145,34 @@
                 <div class="box-body no-padding">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Fatura Adresi Detayları</h3>
+                            <h3 class="box-title">Billing Details</h3>
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
                         <?php $billing = json_decode($orderDetail['order'][0]['billing_address_detail'], true);?>
                         <div class="box-body ">
                             <div class="form-group col-md-4">
-                                <label for="name">Adres İsmi</label>
+                                <label for="name">Address Name</label>
                                 <input disabled="disabled" type="text" class="form-control" name="name" value="<?php echo $billing['address_name'] ?>">
                             </div>
                             <div class="form-group col-md-4">
-                                <label for="email">Adresteki İsim</label>
+                                <label for="email">Name</label>
                                 <input disabled="disabled" type="text" class="form-control" name="email" value="<?php echo $billing['full_name'] ?>">
                             </div>
                             <div class="form-group col-md-4">
-                                <label for="name">İlçe</label>
+                                <label for="name">County</label>
                                 <input disabled="disabled" type="text" class="form-control" name="payment_selection" value="<?php echo $billing['county'] ?>">
                             </div>
                             <div class="form-group col-md-4">
-                                <label for="email">İl</label>
+                                <label for="email">City</label>
                                 <input disabled="disabled" type="text" class="form-control" name="created_at" value="<?php echo $billing['city'] ?>">
                             </div>
                             <div class="form-group col-md-4">
-                                <label for="mobile">Telefon</label>
+                                <label for="mobile">Phone</label>
                                 <input disabled="disabled" type="text" class="form-control" name="cargo_send_code" value="<?php echo $billing['mobile'] ?>">
                             </div>
                             <div class="form-group col-md-12">
-                                <label for="mobile">Adres</label>
+                                <label for="mobile">Address</label>
                                 <textarea style="resize: none;" class="form-control" rows="4" disabled="disabled"><?php echo $billing['address'] ?></textarea>
                             </div>
                         </div>
@@ -185,34 +185,34 @@
                 <div class="box-body no-padding">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Kargo Adresi Detayları</h3>
+                            <h3 class="box-title">Cargo Details</h3>
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
                         <?php $shipping = json_decode($orderDetail['order'][0]['shipping_address_detail'], true);?>
                         <div class="box-body ">
                             <div class="form-group col-md-4">
-                                <label for="name">Adres İsmi</label>
+                                <label for="name">Address Name</label>
                                 <input disabled="disabled" type="text" class="form-control" name="name" value="<?php echo $shipping['address_name'] ?>">
                             </div>
                             <div class="form-group col-md-4">
-                                <label for="email">Adresteki İsim</label>
+                                <label for="email">Name</label>
                                 <input disabled="disabled" type="text" class="form-control" name="email" value="<?php echo $shipping['full_name'] ?>">
                             </div>
                             <div class="form-group col-md-4">
-                                <label for="name">İlçe</label>
+                                <label for="name">County</label>
                                 <input disabled="disabled" type="text" class="form-control" name="payment_selection" value="<?php echo $shipping['county'] ?>">
                             </div>
                             <div class="form-group col-md-4">
-                                <label for="email">İl</label>
+                                <label for="email">City</label>
                                 <input disabled="disabled" type="text" class="form-control" name="created_at" value="<?php echo $shipping['city'] ?>">
                             </div>
                             <div class="form-group col-md-4">
-                                <label for="mobile">Telefon</label>
+                                <label for="mobile">Mobile</label>
                                 <input disabled="disabled" type="text" class="form-control" name="cargo_send_code" value="<?php echo $shipping['mobile'] ?>">
                             </div>
                             <div class="form-group col-md-12">
-                                <label for="mobile">Adres</label>
+                                <label for="mobile">Address</label>
                                 <textarea style="resize: none;" class="form-control" rows="4" disabled="disabled"><?php echo $shipping['address'] ?></textarea>
                             </div>
                         </div>
@@ -234,14 +234,14 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span></button>
-                    <h4 class="modal-title">Siparişi Onayla</h4>
+                    <h4 class="modal-title">Approve Order</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Siparişi onaylamak istediğinize emin misiniz?</p>
+                    <p>You sure to approve?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">İptal</button>
-                    <button type="submit" class="btn btn-primary">Onayla</button>
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Approve</button>
                 </div>
             </form>
         </div>
@@ -257,15 +257,15 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span></button>
-                    <h4 class="modal-title">Kargo Gönderildi Olarak İşaretle</h4>
+                    <h4 class="modal-title">Mark as Shipped</h4>
                 </div>
                 <div class="modal-body">
-                    <label for="name">Kargo Gönderim Kodu (*)</label>
+                    <label for="name">Cargo Sent Code (*)</label>
                     <input type="text" class="form-control required" name="cargo_send_code" value="">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Vazgeç</button>
-                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Dismiss</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
                 </div>
             </form>
         </div>

@@ -4,10 +4,10 @@
 	<!-- Content Header (Page header) -->
 	<section class="content-header">
 		<h1>
-			Genel Site Ayarları
+			General Settings
 		</h1>
 		<ol class="breadcrumb">
-			<li class="active">Site Ayarları</li>
+			<li class="active">Site Settings</li>
 		</ol>
 	</section>
 	<!-- Main content -->
@@ -21,37 +21,37 @@
 						<form role="form" method="post" action="<?php echo $this->get('router')->path('admin_settings_general_update') ?>" id="site-settings-form">
 							<div class="col-md-6">
 								<div class="box-header with-border">
-									<h3 class="box-title">Anasayfa Metinleri</h3>
+									<h3 class="box-title">Main Page Texts</h3>
 								</div>
 								<!-- /.box-header -->
 								<!-- form start -->
 								<div class="box-body">
 									<div class="form-group">
-										<label for="siteKeywords">Site Anahtar Kelimeleri (virgül ile ayırarak yazınız)</label>
+										<label for="siteKeywords">Site Keywords (seperate with comma)</label>
 										<input type="text" class="form-control required" name="keywords" value="<?php echo $siteSettings['keywords'];?>">
 									</div>
 									<div class="form-group">
-										<label for="siteKeywords">Site Copyright Metni</label>
+										<label for="siteKeywords">Site Copyright</label>
 										<input type="text" class="form-control required" name="copyright" value="<?php echo $siteSettings['copyright'];?>"> 
 									</div>
 									<div class="form-group">
-										<label for="siteKeywords">Site Email Adresi</label>
+										<label for="siteKeywords">Site Email</label>
 										<input type="text" class="form-control required" name="mail" value="<?php echo $siteSettings['mail'] ?>">
 									</div>
 									<div class="form-group">
-										<label for="siteWebAddress">Site Web Adresi</label>
+										<label for="siteWebAddress">Site</label>
 										<input type="text" class="form-control required" name="link" value="<?php echo $siteSettings['link'] ?>">
 									</div>
 									<div class="form-group">
-										<label for="siteAddress">Site Açık Adresi</label>
+										<label for="siteAddress">Site Address</label>
 										<input type="text" class="form-control required" name="address" value="<?php echo $siteSettings['address'] ?>">
 									</div>
 									<div class="form-group">
-										<label for="sitePhone">Site Telefonu</label>
+										<label for="sitePhone">Site Phone</label>
 										<input type="text" class="form-control required" name="phone" value="<?php echo $siteSettings['phone'] ?>">
 									</div>
 									<div class="form-group">
-										<label for="siteFooterText">SiteFooterMetni</label>
+										<label for="siteFooterText">Footer Text</label>
 										<textarea style="resize: none;" rows="3" class="form-control" name="footer_text"><?php echo $siteSettings['footer_text'] ?></textarea>
 									</div>
 								</div>
@@ -59,26 +59,26 @@
 							</div>
 							<div class="col-md-6">
 								<div class="box-header with-border">
-									<h3 class="box-title">Site Genel Ayarları</h3>
+									<h3 class="box-title">Site General Settings</h3>
 								</div>
 								<div class="box-body">
 									<div class="form-group" >
-										<label for="siteName">Site İsmi</label>
+										<label for="siteName">Site Name</label>
 										<input type="text" class="form-control required" name="name" value="<?php echo $siteSettings['name'];?>">
 									</div>
 									<div class="form-group">
-										<label for="siteTitle">Site Başlığı</label>
+										<label for="siteTitle">Site Title</label>
 										<input type="text" class="form-control required" name="title" value="<?php echo $siteSettings['title'];?>">
 									</div>
 									<div class="form-group">
-										<label for="siteDescription">Site Açıklaması</label>
+										<label for="siteDescription">Site Description</label>
 										<input type="text" class="form-control required" name="description" value="<?php echo $siteSettings['description'];?>">
 									</div>
 								<div class="box-header with-border">
-									<h3 class="box-title">Sosyal Medya Bağlantıları</h3>
+									<h3 class="box-title">Social</h3>
 								</div>
 								<div class="box-body">
-									<h5>Lütfen sadece adresten sonraki kısmı yazınız. Boş bırakırsanız anasayfada görünmeyecekler.</h5>
+									<h5>Please write only after domain.</h5>
 									<div style="margin-top: 5px" class="input-group">
 										<span class="input-group-addon"><i class="fa fa-facebook"></i> www.facebook.com/</span>
 										<input name="facebook" type="text" class="form-control" value="<?php echo $siteSettings['facebook'] ?>" placeholder="username">
@@ -108,7 +108,7 @@
 							</div>
 							<div class="box-footer">
 								<?php if($admin->hasRole('settings_general_update')): ?>
-									<button type="submit" class="btn btn-primary btn-block">Kaydet</button>
+									<button type="submit" class="btn btn-primary btn-block">Save</button>
 								<?php endif; ?>
 							</div>
 						</form>

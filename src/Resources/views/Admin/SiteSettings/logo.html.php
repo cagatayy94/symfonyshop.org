@@ -7,7 +7,7 @@
 			Logo ve Favicon
 		</h1>
 		<ol class="breadcrumb">
-			<li class="active">Site Ayarları</li>
+			<li class="active">Site Settings</li>
 		</ol>
 	</section>
 	<!-- Main content -->
@@ -26,14 +26,14 @@
 								<thead>
 									<tr>
 										<th colspan="2">
-											<h5>
-												Logolarınızı ve faviconlarınızı güncelledikten sonra tarayıcı geçmişinizi silmeden değişiklikleri görüntüleyemeyebilirsiniz. En iyi görüntü için yüklediğiniz logoların 256 × 64 boyutunda faviconun ise 16x16px boyutunda olduğundan emin olun.
+											<h3>
+                                                After updating your logos and favicons, you may not be able to view the changes without deleting your browser history. For the best display, make sure that the logos you upload are 256 × 64 and the favicon is 16x16px.
 											</h3>
 										</th>
 									</tr>
 									<tr>
-										<th>Mevcut</th>
-										<th>Yeni Yükle</th>
+										<th>Current</th>
+										<th>Add New</th>
 									</tr>
 								</thead>
 									<tbody>
@@ -41,9 +41,11 @@
 												<td style="background: repeating-linear-gradient(45deg,#606dbc,#606dbc 10px,#465298 10px,#465298 20px);"><img height="16" src="web/img/logo-shop.png"></td>
 												<td>
 													<div class="form-group">
-														<label for="dark_logo">Dark Logo Yükle</label>
+														<label for="dark_logo">Dark Logo</label>
 														<input name="dark_logo" type="file" id="dark_logo">
-														<p class="help-block">En iyi sonuç için logonun 256×64 boyutlarında olduğundan emin olun. </p>
+														<p class="help-block">
+                                                            Make sure the logo is 256×64 for best results.
+                                                        </p>
 													</div>
 												</td>
 										</tr>
@@ -51,9 +53,11 @@
 											<td style="background: repeating-linear-gradient(45deg,#606dbc,#606dbc 10px,#465298 10px,#465298 20px);"><img height="16" src="web/img/logo-shop-light.png"></td>                    
 												<td>
 													<div class="form-group">
-														<label for="light_logo">Light Logo Yükle</label>
+														<label for="light_logo">Light Logo</label>
 														<input name="light_logo" type="file" id="light_logo">
-														<p class="help-block">En iyi sonuç için logonun 256×64 boyutlarında olduğundan emin olun. </p>
+														<p class="help-block">
+                                                            Make sure the logo is 256×64 for best results.
+                                                        </p>
 													</div>
 												</td>
 										</tr>
@@ -61,9 +65,11 @@
 											<td style="background: repeating-linear-gradient(45deg,#606dbc,#606dbc 10px,#465298 10px,#465298 20px);"><img height="16" src="web/img/favicon.ico"></td>                    
 												<td>
 													<div class="form-group">
-														<label for="favicon">Favicon Yükle</label>
+														<label for="favicon">Favicon</label>
 														<input name="favicon" type="file" id="favicon">
-														<p class="help-block">En iyi sonuç için favioconun 16x16 boyutlarında olduğundan emin olun.</p>
+														<p class="help-block">
+                                                            Make sure the faviocon is 16x16 for best results.
+                                                        </p>
 													</div>
 												</td>
 										</tr>
@@ -71,7 +77,7 @@
 								<tr>
 									<td colspan="2">
 										<?php if ($admin->hasRole('update_logo')): ?>
-											<button style="float: right;" type="submit" class="btn btn-primary">Güncelle</button>
+											<button style="float: right;" type="submit" class="btn btn-primary">Update</button>
 										<?php endif ?>
 									</td>
 								</tr>

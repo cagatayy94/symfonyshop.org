@@ -4,10 +4,10 @@
 	<!-- Content Header (Page header) -->
 	<section class="content-header">
 		<h1>
-			Kargo Listesi
+			Cargo List
 		</h1>
 		<ol class="breadcrumb">
-			<li class="active">Site Ayarları</li>
+			<li class="active">Site Settings</li>
 		</ol>
 	</section>
 	<!-- Main content -->
@@ -17,12 +17,12 @@
 			<div class="col-xs-12">
 				<div class="box">
 					<div class="box-header">
-						<h3 class="box-title">Kargo Listesi</h3>
+						<h3 class="box-title">Cargo List</h3>
 						<div class="box-tools">
 							<div class="input-group input-group-sm hidden-xs" style="width: 150px;">
 								<div class="input-group-btn">
 									<?php if($admin->hasRole('cargo_create')): ?>
-										<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-new-cargo-modal"><i class="fa fa-plus"></i> Yeni Ekle</button>
+										<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-new-cargo-modal"><i class="fa fa-plus"></i> Add New</button>
 									<?php endif; ?>
 								</div>
 							</div>
@@ -37,12 +37,12 @@
 										<td><?php echo $value['name']; ?></td>
 										<?php if ($admin->hasRole('cargo_update')):?>
 										<td>
-											<button data-update-id="<?php echo $value['id'] ?>" class="btn btn-primary update-cargo"><i class="fa fa-edit"></i> Düzenle</button>
+											<button data-update-id="<?php echo $value['id'] ?>" class="btn btn-primary update-cargo"><i class="fa fa-edit"></i> Update</button>
 										</td>
 										<?php endif;?>
 										<?php if ($admin->hasRole('cargo_delete')):?>
 										<td>
-											<button data-delete-url="<?php echo $this->get('router')->path('admin_settings_cargo_delete', ['cargoId' => $value['id']]); ?>" class="btn btn-danger delete-cargo"><i class="fa fa-remove"></i> Sil</button>
+											<button data-delete-url="<?php echo $this->get('router')->path('admin_settings_cargo_delete', ['cargoId' => $value['id']]); ?>" class="btn btn-danger delete-cargo"><i class="fa fa-remove"></i> Delete</button>
 										</td>
 										<?php endif;?>
 									</tr>
@@ -66,17 +66,17 @@
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">×</span></button>
-					<h4 class="modal-title">Yeni Kargo Firması Ekle</h4>
+					<h4 class="modal-title">Add new cargo</h4>
 				</div>
 				<div class="modal-body">                  
 					<div class="form-group">
-							<label for="name">Kargo Firması İsmi</label>
+							<label for="name">Cargo Company Name</label>
 							<input type="text" class="form-control required" name="name" value="">
 					</div>                  
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Vazgeç</button>
-					<button type="submit" class="btn btn-primary">Kaydet</button>
+					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Dismiss</button>
+					<button type="submit" class="btn btn-primary">Save</button>
 				</div>
 			</form>
 		</div>
@@ -94,18 +94,18 @@
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">×</span></button>
-					<h4 class="modal-title">Kargo Firması Güncelle</h4>
+					<h4 class="modal-title">Update Cargo Company</h4>
 				</div>
 				<div class="modal-body">  
 				<input type="hidden" name="id" id="id" value="">                
 					<div class="form-group">
-							<label for="name">Kargo Firması İsmi</label>
+							<label for="name">Cargo Name</label>
 							<input type="text" class="form-control required" id="name" name="name" value="">
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Vazgeç</button>
-					<button type="submit" class="btn btn-primary">Kaydet</button>
+					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Dismiss</button>
+					<button type="submit" class="btn btn-primary">Save</button>
 				</div>
 			</form>
 		</div>

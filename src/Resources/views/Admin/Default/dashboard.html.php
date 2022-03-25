@@ -20,12 +20,12 @@
                 <div class="small-box bg-aqua">
                     <div class="inner">
                         <h3 class="order_count">0</h3>
-                        <p>Siparişler</p>
+                        <p>Orders</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-bag"></i>
                     </div>
-                    <a href="<?php echo $this->get('router')->path('admin_order_list') ?>" class="small-box-footer">Tümünü gör <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="<?php echo $this->get('router')->path('admin_order_list') ?>" class="small-box-footer">All <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <div class="col-lg-3 col-xs-6">
@@ -33,12 +33,12 @@
                 <div class="small-box bg-yellow">
                     <div class="inner">
                         <h3 class="user_count">0</h3>
-                        <p>Kullanıcılar</p>
+                        <p>Users</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-person-add"></i>
                     </div>
-                    <a href="<?php echo $this->get('router')->path('admin_user_list') ?>" class="small-box-footer">Tümünü gör <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="<?php echo $this->get('router')->path('admin_user_list') ?>" class="small-box-footer">All <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -47,12 +47,12 @@
                 <div class="small-box bg-red">
                     <div class="inner">
                         <h3 class="order_notice_count">0</h3>
-                        <p>Havale Bildirimleri</p>
+                        <p>Order Notices</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-disc"></i>
                     </div>
-                    <a href="<?php echo $this->get('router')->path('admin_money_order_list') ?>" class="small-box-footer">Tümünü gör <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="<?php echo $this->get('router')->path('admin_money_order_list') ?>" class="small-box-footer">All <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->

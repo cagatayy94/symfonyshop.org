@@ -5,11 +5,11 @@
 	<!-- Content Header (Page header) -->
 	<section class="content-header">
 			<h1>
-					Havale Bildirimleri Listesi
+                Order Notice List
 			</h1>
 			<ol class="breadcrumb">
 					<li><a href="<?php echo $this->get('router')->path('admin_dashboard'); ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-					<li class="active">Havale Bildirimleri Listesi</li>
+					<li class="active">Order Notice List</li>
 			</ol>
 	</section>
 	<section class="content">
@@ -17,7 +17,7 @@
 			<div class="col-md-12">
 				<div class="box">
 				<div class="box-header with-border">
-					<h3 class="box-title">Havale Bildirimleri Listesi <span class="label label-warning"><?php echo "Toplam :".$bankTrasferList['total']; ?></span></h3>
+					<h3 class="box-title">Order Notice List <span class="label label-warning"><?php echo "Toplam :".$bankTrasferList['total']; ?></span></h3>
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body">
@@ -27,13 +27,13 @@
 							<table class="table table-striped table-bordered">
 								<tbody>
 									<tr>
-											<th class="text-center">İsim</th>
+											<th class="text-center">Name</th>
 											<th class="text-center">Mail</th>
-											<th class="text-center">Telefon</th>
-											<th class="text-center">Banka</th>
-											<th style="width: 100px" class="text-center">Onaylı</th>
-											<th style="min-width: 180px" class="text-center">Tarih Aralığı</th>
-											<th style="width: 150px" class="text-center">Mesaj</th>
+											<th class="text-center">Phone</th>
+											<th class="text-center">Banks</th>
+											<th style="width: 100px" class="text-center">Status</th>
+											<th style="min-width: 180px" class="text-center">Date</th>
+											<th style="width: 150px" class="text-center">Message</th>
 											<th></th>
 									</tr>
 									<tr>
@@ -48,7 +48,7 @@
 											</td>
 											<td class="text-center">
 												<select name="bankId" class="form-control change-submit">
-													<option value="">Tümü</option>
+													<option value="">All</option>
 													<?php foreach ($allBanks as $value): ?>
 														<option <?php echo $bankId == $value['id'] ? 'selected="selected"' : '' ?> value="<?php echo $value['id'] ?>"><?php echo $value['name'] ?></option>
 													<?php endforeach ?>
@@ -56,9 +56,9 @@
 											</td>
 											<td class="text-center">
 												<select name="isApproved" class="form-control change-submit">
-													<option <?php echo is_null($isApproved) ? 'selected="selected"' : '' ?> value="">Tümü</option>
-													<option <?php echo !is_null($isApproved) && $isApproved == "0" ? 'selected="selected"' : '' ?> value="0">Onaylanmamış</option>
-													<option <?php echo !is_null($isApproved) && $isApproved == "1" ? 'selected="selected"' : '' ?> value="1">Onaylanmış</option>
+													<option <?php echo is_null($isApproved) ? 'selected="selected"' : '' ?> value="">All</option>
+													<option <?php echo !is_null($isApproved) && $isApproved == "0" ? 'selected="selected"' : '' ?> value="0">Not Approved</option>
+													<option <?php echo !is_null($isApproved) && $isApproved == "1" ? 'selected="selected"' : '' ?> value="1">Approved</option>
 												</select>
 											</td>
 											<td class="text-center">
@@ -67,7 +67,7 @@
 											</td>
 											<td></td>
 											<td class="text-center">
-												<button type="submit" class="btn btn-sm btn-success submit-filter"><i class="fa fa-fw fa-filter"></i> Filtrele</button>
+												<button type="submit" class="btn btn-sm btn-success submit-filter"><i class="fa fa-fw fa-filter"></i> Search</button>
 											</td>
 									</tr>
 									<?php foreach ($bankTrasferList['records'] as $value): ?>
@@ -77,11 +77,11 @@
 											<td class="text-center"><?php echo $value['mobile'] ?></td>
 											<td class="text-center"><?php echo $value['bank_name'] ?></td>
 											<td class="text-center">
-												<?php echo $value['is_approved'] ? '<span class="label label-success">Onaylanmış</span>' : '<span class="label label-danger">Onaylanmamış</span>'; ?>
+												<?php echo $value['is_approved'] ? '<span class="label label-success">Approved</span>' : '<span class="label label-danger">Non Approved</span>'; ?>
 												<?php if ($value['is_approved']):?>
-													<button style="margin: 5px" type="button" data-type="unapprove" class="btn btn-danger btn-sm approve">Onayı Geri Al</button>
+													<button style="margin: 5px" type="button" data-type="unapprove" class="btn btn-danger btn-sm approve">Revert Approval</button>
 												<?php else: ?>
-													<button style="margin: 5px" type="button" data-type="approve" class="btn btn-success btn-sm approve">Onayla</button>
+													<button style="margin: 5px" type="button" data-type="approve" class="btn btn-success btn-sm approve">Approve</button>
 												<?php endif; ?>
 											</td>
 											<td class="text-center">
@@ -90,7 +90,7 @@
 											<td class="text-center"><?php echo $value['message'] ?></td>
 											<td class="text-center">
 												<?php if ($admin->hasRole('bank_transfer_delete')): ?>
-													<button data-delete-url="<?php echo $this->get('router')->path('admin_money_order_delete', ['moneyOrderId' => $value['id']]) ?>" class="btn btn-sm btn-danger delete-bank-transfer"><i class="fa fa-fw fa-eraser"></i> Sil</button>
+													<button data-delete-url="<?php echo $this->get('router')->path('admin_money_order_delete', ['moneyOrderId' => $value['id']]) ?>" class="btn btn-sm btn-danger delete-bank-transfer"><i class="fa fa-fw fa-eraser"></i> Delete</button>
 												<?php endif ?>
 											</td>
 										</tr>

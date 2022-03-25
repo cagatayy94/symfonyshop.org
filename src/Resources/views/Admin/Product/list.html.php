@@ -5,11 +5,11 @@
 	<!-- Content Header (Page header) -->
 	<section class="content-header">
 		<h1>
-			Ürün Listesi
+            Product List
 		</h1>
 		<ol class="breadcrumb">
 			<li><a href="<?php echo $this->get('router')->path('admin_dashboard'); ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-			<li class="active">Ürün Listesi</li>
+			<li class="active">Product List</li>
 		</ol>
 	</section>
 	<section class="content">
@@ -17,7 +17,7 @@
 		<div class="col-md-12">
 		  <div class="box">
 		  <div class="box-header with-border">
-			<h3 class="box-title">Ürün Listesi <span class="label label-warning"><?php echo "Toplam :".$products['total']; ?></span></h3>
+			<h3 class="box-title">Product List <span class="label label-warning"><?php echo "Toplam :".$products['total']; ?></span></h3>
 		  </div>
 		  <!-- /.box-header -->
 		  <div class="box-body">
@@ -28,15 +28,15 @@
 				<table class="table table-striped table-bordered">
 				  <tbody>
 					<tr>
-						<th class="text-center">Ürün Kodu</th>
-						<th class="text-center">Ürün ismi</th>
-						<th class="text-center">Fiyat</th>
-						<th class="text-center">Kargo Fiyatı</th>
-						<th class="text-center">Vergi</th>
-						<th class="text-center">Açıklama</th>
-						<th class="text-center">Variant Başlığı</th>
-						<th class="text-center">Görüntülenme Sayısı</th>
-						<th style="min-width: 180px" class="text-center">Oluşturulma Tarihi</th>
+						<th class="text-center">Product Code</th>
+						<th class="text-center">Name</th>
+						<th class="text-center">Price</th>
+						<th class="text-center">Cargo Price</th>
+						<th class="text-center">Tax</th>
+						<th class="text-center">Desc</th>
+						<th class="text-center">Variant title</th>
+						<th class="text-center">View Count</th>
+						<th style="min-width: 180px" class="text-center">Date</th>
 						<th></th>
 					</tr>
 					<?php if (!$excelExport): ?>                      
@@ -59,8 +59,8 @@
 						</th>
 						<th class="text-center">
 						  <?php if (!$excelExport): ?>
-							<button style="margin: 2px" type="submit" class="btn btn-sm btn-primary submit-filter"><i class="fa fa-fw fa-filter"></i> Filtrele</button>                            
-							<button style="margin: 2px" type="submit" class="btn btn-sm btn-success submit-filter-excel"><i class="fa fa-fw fa-file-excel-o"></i> Excel</button>
+							<button style="margin: 2px" type="submit" class="btn btn-sm btn-primary submit-filter"><i class="fa fa-fw fa-filter"></i> Filter</button>
+							<button style="margin: 2px" type="submit" class="btn btn-sm btn-success submit-filter-excel"><i class="fa fa-fw fa-file-excel-o"></i> Export</button>
 						  <?php endif ?>
 						</th>
 					</tr>
@@ -80,11 +80,11 @@
 						</td>
 						<td class="text-center">
 							<?php if ($admin->hasRole('product_detail') && !$excelExport): ?>
-								<a style="margin: 2px" class="btn btn-sm btn-success" href="<?php echo $this->get('router')->path('admin_product_detail', ['id' => $value['id']]) ?>"><i class="fa fa-fw fa-info"></i> Detay</a>
+								<a style="margin: 2px" class="btn btn-sm btn-success" href="<?php echo $this->get('router')->path('admin_product_detail', ['id' => $value['id']]) ?>"><i class="fa fa-fw fa-info"></i> Detail</a>
 						  	<?php endif ?>
 
 							<?php if ($admin->hasRole('product_delete') && !$excelExport): ?>
-								<button style="margin: 2px" data-delete-url="<?php echo $this->get('router')->path('admin_product_delete', ['productId' => $value['id']]) ?>" class="btn btn-sm btn-danger delete-product"><i class="fa fa-fw fa-eraser"></i> Sil</button>
+								<button style="margin: 2px" data-delete-url="<?php echo $this->get('router')->path('admin_product_delete', ['productId' => $value['id']]) ?>" class="btn btn-sm btn-danger delete-product"><i class="fa fa-fw fa-eraser"></i> Delete</button>
 							<?php endif ?>
 						</td>
 					  </tr>

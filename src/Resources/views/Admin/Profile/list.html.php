@@ -6,11 +6,11 @@
 	<!-- Content Header (Page header) -->
 	<section class="content-header">
 			<h1>
-					Yönetici Profil Listesi
+                Admin Profile List
 			</h1>
 			<ol class="breadcrumb">
 					<li><a href="<?php echo $this->get('router')->path('admin_dashboard'); ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-					<li class="active">Yönetici Profil Listesi</li>
+					<li class="active">Admin Profile List</li>
 			</ol>
 	</section>
 	<section class="content">
@@ -19,10 +19,10 @@
 				<div class="box">
 					<div class="box-header">
 						<div class="row">
-							<div class="col-md-10"><h3 class="box-title">Yönetici Profil Listesi</h3></div>
+							<div class="col-md-10"><h3 class="box-title">Admin Profile List</h3></div>
 							<div class="col-md-2">
 								<?php if ($admin->hasRole('profile_create')):?>
-									<button type="button" data-toggle="modal" data-target="#add-new-admin-modal" class="btn btn-block btn-info btn-flat"><i class="fa fa-fw fa-plus"></i> Yeni Ekle </button>
+									<button type="button" data-toggle="modal" data-target="#add-new-admin-modal" class="btn btn-block btn-info btn-flat"><i class="fa fa-fw fa-plus"></i> Add New </button>
 								<?php endif; ?>
 							</div>
 						</div>
@@ -32,8 +32,8 @@
 						<table class="table table-striped">
 							<tbody>
 							<tr>
-								<th>İsim</th>
-								<th>Kişiler</th>
+								<th>Name</th>
+								<th>Users</th>
 								<th></th>
 							</tr>
 							<?php if (count($adminProfileList)):?>
@@ -49,7 +49,7 @@
 										</td>
 										<td>
 											<?php if ($admin->hasRole('profile_detail_show')): ?>
-												<a style="padding: 0;" href="<?php echo $this->get('router')->path('admin_profile_detail', ['profileId' => $profileKey]) ?>" class="btn"><i class="fa fa-edit"></i> Detay </a>
+												<a style="padding: 0;" href="<?php echo $this->get('router')->path('admin_profile_detail', ['profileId' => $profileKey]) ?>" class="btn"><i class="fa fa-edit"></i> Detail </a>
 											<?php endif ?>
 										</td>
 									</tr>
@@ -71,19 +71,19 @@
 										<div class="modal-header">
 											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 												<span aria-hidden="true">×</span></button>
-											<h4 class="modal-title">Yeni Yönetici Profili Oluştur</h4>
+											<h4 class="modal-title">New Profile</h4>
 										</div>
 										<div class="modal-body">
 													<div class="box-body">
 															<div class="form-group">
-																	<label for="name">İsim</label>
+																	<label for="name">Name</label>
 																	<input type="text" class="form-control required" name="profileName" placeholder="İsim">
 															</div>
 													</div>
 										</div>
 										<div class="modal-footer">
-											<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Kapat</button>
-											<button type="submit" class="btn btn-primary">Kaydet</button>
+											<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Dismiss</button>
+											<button type="submit" class="btn btn-primary">Save</button>
 										</div>
 							</form>
 					</div>

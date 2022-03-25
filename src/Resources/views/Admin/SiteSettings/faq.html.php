@@ -4,10 +4,10 @@
 	<!-- Content Header (Page header) -->
 	<section class="content-header">
 		<h1>
-			Sık Sorulan Sorular
+			F.A.Q.
 		</h1>
 		<ol class="breadcrumb">
-			<li class="active">Site Ayarları</li>
+			<li class="active">Site Settings</li>
 		</ol>
 	</section>
 	<!-- Main content -->
@@ -17,12 +17,12 @@
 			<div class="col-xs-12">
 				<div class="box">
 					<div class="box-header">
-						<h3 class="box-title">Sık Sorulan Sorular</h3>
+						<h3 class="box-title">F.A.Q.</h3>
 						<div class="box-tools">
 							<div class="input-group input-group-sm hidden-xs" style="width: 150px;">
 								<div class="input-group-btn">
 									<?php if($admin->hasRole('faq_create')): ?>
-										<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-new-faq-modal"><i class="fa fa-plus"></i> Yeni Ekle</button>
+										<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-new-faq-modal"><i class="fa fa-plus"></i> Add New</button>
 									<?php endif; ?>
 								</div>
 							</div>
@@ -33,8 +33,8 @@
 						<table class="table table-hover">
 							<tbody>
 								<tr>
-									<th>Soru</th>
-									<th>Cevap</th>
+									<th>Question</th>
+									<th>Answer</th>
 									<?php if ($admin->hasRole('faq_update')):?>
 									<th></th>
 									<?php endif; ?>
@@ -48,12 +48,12 @@
 										<td><?php echo $value['answer']; ?></td>
 										<?php if ($admin->hasRole('faq_update')):?>
 										<td>
-											<button data-update-id="<?php echo $value['id'] ?>" class="btn btn-primary update-faq"><i class="fa fa-edit"></i> Düzenle</button>
+											<button data-update-id="<?php echo $value['id'] ?>" class="btn btn-primary update-faq"><i class="fa fa-edit"></i> Update</button>
 										</td>
 										<?php endif;?>
 										<?php if ($admin->hasRole('faq_delete')):?>
 										<td>
-											<button data-delete-url="<?php echo $this->get('router')->path('admin_settings_faq_delete', ['faqId' => $value['id']]); ?>" class="btn btn-danger delete-faq"><i class="fa fa-remove"></i> Sil</button>
+											<button data-delete-url="<?php echo $this->get('router')->path('admin_settings_faq_delete', ['faqId' => $value['id']]); ?>" class="btn btn-danger delete-faq"><i class="fa fa-remove"></i> Delete</button>
 										</td>
 										<?php endif;?>
 									</tr>
@@ -77,21 +77,21 @@
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">×</span></button>
-					<h4 class="modal-title">Yeni Sık Sorulan Soru Ekle</h4>
+					<h4 class="modal-title">Add new faq</h4>
 				</div>
 				<div class="modal-body">                  
 					<div class="form-group">
-							<label for="question">Soru</label>
+							<label for="question">Question</label>
 							<textarea name="question" class="form-control required" rows="4"></textarea>
 					</div>
 					<div class="form-group">
-							<label for="answer">Cevap</label>
+							<label for="answer">Answer</label>
 							<textarea name="answer" class="form-control required" rows="4"></textarea>
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Vazgeç</button>
-					<button type="submit" class="btn btn-primary">Kaydet</button>
+					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Dismiss</button>
+					<button type="submit" class="btn btn-primary">Save</button>
 				</div>
 			</form>
 		</div>
@@ -109,22 +109,22 @@
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">×</span></button>
-					<h4 class="modal-title">Sorulan Soru Güncelle</h4>
+					<h4 class="modal-title">Update faq</h4>
 				</div>
 				<div class="modal-body">                  
 					<div class="form-group">
 							<input type="hidden" id="faq_id" name="faq_id" value="">
-							<label for="question">Soru</label>
+							<label for="question">Question</label>
 							<textarea id="question" name="question" class="form-control required" rows="4"></textarea>
 					</div>
 					<div class="form-group">
-							<label for="answer">Cevap</label>
+							<label for="answer">Answer</label>
 							<textarea id="answer" name="answer" class="form-control required" rows="4"></textarea>
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Vazgeç</button>
-					<button type="submit" class="btn btn-primary">Kaydet</button>
+					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Dismiss</button>
+					<button type="submit" class="btn btn-primary">Save</button>
 				</div>
 			</form>
 		</div>

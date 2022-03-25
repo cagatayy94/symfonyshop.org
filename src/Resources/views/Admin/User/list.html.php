@@ -6,11 +6,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Kullanıcı Listesi
+            User List
         </h1>
         <ol class="breadcrumb">
             <li><a href="<?php echo $this->get('router')->path('admin_dashboard'); ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active">Kullanıcı Listesi</li>
+            <li class="active">User List</li>
         </ol>
     </section>
     <section class="content">
@@ -19,7 +19,7 @@
           <div class="box">
             <div class="box-header">
                 <div class="row">
-                    <div class="col-md-12"><h3 class="box-title">Kullanıcılar</h3></div>
+                    <div class="col-md-12"><h3 class="box-title">Users</h3></div>
                 </div>
             </div>
             <!-- /.box-header -->
@@ -29,12 +29,12 @@
                     <table class="table table-striped">
                         <tbody>
                             <tr>
-                                <th>İsim</th>
-                                <th>Email</th>
-                                <th>Telefon</th>
-                                <th>Durum</th>
-                                <th>Mail Listesi</th>
-                                <th>Kayıt Tarihi</th>
+                                <th>Name</th>
+                                <th>Mail</th>
+                                <th>Phone</th>
+                                <th>Status</th>
+                                <th>Mail List</th>
+                                <th>Date</th>
                             </tr>
                             <?php if (count($userList)): ?>
                                 <?php foreach ($userList['records'] as $key => $user): ?>
@@ -43,32 +43,32 @@
                                         <td>
                                             <?php if($user['is_email_approved']): ?>
                                                 <span><?php echo $user['email']; ?></span>
-                                                <small class="label pull-left bg-green">Onaylı</small>
+                                                <small class="label pull-left bg-green">Approved</small>
                                             <?php else: ?>
                                                 <span><?php echo $user['email']; ?></span>
-                                                <small class="label pull-left bg-red">Onaysız</small>
+                                                <small class="label pull-left bg-red">Non Approved</small>
                                             <?php endif; ?>
                                         </td>
                                         <td>
                                             <span><?php echo $user['mobile'] ? $user['mobile'] : 'Belirtilmemiş'; ?></span>
                                             <?php if($user['is_mobile_approved']): ?>
-                                                <small class="label pull-left bg-green">Onaylı</small>
+                                                <small class="label pull-left bg-green">Approved</small>
                                             <?php else: ?>
-                                                <small class="label pull-left bg-red">Onaysız</small>
+                                                <small class="label pull-left bg-red">Non Approved</small>
                                             <?php endif; ?>
                                         </td>
                                         <td>
                                             <?php if($user['is_deleted']): ?>
-                                                <small class="label pull-left bg-red">Silinmiş</small>
+                                                <small class="label pull-left bg-red">Deleted</small>
                                             <?php else: ?>
-                                                <small class="label pull-left bg-green">Mevcut</small>
+                                                <small class="label pull-left bg-green">Present</small>
                                             <?php endif; ?>
                                         </td>
                                         <td>
                                             <?php if($user['is_unsubscribe']): ?>
-                                                <small class="label pull-left bg-red">Kapalı</small>
+                                                <small class="label pull-left bg-red">Closed</small>
                                             <?php else: ?>
-                                                <small class="label pull-left bg-green">Açık</small>
+                                                <small class="label pull-left bg-green">Open</small>
                                             <?php endif; ?>
                                         </td>
                                         <td>

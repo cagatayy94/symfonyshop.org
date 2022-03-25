@@ -6,11 +6,11 @@
 	<!-- Content Header (Page header) -->
 	<section class="content-header">
 			<h1>
-				Menü Listesi
+				Menu List
 			</h1>
 			<ol class="breadcrumb">
 				<li><a href="<?php echo $this->get('router')->path('admin_dashboard'); ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-				<li class="active">Menü Listesi</li>
+				<li class="active">Menu List</li>
 			</ol>
 	</section>
 	<section class="content">
@@ -19,10 +19,10 @@
 				<div class="box">
 					<div class="box-header">
 						<div class="row">
-							<div class="col-md-10"><h3 class="box-title">Menü Listesi</h3></div>
+							<div class="col-md-10"><h3 class="box-title">Menu List</h3></div>
 							<div class="col-md-2">
 								<?php if ($admin->hasRole('menu_create')):?>
-									<button type="button" data-toggle="modal" data-target="#add-new-menu-modal" class="btn btn-block btn-info btn-flat"><i class="fa fa-fw fa-plus"></i> Yeni Ekle </button>
+									<button type="button" data-toggle="modal" data-target="#add-new-menu-modal" class="btn btn-block btn-info btn-flat"><i class="fa fa-fw fa-plus"></i> Add new </button>
 								<?php endif; ?>
 							</div>
 						</div>
@@ -32,8 +32,8 @@
 						<table class="table table-striped">
 							<tbody>
 							<tr>
-								<th>İsim</th>
-								<th>Kategoriler</th>
+								<th>Name</th>
+								<th>Categories</th>
 								<th></th>
 							</tr>
 							<?php foreach ($menus as $menu): ?>
@@ -50,7 +50,7 @@
 									</td>
 									<td>
 										<?php if ($admin->hasRole('menu_detail')): ?>
-											<a style="padding: 0;" href="<?php echo $this->get('router')->path('admin_menu_detail', ['menuId' => $menu['id']]) ?>" class="btn"><i class="fa fa-edit"></i> Detay </a>
+											<a style="padding: 0;" href="<?php echo $this->get('router')->path('admin_menu_detail', ['menuId' => $menu['id']]) ?>" class="btn"><i class="fa fa-edit"></i> Detail </a>
 										<?php endif ?>
 									</td>
 								</tr>
@@ -72,19 +72,19 @@
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">×</span></button>
-							<h4 class="modal-title">Yeni Menu Oluştur</h4>
+							<h4 class="modal-title">Create New menu</h4>
 						</div>
 						<div class="modal-body">
 							<div class="box-body">
 								<div class="form-group">
-									<label for="name">İsim</label>
+									<label for="name">Name</label>
 									<input type="text" class="form-control required" name="menuName" placeholder="İsim">
 								</div>
 							</div>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Kapat</button>
-							<button type="submit" class="btn btn-primary">Kaydet</button>
+							<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Dismiss</button>
+							<button type="submit" class="btn btn-primary">Save</button>
 						</div>
 					</form>
 				</div>

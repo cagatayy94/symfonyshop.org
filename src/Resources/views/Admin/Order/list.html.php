@@ -5,11 +5,11 @@
 	<!-- Content Header (Page header) -->
 	<section class="content-header">
 		<h1>
-			Sipariş Listesi
+			Order List
 		</h1>
 		<ol class="breadcrumb">
 			<li><a href="<?php echo $this->get('router')->path('admin_dashboard'); ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-			<li class="active">Sipariş Listesi</li>
+			<li class="active">Order List</li>
 		</ol>
 	</section>
 	<section class="content">
@@ -17,7 +17,7 @@
 		<div class="col-md-12">
 		  <div class="box">
 		  <div class="box-header with-border">
-			<h3 class="box-title">Sipariş Listesi <span class="label label-warning"><?php echo "Toplam :".$orders['total']; ?></span></h3>
+			<h3 class="box-title">Order List <span class="label label-warning"><?php echo "Toplam :".$orders['total']; ?></span></h3>
 		  </div>
 		  <!-- /.box-header -->
 		  <div class="box-body">
@@ -28,12 +28,12 @@
 				<table class="table table-striped table-bordered">
 				  <tbody>
 					<tr>
-						<th style="width: 55px" class="text-center">Sipariş Id</th>
-						<th style="width: 250px" class="text-center">Alıcı Adı</th>
-						<th style="width: 250px" class="text-center">Toplam Tutar</th>
-						<th style="width: 250px" class="text-center">Sipariş Onay Durumu</th>
-						<th style="width: 250px" class="text-center">Kargo Gönderim Durumu</th>
-						<th style="width: 180px" class="text-center">Oluşturulma Tarihi</th>
+						<th style="width: 55px" class="text-center">Id</th>
+						<th style="width: 250px" class="text-center">Customer Name</th>
+						<th style="width: 250px" class="text-center">Total Amount</th>
+						<th style="width: 250px" class="text-center">Approved</th>
+						<th style="width: 250px" class="text-center">Shipped</th>
+						<th style="width: 180px" class="text-center">Date</th>
 						<th></th>
 					</tr>
 					<?php if (!$excelExport): ?>                      
@@ -66,22 +66,22 @@
 						<td class="text-center"><?php echo $value['order_total_amount'] ?></td>
 						<td class="text-center">
 				            <?php if (!$value['is_approved']):?>
-				                <small class="label bg-red">Sipariş Onaylanmamış</small>
+				                <small class="label bg-red">Approved</small>
 				            <?php else: ?>
-				                <small class="label bg-green">Sipariş Onaylanmış</small>
+				                <small class="label bg-green">Not Approved</small>
 				            <?php endif;?>
 						</td>
 						<td class="text-center">
 							<?php if (!$value['is_shipped']):?>
-								<small class="label bg-red">Kargoya Verilmemiş</small>
+								<small class="label bg-red">Shipped</small>
 							<?php else: ?>
-								<small class="label bg-green">Kargoya Verilmiş</small>
+								<small class="label bg-green">Not Shipped</small>
 							<?php endif;?>			
 						</td>
 						<td class="text-center">
 						  <?php $created_at = new \DateTime($value['created_at']); echo $created_at->format('d.m.Y H:i:s'); ?> 
 						</td>
-						<td><a class="btn btn-primary" href="<?php echo $this->get('router')->path('admin_order_detail', ['orderId' => $value['order_id']]) ?>">Detay</a></td>
+						<td><a class="btn btn-primary" href="<?php echo $this->get('router')->path('admin_order_detail', ['orderId' => $value['order_id']]) ?>">Detail</a></td>
 					  </tr>
 					<?php endforeach ?>
 				  </tbody>

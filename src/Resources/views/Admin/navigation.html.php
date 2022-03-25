@@ -15,7 +15,7 @@
         </div>
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu" data-widget="tree">
-            <li class="header">Yönetim Paneli</li>
+            <li class="header">Management Panel</li>
             <!-- Optionally, you can add icons to the links -->
             <?php if ($admin->hasRole('site_dashboard_show')):?>
                 <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_dashboard'); ?>"><i class="fa fa-tachometer"></i> <span>Dashboard</span></a></li>
@@ -23,13 +23,13 @@
             
             <?php if ($admin->hasRole('bank_transfer_list')):?>
             <li class="treeview">
-                <a href=""><i class="fa fa-bank" aria-hidden="true"></i><span>Havale Bildirimleri</span>
+                <a href=""><i class="fa fa-bank" aria-hidden="true"></i><span>Order Notices</span>
                     <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span>
                 </a>
                 <ul class="treeview-menu">
                     <?php if($admin->hasRole('bank_transfer_list')): ?>
-                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_money_order_list'); ?>">Havale Bildirimleri</a></li>
-                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_money_order_list_deleted'); ?>">Silinmiş Havale Bildirimleri</a></li>
+                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_money_order_list'); ?>">Order Notices</a></li>
+                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_money_order_list_deleted'); ?>">Deleted Order Notices</a></li>
                     <?php endif; ?>
                 </ul>
             </li>
@@ -37,15 +37,15 @@
 
             <?php if($admin->hasRole('account_list_show') && $admin->hasRole('profile_list_show')): ?>
             <li class="treeview">
-                <a href=""><i class="fa fa-user-circle-o" aria-hidden="true"></i><span>Yöneticiler</span>
+                <a href=""><i class="fa fa-user-circle-o" aria-hidden="true"></i><span>Admins</span>
                     <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span>
                 </a>
                 <ul class="treeview-menu">
                     <?php if ($admin->hasRole('account_list_show')):?>
-                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_account_list'); ?>">Yönetici Listesi</a></li>
+                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_account_list'); ?>">Admin List</a></li>
                     <?php endif; ?>
                     <?php if ($admin->hasRole('profile_list_show')):?>
-                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_profile_list'); ?>">Yönetici Yetki Profilleri</a></li>
+                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_profile_list'); ?>">Admin Profiles</a></li>
                     <?php endif; ?>
                 </ul>
             </li>
@@ -58,11 +58,11 @@
                 </a>
                 <ul class="treeview-menu">
                     <?php if ($admin->hasRole('product_create')):?>
-                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_product_create_view'); ?>">Yeni Ürün Ekle</a></li>
+                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_product_create_view'); ?>">Add New</a></li>
                     <?php endif; ?>
                     <?php if ($admin->hasRole('product_list')):?>
-                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_product_list'); ?>">Ürün Listesi</a></li>
-                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_product_list_deleted'); ?>">Silinmiş Ürün Listesi</a></li>
+                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_product_list'); ?>">Product List</a></li>
+                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_product_list_deleted'); ?>">Deleted Product List</a></li>
                     <?php endif; ?>
                 </ul>
             </li>
@@ -70,12 +70,12 @@
 
         <?php if($admin->hasRole('order_list')): ?>
             <li class="treeview">
-                <a href=""><i class="fa fa-shopping-bag" aria-hidden="true"></i><span>Siparişler</span>
+                <a href=""><i class="fa fa-shopping-bag" aria-hidden="true"></i><span>Orders</span>
                     <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span>
                 </a>
                 <ul class="treeview-menu">
                     <?php if ($admin->hasRole('order_list')):?>
-                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_order_list'); ?>">Sipariş Listesi</a></li>
+                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_order_list'); ?>">Order List</a></li>
                     <?php endif; ?>
                 </ul>
             </li>
@@ -83,12 +83,12 @@
 
         <?php if($admin->hasRole('menu_list')): ?>
             <li class="treeview">
-                <a href=""><i class="fa fa-bars" aria-hidden="true"></i><span>Menüler</span>
+                <a href=""><i class="fa fa-bars" aria-hidden="true"></i><span>Menus</span>
                     <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span>
                 </a>
                 <ul class="treeview-menu">
                     <?php if ($admin->hasRole('menu_list')):?>
-                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_menu_list'); ?>">Menü Listesi</a></li>
+                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_menu_list'); ?>">Menu List</a></li>
                     <?php endif; ?>
                 </ul>
             </li>
@@ -96,45 +96,45 @@
 
         <?php if($admin->hasRole('settings_general') || $admin->hasRole('settings_strings') || $admin->hasRole('settings_bank') || $admin->hasRole('faq_list') || $admin->hasRole('settings_logo') || $admin->hasRole('all_banners') || $admin->hasRole('cargo_list')): ?>
             <li class="treeview">
-                <a href=""><i class="fa fa-cog" aria-hidden="true"></i><span>Site Ayarları</span>
+                <a href=""><i class="fa fa-cog" aria-hidden="true"></i><span>Site Settings</span>
                     <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span>
                 </a>
                 <ul class="treeview-menu">
                     <?php if($admin->hasRole('settings_general')): ?>
-                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_settings_general'); ?>">Genel Ayarlar</a></li>
+                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_settings_general'); ?>">General Settings</a></li>
                     <?php endif; ?>
                     <?php if($admin->hasRole('settings_strings')): ?>
-                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_settings_strings'); ?>">Metin Ayarları</a></li>
+                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_settings_strings'); ?>">String Settings</a></li>
                     <?php endif; ?>
                     <?php if($admin->hasRole('settings_bank')): ?>
-                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_settings_bank'); ?>">Banka Ayarları</a></li>
+                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_settings_bank'); ?>">Bank Settings</a></li>
                     <?php endif; ?>
                     <?php if($admin->hasRole('faq_list')): ?>
-                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_settings_faq'); ?>">Sık Sorulan Sorular</a></li>
+                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_settings_faq'); ?>">FAQ</a></li>
                     <?php endif; ?>
                     <?php if($admin->hasRole('settings_logo')): ?>
-                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_settings_logo'); ?>">Logo ve Favicon</a></li>
+                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_settings_logo'); ?>">Logo and Favicon</a></li>
                     <?php endif; ?>
                     <?php if($admin->hasRole('all_banners')): ?>
-                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_settings_banner'); ?>">Banner Ayarları</a></li>
+                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_settings_banner'); ?>">Banner Settings</a></li>
                     <?php endif; ?>
                     <?php if($admin->hasRole('cargo_list')): ?>
-                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_settings_cargo_list'); ?>">Kargo Listesi</a></li>
+                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_settings_cargo_list'); ?>">Cargo List</a></li>
                     <?php endif; ?>
                     <?php if($admin->hasRole('iyzico_settings_show')): ?>
-                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_settings_iyzico'); ?>">Izyico Ayarları</a></li>
+                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_settings_iyzico'); ?>">Izyico Settings</a></li>
                     <?php endif; ?>
                 </ul>
             </li>
         <?php endif; ?>
         <?php if($admin->hasRole('user_list')): ?>
             <li class="treeview">
-                <a href=""><i class="fa fa-user" aria-hidden="true"></i><span>Kullanıcılar</span>
+                <a href=""><i class="fa fa-user" aria-hidden="true"></i><span>Users</span>
                     <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span>
                 </a>
                 <ul class="treeview-menu">
                     <?php if ($admin->hasRole('user_list')):?>
-                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_user_list'); ?>">Kullanıcı Listesi</a></li>
+                    <li class="nav-dynamic"><a href="<?php echo $this->get('router')->path('admin_user_list'); ?>">User List</a></li>
                     <?php endif; ?>
                 </ul>
             </li>

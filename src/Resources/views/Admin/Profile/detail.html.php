@@ -6,11 +6,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Yönetici Profil Detayı
+            Admin Profile Detail
         </h1>
         <ol class="breadcrumb">
             <li><a href="<?php echo $this->get('router')->path('admin_dashboard'); ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active">Yönetici Profil Detayı</li>
+            <li class="active">Admin Profile Detail</li>
         </ol>
     </section>
     <section class="content">
@@ -20,7 +20,7 @@
                     <div class="box-header">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3 class="box-title">Yönetici Profil Detayı</h3></div>
+                                <h3 class="box-title">Admin Profile Detail</h3></div>
                         </div>
                     </div>
                     <!-- /.box-header -->
@@ -35,11 +35,11 @@
                                         <div class="box-body">
                                             <input type="hidden" name="profileId" value="<?php echo $profileDetail['id'] ?>">
                                             <div class="form-group">
-                                                <label for="name">Profil ismi</label>
+                                                <label for="name">Profile Name</label>
                                                 <input type="text" class="form-control required" id="name" name="name" value="<?php echo $profileDetail['name'] ?>">
                                             </div>
                                             <div class="form-group">
-                                                <h4>İzinler</h4>
+                                                <h4>Permissions</h4>
                                                 <?php foreach ($allPermissions as $permission): ?>
                                                      <div class="form-check">
                                                         <label>
@@ -57,10 +57,10 @@
                                         </div>
                                         <div class="box-footer">
                                             <?php if ($admin->hasRole('profile_update')):?>
-                                                <button type="submit" class="btn btn-primary">Kaydet</button>
+                                                <button type="submit" class="btn btn-primary">Save</button>
                                             <?php endif; ?>
                                             <?php if ($admin->hasRole('profile_delete')):?>
-                                                <button type="button" id="admin_profile_delete" data-href="<?php echo $this->get('router')->path('admin_profile_delete', ['profileId' => $profileDetail['id']]) ?>" data-profile-id="<?php echo $profileDetail['id'] ?>" class="btn btn-danger">Sil</button>
+                                                <button type="button" id="admin_profile_delete" data-href="<?php echo $this->get('router')->path('admin_profile_delete', ['profileId' => $profileDetail['id']]) ?>" data-profile-id="<?php echo $profileDetail['id'] ?>" class="btn btn-danger">Delete</button>
                                             <?php endif; ?>
                                         </div>
                                     </form>

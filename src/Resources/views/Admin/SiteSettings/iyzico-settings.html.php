@@ -4,10 +4,10 @@
 	<!-- Content Header (Page header) -->
 	<section class="content-header">
 		<h1>
-			İyzico Ayarları
+			İyzico Settings
 		</h1>
 		<ol class="breadcrumb">
-			<li class="active">İyzico Ayarları</li>
+			<li class="active">İyzico Settings</li>
 		</ol>
 	</section>
 	<!-- Main content -->
@@ -21,7 +21,7 @@
 						<form role="form" method="post" action="<?php echo $this->get('router')->path('admin_settings_iyzico_update') ?>" id="iyzico-settings-form">
 							<div class="col-md-6">
 								<div class="box-header with-border">
-									<h3 class="box-title">İyzico Ayarları</h3>
+									<h3 class="box-title">İyzico Settings</h3>
 								</div>
 								<!-- /.box-header -->
 								<!-- form start -->
@@ -40,7 +40,7 @@
 									</div>
 									<div class="form-group">
 										<?php if($admin->hasRole('iyzico_settings_update')): ?>
-											<button type="submit" class="btn btn-primary btn-block">Kaydet</button>
+											<button type="submit" class="btn btn-primary btn-block">Save</button>
 										<?php endif; ?>
 									</div>
 								</div>

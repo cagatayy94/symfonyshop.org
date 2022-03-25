@@ -30,14 +30,14 @@
 <body class="hold-transition login-page">
 <div class="login-box">
 	<div class="login-logo">
-		<a href="admin/index2.html"><b>Yönetici</b>Giriş</a>
+		<a href="admin/index2.html"><b>Admin</b>Login</a>
 	</div>
 	<!-- /.login-logo -->
 	<div class="login-box-body">
-		<p class="login-box-msg">Oturum açmak için giriş yapınız</p>
+		<p class="login-box-msg">Login</p>
 		<form method="post">
 				<?php if ($error): ?>
-						<div class="alert alert-danger">Giriş Başarısız</div>
+						<div class="alert alert-danger">Failed</div>
 				<?php endif ?>
 			<div class="form-group has-feedback">
 				<input type="email" name="email" class="form-control" id="inputEmail" value="<?php echo $last_username ?>" placeholder="Email" required autofocus>
@@ -52,13 +52,13 @@
 				<div class="col-xs-8">
 					<div class="checkbox icheck">
 						<label>
-							<input type="checkbox" name="_remember_me"> Beni Hatırla
+							<input type="checkbox" name="_remember_me"> Remember
 						</label>
 					</div>
 				</div>
 				<!-- /.col -->
 				<div class="col-xs-4">
-					<button type="submit" class="btn btn-primary btn-block btn-flat">Giriş Yap</button>
+					<button type="submit" class="btn btn-primary btn-block btn-flat">Login</button>
 				</div>
 				<!-- /.col -->
 			</div>

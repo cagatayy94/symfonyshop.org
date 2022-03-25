@@ -6,11 +6,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Menü Detayı
+            Menu Detail
         </h1>
         <ol class="breadcrumb">
             <li><a href="<?php echo $this->get('router')->path('admin_dashboard'); ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active">Menü Detayı</li>
+            <li class="active">Menu Detail</li>
         </ol>
     </section>
     <section class="content">
@@ -20,7 +20,7 @@
                     <div class="box-header">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3 class="box-title">Menü Detayı</h3></div>
+                                <h3 class="box-title">Menu Detail</h3></div>
                         </div>
                     </div>
                     <!-- /.box-header -->
@@ -35,11 +35,11 @@
                                         <div class="box-body">
                                             <input type="hidden" name="menuId" value="<?php echo $menuId ?>">
                                             <div class="form-group">
-                                                <label for="name">Menü ismi</label>
+                                                <label for="name">Menu Name</label>
                                                 <input type="text" class="form-control required" id="name" name="name" value="<?php echo $menuDetail['name'] ?>">
                                             </div>
                                             <div class="form-group">
-                                                <h4>Kategoriler</h4>
+                                                <h4>Categories</h4>
                                                 <?php foreach ($categories as $key => $category): ?>
                                                      <div class="form-check">
                                                         <label>
@@ -51,10 +51,10 @@
                                         </div>
                                         <div class="box-footer">
                                             <?php if ($admin->hasRole('menu_update')):?>
-                                                <button type="submit" class="btn btn-primary">Kaydet</button>
+                                                <button type="submit" class="btn btn-primary">Save</button>
                                             <?php endif; ?>
                                             <?php if ($admin->hasRole('menu_delete')):?>
-                                                <button type="button" id="menu_delete" data-href="<?php echo $this->get('router')->path('admin_menu_delete', ['menuId' => $menuId]) ?>" data-menu-id="<?php echo $menuId ?>" class="btn btn-danger">Sil</button>
+                                                <button type="button" id="menu_delete" data-href="<?php echo $this->get('router')->path('admin_menu_delete', ['menuId' => $menuId]) ?>" data-menu-id="<?php echo $menuId ?>" class="btn btn-danger">Delete</button>
                                             <?php endif; ?>
                                         </div>
                                     </form>
