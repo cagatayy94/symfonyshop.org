@@ -930,7 +930,6 @@ class Account
 
         foreach ($sqlArray as $value) {
             $statement = $connection->prepare($value);
-
             $statement->execute();
         }
     }

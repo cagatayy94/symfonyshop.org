@@ -663,23 +663,15 @@ INSERT INTO public.menu (id, name, slug, is_deleted) VALUES (4, 'Ev & Yaşam', '
 INSERT INTO public.menu (id, name, slug, is_deleted) VALUES (5, 'Elektronik', 'elektronik', false);
 
 INSERT INTO public.settings (id, is_deleted, name, title, description, keywords, copyright, mail, link, address, phone, footer_text, facebook, instagram, linkedin, twitter, youtube, pinterest) VALUES (1, false, 'symfonyshop', 'Yeni nesil eticaret', 'giyim, elektronik, ev eşyaları, kozmetik binlerce ürün ', 'giyim, elektronik, ev eşyaları, kozmetik', '2020 All Rights Reserved', 'info@symfonyshop.tk', 'symfonyshop.tk', 'İstanbul - Kadıköy', '5999999999', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', NULL, NULL, NULL, NULL, NULL, NULL);
-
 INSERT INTO public.iyzico (id, iyzico_api_key, iyzico_secret_key, iyzico_base_url) VALUES (1, 'api_key', 'secret', 'base_url');
 
 SELECT pg_catalog.setval('public.admin_account_id_seq', 1, true);
-
 SELECT pg_catalog.setval('public.admin_account_profile_id_seq', 1, true);
-
 SELECT pg_catalog.setval('public.admin_permission_id_seq', 57, true);
-
 SELECT pg_catalog.setval('public.admin_profile_id_seq', 1, true);
-
 SELECT pg_catalog.setval('public.admin_profile_permission_id_seq', 57, true);
-
 SELECT pg_catalog.setval('public.category_id_seq', 13, true);
-
 SELECT pg_catalog.setval('public.menu_id_seq', 5, true);
-
 SELECT pg_catalog.setval('public.settings_id_seq', 1, true);
 
 ALTER TABLE ONLY public.address

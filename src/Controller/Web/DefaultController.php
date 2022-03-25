@@ -2,6 +2,7 @@
 
 namespace App\Controller\Web;
 
+use Faker\Factory as FakerFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -154,12 +155,17 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/uyelik-sozlesmesi", name="sign_up_aggreement")
+     * @Route("/sign-up-aggreement", name="sign_up_aggreement")
      */
     public function signUpAgreement(SiteSettings $siteSettings)
     {
         $user = $this->getUser();
         $signUpAgreement = $siteSettings->getAgreementString('sign_up_agreement');
+
+        if($signUpAgreement){
+            $fakerFactory = FakerFactory::create();
+            $signUpAgreement = $fakerFactory->sentences(3, true);
+        }
 
         return $this->render('Web/Strings/sign_up_agreement.html.php', [
             'signUpAgreement' => $signUpAgreement,
