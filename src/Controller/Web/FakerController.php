@@ -23,22 +23,7 @@ class FakerController extends AbstractController
 
             $data['ip'] = $ipAddress;
 
-            $data['uuid'] = $fakerFactory->uuid;
-            $data['uuid'] = $fakerFactory->uuid;
-            $data['uuid'] = $fakerFactory->uuid;
-            $data['uuid'] = $fakerFactory->uuid;
-            $data['uuid'] = $fakerFactory->uuid;
-            $data['uuid'] = $fakerFactory->uuid;
-            $data['uuid'] = $fakerFactory->uuid;
-            $data['uuid'] = $fakerFactory->uuid;
-            $data['uuid'] = $fakerFactory->uuid;
-            $data['uuid'] = $fakerFactory->uuid;
-            $data['uuid'] = $fakerFactory->uuid;
-            $data['uuid'] = $fakerFactory->uuid;
-            $data['uuid'] = $fakerFactory->uuid;
-            $data['uuid'] = $fakerFactory->uuid;
 
-            dd();
 
             return new JsonResponse([
                 'success' => true,

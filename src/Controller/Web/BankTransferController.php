@@ -15,7 +15,7 @@ use App\Service\Web\OrderNotice as OrderNoticeService;
 class BankTransferController extends AbstractController
 {
     /**
-     * @Route("/havale-bildirimi", name="order_notice")
+     * @Route("/order-notice", name="order_notice")
      */
     public function orderNotice(SiteSettings $siteSettings)
     {
@@ -29,7 +29,7 @@ class BankTransferController extends AbstractController
     }
 
     /**
-     * @Route("/havale-bildirimi-submit", name="order_notice_submit")
+     * @Route("/order-notice", name="order_notice_submit")
      */
     public function orderNoticeSubmit(Request $request, OrderNoticeService $orderNoticeService)
     {

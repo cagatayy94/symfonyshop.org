@@ -92,7 +92,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/parolami-sifirla", name="reset_password")
+     * @Route("/reset-password", name="reset_password")
      */
     public function forgotPasswordAction(Request $request, UserService $userService)
     {
@@ -197,7 +197,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/profilim", name="profile")
+     * @Route("/profile", name="profile")
      */
     public function profileAction(UserService $userService)
     {

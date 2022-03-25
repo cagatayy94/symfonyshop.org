@@ -17,7 +17,7 @@ use App\Service\Admin\Account as AccountService;
 class AccountController extends AbstractController
 {
     /**
-     * @Route("/account/list", name="account_list")
+     * @Route("/accounts", name="account_list")
      */
     public function adminListAction(AccountService $accountService)
     {

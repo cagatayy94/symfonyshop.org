@@ -17,9 +17,9 @@ class DefaultController extends AbstractController
      */
     public function loginAction(AuthenticationUtils $authenticationUtils): Response
     {
-        // if ($this->getUser()) {
-        //     return $this->redirectToRoute('target_path');
-        // }
+        if ($this->getUser()) {
+            return $this->redirectToRoute('target_path');
+        }
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
