@@ -1,7 +1,7 @@
 name: PHP Composer
 on:
   push:
-    branches: [ master ]
+    branches: [ master-ercan ]
 
 jobs:
   run:
@@ -36,9 +36,9 @@ jobs:
           echo APP_SECRET=${{ secrets.APP_SECRET }} >> .env  &&
           echo MAILER_URL=${{ secrets.MAILER_URL   }} >> .env  &&
           echo MAIL_FROM_ADDRESS=${{ secrets.MAIL_FROM_ADDRESS   }} >> .env  &&
-          echo DATABASE_URL=${{ secrets.PROD_DATABASE_URL }} >> .env  &&
+          echo DATABASE_URL=${{ secrets.PROD_DATABASE_URL_ERCAN }} >> .env  &&
           echo APP_NAME=SymfonyShop >> .env  &&
-          echo MAIN_MAIL_ADDRESS=mustafa.cagatay.yilmaz@gmail.com >> .env
+          echo MAIN_MAIL_ADDRESS=ilyasercankaya@hotmail.com >> .env
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
@@ -58,4 +58,4 @@ jobs:
           KEY: ${{ secrets.SSH_KEY }}
         with:
           source: "."
-          target: "/var/www/symfonyshop.org"
+          target: "/var/www/fantaazi.tk"
