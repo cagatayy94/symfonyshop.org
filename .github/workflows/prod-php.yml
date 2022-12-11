@@ -36,7 +36,7 @@ jobs:
           echo APP_SECRET=${{ secrets.APP_SECRET }} >> .env  &&
           echo MAILER_URL=${{ secrets.MAILER_URL   }} >> .env  &&
           echo MAIL_FROM_ADDRESS=${{ secrets.MAIL_FROM_ADDRESS   }} >> .env  &&
-          echo DATABASE_URL=${{ secrets.PROD_DATABASE_URL_ERCAN }} >> .env  &&
+          echo DATABASE_URL=${{ secrets.PROD_DATABASE_URL_ENG }} >> .env  &&
           echo APP_NAME=SymfonyShop >> .env  &&
           echo MAIN_MAIL_ADDRESS=mustafa.cagatay.yilmaz@gmail.com >> .env
 
