@@ -7,22 +7,22 @@
     <base href="/">
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="stylesheet" href="admin/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.symfonyshop.org/admin/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="admin/bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.symfonyshop.org/admin/bower_components/font-awesome/css/font-awesome.min.css">
     <!-- Ionicons -->
-    <link rel="stylesheet" href="admin/bower_components/Ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="https://cdn.symfonyshop.org/admin/bower_components/Ionicons/css/ionicons.min.css">
     <!-- bootstrap datepicker -->
-    <link rel="stylesheet" href="admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="https://cdn.symfonyshop.org/admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="admin/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="https://cdn.symfonyshop.org/admin/dist/css/AdminLTE.min.css">
         <!-- toastr style -->
-    <link rel="stylesheet" href="toastr/toastr.min.css">
+    <link rel="stylesheet" href="https://cdn.symfonyshop.org/toastr/toastr.min.css">
     <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
           page. However, you can choose any other skin. Make sure you
           apply the skin class to the body tag so the changes take effect. -->
-    <link rel="stylesheet" href="admin/dist/css/skins/skin-blue.min.css">
-    <link rel="icon" href="web/img/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdn.symfonyshop.org/admin/dist/css/skins/skin-blue.min.css">
+    <link rel="icon" href="https://cdn.symfonyshop.org/web/img/favicon.ico" type="image/x-icon" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -34,7 +34,7 @@
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
-<script src="toastr/jquery-3.4.1.min.js"></script>  
+<script src="https://cdn.symfonyshop.org/toastr/jquery-3.4.1.min.js"></script>
 <div class="wrapper">
     <!-- Main Header -->
     <header class="main-header">
@@ -59,14 +59,14 @@
                         <!-- Menu Toggle Button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <!-- The user image in the navbar-->
-                            <img src="admin/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                            <img src="https://cdn.symfonyshop.org/admin/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
                             <span class="hidden-xs"><?php echo $admin->getName().' '.$admin->getSurname(); ?></span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- The user image in the menu -->
                             <li class="user-header">
-                                <img src="admin/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                <img src="https://cdn.symfonyshop.org/admin/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                                 <p>
                                     <?php echo $admin->getName().' '.$admin->getSurname(); ?>
                                 </p>
@@ -104,15 +104,15 @@
 <!-- ./wrapper -->
 <!-- REQUIRED JS SCRIPTS -->
 <!-- jQuery 3 -->
-<script src="admin/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="https://cdn.symfonyshop.org/admin/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
-<script src="admin/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.symfonyshop.org/admin/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- bootstrap datepicker -->
-<script src="admin/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<script src="https://cdn.symfonyshop.org/admin/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 <!-- AdminLTE App -->
-<script src="admin/dist/js/adminlte.min.js"></script>
+<script src="https://cdn.symfonyshop.org/admin/dist/js/adminlte.min.js"></script>
 <!-- toastr js -->
-<script src="toastr/toastr.min.js"></script>
+<script src="https://cdn.symfonyshop.org/toastr/toastr.min.js"></script>
 <script src="admin/assets/admin.js"></script>
 <?php $view['slots']->output('javascript'); ?>
 </body>
