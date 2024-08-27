@@ -6,7 +6,7 @@
             <div class="row text-center">
                 <div class="col">
                     <h2 class="font-weight-bold appear-animation animated fadeInUpShorter appear-animation-visible" data-appear-animation="fadeInUpShorter" style="animation-delay: 100ms;">Çalıştığımız bankalar aşağıda yer almaktadır.</h2>
-                    <p class="lead appear-animation animated fadeInUpShorter appear-animation-visible" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="200" style="animation-delay: 200ms;">Havale yaptıktan sonra havale bildirimi yapmayı unutmayınız. Havale bildirimi yapmak için <a href="2222">tıklayınız.</a></p>
+                    <p class="lead appear-animation animated fadeInUpShorter appear-animation-visible" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="200" style="animation-delay: 200ms;">Havale yaptıktan sonra havale bildirimi yapmayı unutmayınız. Havale bildirimi yapmak için <a href="havale-bildirimi">tıklayınız.</a></p>
                 </div>
             </div>
         </div>
