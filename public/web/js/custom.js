@@ -1547,3 +1547,7 @@ $('body').on('click', '[data-target="#paymentModal"]', function(e) {
 $('#paymentModal').on('hidden.bs.modal', function (e) {
     $(this).find('.modal-body').html('<div class="text-center"><div id="portfolioLoadMoreLoader" class="portfolio-load-more-loader" style="height: 67.5312px; display:block;"><div class="bounce-loader"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div></div></div>');
 });
+
+$('body').on('click', '.login-for-use-chart', function(e) {
+    toastr.info('Sepete eklemek için lütfen giriş yapınız');
+});

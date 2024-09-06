@@ -81,7 +81,7 @@
                             <?php if ($user): ?>
                                 <button type="submit" class="add-to-cart btn btn-primary btn-rounded font-weight-semibold btn-v-3 btn-h-2 btn-fs-2 ml-3">SEPETE EKLE</button>
                             <?php else: ?>
-                                <button type="button" data-container="body" data-trigger="focus" data-toggle="popover" data-placement="right" data-content="Sepete eklemek için giriş yapınız." class="btn btn-primary btn-rounded font-weight-semibold btn-v-3 btn-h-2 btn-fs-2 ml-3" data-original-title="" title="">SEPETE EKLE</button>
+                                <button type="button" data-container="body" data-trigger="focus" data-toggle="popover" data-placement="right" data-content="Sepete eklemek için giriş yapınız." class="btn btn-primary btn-rounded font-weight-semibold btn-v-3 btn-h-2 btn-fs-2 ml-3 login-for-use-chart" data-original-title="" title="">SEPETE EKLE</button>
                             <?php endif; ?>
                         </form>
                         <hr class="my-4">
