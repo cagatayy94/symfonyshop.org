@@ -51,7 +51,11 @@
                             <?php foreach ($productDetail['photos'] as $key => $value): ?>
                                 <div>
                                     <span class="d-block">
-                                        <img alt="Product Image" src="<?php echo $value ?>" class="img-fluid">
+                                        <?php if ($user): ?>
+                                            <img alt="Product Image" src="<?php echo $value ?>" class="img-fluid">
+                                        <?php else: ?>
+                                            <img src="/web/img/default-img.png" class="img-fluid" alt="">
+                                        <?php endif; ?>
                                     </span>
                                 </div>
                             <?php endforeach; ?>
