@@ -39,7 +39,11 @@
                         <div class="owl-carousel owl-theme manual dots-style-2 nav-style-2 nav-color-dark mb-3" id="thumbGalleryDetail">
                             <?php foreach ($productDetail['photos'] as $key => $value): ?>
                                 <div>
-                                    <img src="<?php echo $value ?>" class="img-fluid" alt="">
+                                    <?php if ($user): ?>
+                                        <img src="<?php echo $value ?>" class="img-fluid" alt="">
+                                    <?php else: ?>
+                                        <img src="/web/img/default-img.png>" class="img-fluid" alt="">
+                                    <?php endif; ?>
                                 </div>
                             <?php endforeach; ?>
                         </div>
