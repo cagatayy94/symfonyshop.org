@@ -112,7 +112,7 @@
                                             </div>
                                             <div class="product-info d-flex flex-column flex-lg-row justify-content-between">
                                                 <div class="product-info-title">
-                                                    <h3 class="text-color-default text-2 line-height-1 mb-1"><a href="<?php echo '/product-detail/'.strtolower(preg_replace('~-+~', '-', trim(preg_replace('~[^-\w]+~', '', iconv('utf-8', 'us-ascii//TRANSLIT', preg_replace('~[^\pL\d]+~u', '-', $value['name']))), '-'))).'/'.$value['id'] ?>"><?php echo $value['name'] ?></a></h3>
+                                                    <h3 class="text-color-default text-2 line-height-1 mb-1"><a href="<?php echo '/product-detail/'.strtolower(preg_replace('~-+~', '-', trim(preg_replace('~[^-\w]+~', '', iconv('utf-8', 'us-ascii//IGNORE', preg_replace('~[^\pL\d]+~u', '-', $value['name']))), '-'))).'/'.$value['id'] ?>"><?php echo $value['name'] ?></a></h3>
                                                     <span class="price font-primary text-4"><strong class="text-color-dark"><?php echo $value['price'] ?> TL</strong></span>
                                                     <span class="old-price font-primary text-line-trough text-1"><strong class="text-color-default"><?php echo $value['price']+10 ?> TL</strong></span>
                                                 </div>
