@@ -102,7 +102,7 @@
                                                     <?php if ($user): ?>
                                                             <img src="<?php echo json_decode($value['photo'], true)[0] ?>" class="img-fluid" alt="">
                                                     <?php else: ?>
-                                                            <img src="/web/img/default-img.png>" class="img-fluid" alt="">
+                                                            <img src="/web/img/default-img.png" class="img-fluid" alt="">
                                                     <?php endif; ?>
                                                     </a>
                                                     <span class="image-frame-action">

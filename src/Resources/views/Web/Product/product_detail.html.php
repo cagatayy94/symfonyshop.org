@@ -42,7 +42,7 @@
                                     <?php if ($user): ?>
                                         <img src="<?php echo $value ?>" class="img-fluid" alt="">
                                     <?php else: ?>
-                                        <img src="/web/img/default-img.png>" class="img-fluid" alt="">
+                                        <img src="/web/img/default-img.png" class="img-fluid" alt="">
                                     <?php endif; ?>
                                 </div>
                             <?php endforeach; ?>
