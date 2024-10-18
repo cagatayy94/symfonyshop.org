@@ -56,7 +56,7 @@ class DefaultController extends AbstractController
             $pageCount = ceil($products['total'] / $perPage);
         }
 
-        return $this->render('Web/Default/index.html.php', [
+        return $this->render('Web/Default/index2.html.php', [
             'banner'            => $banner,
             'slug'              => null,
             'user'              => $user,

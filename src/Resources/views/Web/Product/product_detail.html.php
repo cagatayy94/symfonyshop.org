@@ -39,11 +39,7 @@
                         <div class="owl-carousel owl-theme manual dots-style-2 nav-style-2 nav-color-dark mb-3" id="thumbGalleryDetail">
                             <?php foreach ($productDetail['photos'] as $key => $value): ?>
                                 <div>
-                                    <?php if ($user): ?>
-                                        <img src="<?php echo $value ?>" class="img-fluid" alt="">
-                                    <?php else: ?>
-                                        <img src="/web/img/default-img.png" class="img-fluid" alt="">
-                                    <?php endif; ?>
+                                    <img src="<?php echo $value ?>" class="img-fluid" alt="">
                                 </div>
                             <?php endforeach; ?>
                         </div>
@@ -51,11 +47,7 @@
                             <?php foreach ($productDetail['photos'] as $key => $value): ?>
                                 <div>
                                     <span class="d-block">
-                                        <?php if ($user): ?>
-                                            <img alt="Product Image" src="<?php echo $value ?>" class="img-fluid">
-                                        <?php else: ?>
-                                            <img src="/web/img/default-img.png" class="img-fluid" alt="">
-                                        <?php endif; ?>
+                                        <img alt="Product Image" src="<?php echo $value ?>" class="img-fluid">
                                     </span>
                                 </div>
                             <?php endforeach; ?>
